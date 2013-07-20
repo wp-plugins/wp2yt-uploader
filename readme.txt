@@ -18,10 +18,10 @@ these any where in your themes.
 **OVER 500 ICONS INCLUDED**
 **Insert Icons Directly Into Posts**
 
-**Future Development Planned**
+=Future Development Planned=
 1. Icon Customizer 
 2. Select color, set size, and add animations before using the code
-	
+3. <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Included Icon Demo</a>
 
 
 == Installation ==
