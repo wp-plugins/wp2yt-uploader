@@ -16,6 +16,13 @@ webfonts on to the server everytime. With this plugin its one click and you're r
 these any where in your themes.
 
 **OVER 500 ICONS INCLUDED**
+**Insert Icons Directly Into Posts**
+
+**Future Development Planned**
+-Icon Customizer
+	-Select color, set size, and add animations before using the code
+	
+
 
 == Installation ==
 
@@ -32,7 +39,7 @@ as large as you want with out any loss in quality.
 
 = Can you change the color of the icons? =
 
-Yes, by specificying an inline font-color property to the div. 
+Yes, by specificying an inline color property to the div. 
 
 = Can you add animations to the icons? =
 
