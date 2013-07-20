@@ -18,9 +18,9 @@ these any where in your themes.
 **OVER 500 ICONS INCLUDED**
 **Insert Icons Directly Into Posts**
 
-**Future Development Planned**<br/>
--Icon Customizer <br/>
-Select color, set size, and add animations before using the code
+**Future Development Planned**
+1. Icon Customizer 
+2. Select color, set size, and add animations before using the code
 	
 
 
