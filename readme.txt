@@ -20,7 +20,7 @@ these any where in your themes.
 
 **Future Development Planned**
 -Icon Customizer
-	-Select color, set size, and add animations before using the code
+	*Select color, set size, and add animations before using the code
 	
 
 
