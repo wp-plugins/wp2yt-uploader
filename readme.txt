@@ -51,6 +51,3 @@ This icon set comes with a few good loader icons just for this purpose.
 
 = 1.0 =
 * Original Release
-
-
-`<?php code(); // goes in backticks ?>`
