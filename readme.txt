@@ -22,8 +22,10 @@ these any where in your themes.
 <ul>
 <li>Icon Customizer</li>
 <li>Select color, set size, and add animations before using the code</li>
-<li><a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Included Icon Demo</a></li>
 </ul>
+
+**Demo Page**
+<a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Check out the Included Icons</a>
 
 == Installation ==
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
@@ -64,5 +66,5 @@ This icon set comes with a few good loader icons just for this purpose.
 = 1.0 =
 Original release - July 20th, 2013.
 
-== Demo ==
+== Arbitrary section ==
 <h3> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!</h3>
