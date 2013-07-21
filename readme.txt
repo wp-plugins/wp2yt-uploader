@@ -48,6 +48,10 @@ Yes, by specificying an inline color property to the div.
 Yes, but you will need to know how to add CSS3 animations. The plugin does not come with any prebuilt animation.
 This icon set comes with a few good loader icons just for this purpose.
 
+= Have a question, idea or found a bug? =
+
+If you have found any problems, have an idea for a future release, found a bug you would like me to correct or 
+need light technical support you can reach me by email at <a href="mailto:evanmherman@gmail.com">Evan.M.Herman@gmail.com</a>.
 
 == Screenshots ==
 
@@ -66,5 +70,5 @@ This icon set comes with a few good loader icons just for this purpose.
 = 1.0 =
 Original release - July 20th, 2013.
 
-== Arbitrary section ==
-<h3> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!</h3>
+== Demo Page ==
+<p> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!</p>
