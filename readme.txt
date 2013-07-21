@@ -8,9 +8,10 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin will install a set of SVG webfont icons for use on your site. Users can select which icon they want to
-use and copy the provided code for use on any page. 
+This plugin will install 500+ SVG webfont icons for use on your site. Users can select which icon they want to
+use and use the provided code in posts, themes and templates. 
 
+== Description ==
 This plugin is great for developers who use icons on multiple sites and want to avoid the hassle of re-installing
 webfonts on to the server everytime. With this plugin its one click and you're ready to begin working. You can use
 these any where in your themes.
@@ -24,11 +25,9 @@ these any where in your themes.
 * <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Included Icon Demo</a>
 
 == Demo ==
-
 <h3> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!</h3>
 
 == Installation ==
-
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Place the provided code anywhere in your templates
