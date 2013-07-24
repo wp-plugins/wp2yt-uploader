@@ -4,7 +4,7 @@ Donate link: http://evan-herman.com/
 Tags: svg, icon, icons, set1, evan, herman
 Requires at least: 3.0.1
 Tested up to: 3.5.2
-Stable tag: trunk
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,10 +19,6 @@ these any where in your themes.
 **Insert Icons Directly Into Posts**
 
 **Future Development Planned**
-<ul>
-<li>Icon Customizer</li>
-<li>Select color, set size, and add animations before using the code</li>
-</ul>
 
 *Developing plugins is long and tidious work. If you benefit or enjoy this plugin please take the time to rate
 and review it, as this will only make future iterations of it better.*
