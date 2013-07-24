@@ -24,6 +24,9 @@ these any where in your themes.
 <li>Select color, set size, and add animations before using the code</li>
 </ul>
 
+*Developing plugins is long and tidious work. If you benefit or enjoy this plugin please take the time to rate
+and review it, as this will only make future iterations of it better.*
+
 **Demo Page**
 <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Check out the Included Icons</a>
 
@@ -51,7 +54,8 @@ This icon set comes with a few good loader icons just for this purpose.
 = Have a question, idea or found a bug? =
 
 If you have found any problems, have an idea for a future release, found a bug you would like me to correct or 
-need light technical support you can reach me by email at <a href="mailto:evanmherman@gmail.com">Evan.M.Herman@gmail.com</a>.
+need light technical support you can reach me by email at <a href="mailto:evanmherman@gmail.com">Evan.M.Herman@gmail.com</a>
+or through the contact form on my website at <a href="http://www.Evan-Herman.com">www.Evan-Herman.com</a>.
 
 == Screenshots ==
 
