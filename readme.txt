@@ -20,7 +20,7 @@ these any where in your themes.
 
 **Future Development Planned**
 
-*Developing plugins is long and tidious work. If you benefit or enjoy this plugin please take the time to rate
+*Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate
 and review it, as this will only make future iterations of it better.*
 
 **Demo Page**
