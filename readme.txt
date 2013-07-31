@@ -44,8 +44,21 @@ Yes, by specificying an inline color property to the div.
 
 = Can you add animations to the icons? =
 
-Yes, but you will need to know how to add CSS3 animations. The plugin does not come with any prebuilt animation.
-This icon set comes with a few good loader icons just for this purpose.
+Yes, but you will need to know how to code CSS3 animations. 
+
+= What is so different between the free and the pro version? =
+
+The pro version was built with ease of use for the end user in mind. The pro version comes with an icon customization window where users
+can much more easily change the icon size and icon color. The customization window also features 59 pre-built CSS3 animations
+which users can add to any icon in the library. On top of that users can choose when to animate the icon from options such as
+'On Load', 'On Hover' and 'On Click'. Within the customization window users can also add a drop shadow, or make the icon appear 3D
+with just one click, all while watching the changes in real time within the 'Icon Preview Window'. Users also hve the ability to turn the icon
+in to a functioning link to an internal or external page. Once the user is content with the final icon design, they click 'Generate 
+Code' where they are given all the necessary code to place that icon anywhere on your site.
+
+It's as easy as copy and paste.
+
+If you buy the pro version you will also receive support for one year, for those times you need to make something out of the ordinary happen.
 
 = Have a question, idea or found a bug? =
 
