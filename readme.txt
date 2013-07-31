@@ -1,7 +1,7 @@
-=== WP SVG Icon Set 1 ===
+=== WordPress SVG Icon Set ===
 Contributors: eherman24
-Donate link: http://evan-herman.com/
-Tags: svg, icon, icons, set1, evan, herman
+Donate link: https://www.paypal.com/us/cgi-bin/webscr?cmd=_flow&SESSION=pot_6tRO_G8j3Y0-1AokFwCrlsSLk9ZY8HyNHice8ydzzAtyQzWe6CoSz7m&dispatch=5885d80a13c0db1f8e263663d3faee8d92b37e35c82a7c965120dd5a9b6ad0e3
+Tags: wordpress, wp, svg, icon, set, icons, evan, herman, 
 Requires at least: 3.0.1
 Tested up to: 3.5.2
 Stable tag: 1.0
@@ -11,14 +11,23 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 This plugin will install 500+ SVG webfont icons for use on your site. Users can use the provided code in posts, themes and templates. 
 
 == Description ==
-This plugin is great for developers who use icons on multiple sites and want to avoid the hassle of re-installing
-webfonts on to the server everytime. With this plugin its one click and you're ready to begin working. You can use
+I originally created this plugin for my own personal use on client projects. After witnessing the power of this plugin firsthand, I wanted 
+to give a little something back to the community who have helped me through the years. The 'WordPress SVG Icon Set' is extremely
+easy for any one to use. Two clicks of the mouse and you have an icon ready to be placed on to your site. 
+
+These icons are a set of web-fonts, and are extremely scale-able. Meaning they will not degrade in quality the larger they get. Another
+great feature of this plugin is the ability to use the same icons across all devices. No need to generate Retina specific images for retina
+ready devices. By setting a max-width on the icon, it then becomes responsive.
+
+This plugin is also great for developers who use icons on multiple sites and want to avoid the hassle of re-installing
+webfonts on to a new server everytime. With this plugin its one click and you're ready to begin working. You can use
 these any where in your themes.
 
 **OVER 500 ICONS INCLUDED**
+
 **Insert Icons Directly Into Posts**
 
-**Future Development Planned**
+**Pro Version in Development**
 
 *Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate
 and review it, as this will only make future iterations of it better.*
@@ -29,7 +38,10 @@ and review it, as this will only make future iterations of it better.*
 == Installation ==
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Place the provided code anywhere in your templates
+3. Go to the 'WP SVG Icon' plugin page in the dashboard
+4. Click on which icon you would like to use
+5. It will then appear in the preview box at the top. Copy the provided code out of the 'example' box.
+6. You may now paste the copied code anywhere you want the icon to appear. (even in posts or anywhere in your themes)
 
 == Frequently Asked Questions ==
 
@@ -84,4 +96,5 @@ or through the contact form on my website at <a href="http://www.Evan-Herman.com
 Original release - July 20th, 2013.
 
 == Demo Page ==
-<p> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!</p>
+<p> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!
+The page gets updated very frequently, so check back for future updates.</p>
