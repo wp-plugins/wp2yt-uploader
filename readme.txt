@@ -40,7 +40,7 @@ and review it, as this will only make future iterations of it better.*
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to the 'WP SVG Icon' plugin page in the dashboard
 4. Click on which icon you would like to use
-5. It will then appear in the preview box at the top. Copy the provided code out of the 'example' box.
+5. A preview of the icon will then appear in the preview box at the top. Copy the generated code out of the 'example' box.
 6. You may now paste the copied code anywhere you want the icon to appear. (even in posts or anywhere in your themes)
 
 == Frequently Asked Questions ==
