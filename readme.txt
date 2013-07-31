@@ -27,7 +27,7 @@ these any where in your themes.
 
 **Insert Icons Directly Into Posts**
 
-**Pro Version in Development**
+**Pro Version in Development with Customization Features**
 
 *Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate
 and review it, as this will only make future iterations of it better.*
