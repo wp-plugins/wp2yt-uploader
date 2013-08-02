@@ -13,7 +13,7 @@ This plugin will install 500+ SVG webfont icons for use on your site. Users can 
 == Description ==
 This plugin is great for developers who use icons on multiple sites and want to avoid the hassle of re-installing
 webfonts on to the server everytime. With this plugin its one click and you're ready to begin working. You can use
-these any where in your themes.
+these any where in your themes. -
 
 **OVER 500 ICONS INCLUDED**
 **Insert Icons Directly Into Posts**
