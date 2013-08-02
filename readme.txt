@@ -96,7 +96,7 @@ or through the contact form on my website at <a href="http://www.Evan-Herman.com
 * Original Release
 
 == Upgrade Notice ==
-= 1.0.1 =
+= 1.1 =
 August 2nd, 2013
 * Made it easier to select icons by making the entire div selectable
 * Added icon highlighting after selection
