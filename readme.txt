@@ -86,7 +86,7 @@ or through the contact form on my website at <a href="http://www.Evan-Herman.com
 4. Social networking icons, mail icons etc.
 
 == Changelog ==
-= 1.0.1 =
+= 1.1 =
 * Made it easier to select icons by making the entire div selectable
 * Added icon highlighting after selection
 * Added smooth scroll back to top
