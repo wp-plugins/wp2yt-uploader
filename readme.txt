@@ -1,17 +1,16 @@
-=== WordPress SVG Icon Set ===
+=== WordPress Icons - SVG ===
 Contributors: eherman24
-Donate link: https://www.paypal.com/us/cgi-bin/webscr?cmd=_flow&SESSION=pot_6tRO_G8j3Y0-1AokFwCrlsSLk9ZY8HyNHice8ydzzAtyQzWe6CoSz7m&dispatch=5885d80a13c0db1f8e263663d3faee8d92b37e35c82a7c965120dd5a9b6ad0e3
-Tags: wordpress, wp, svg, icon, set, icons, evan, herman, 
+Donate link: http://evan-herman.com/
+Tags: wordpress, icons, evan, herman, icon, set, svg, wp
 Requires at least: 3.0.1
-Tested up to: 3.5.2
-Stable tag: 1.0
+Tested up to: 3.6
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin will install 500+ SVG webfont icons for use on your site. Users can use the provided code in posts, themes and templates. 
 
 == Description ==
-
 **Demo Page**
 <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Check out the Included Icons</a>
 
@@ -35,7 +34,6 @@ these any where in your themes.
 
 *Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate
 and review it, as this will only make future iterations of it better.*
-
 
 == Installation ==
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
@@ -88,15 +86,24 @@ or through the contact form on my website at <a href="http://www.Evan-Herman.com
 4. Social networking icons, mail icons etc.
 
 == Changelog ==
+= 1.0.1 =
+* Made it easier to select icons by making the entire div selectable
+* Added icon highlighting after selection
+* Added smooth scroll back to top
+* Placed scripts in external file
 
 = 1.0 =
 * Original Release
 
 == Upgrade Notice ==
+= 1.0.1 =
+August 2nd, 2013
+* Made it easier to select icons by making the entire div selectable
+* Added icon highlighting after selection
+* Added smooth scroll back to top
 
 = 1.0 =
 Original release - July 20th, 2013.
 
 == Demo Page ==
-<p> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!
-The page gets updated very frequently, so check back for future updates.</p>
+<p> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!</p>
