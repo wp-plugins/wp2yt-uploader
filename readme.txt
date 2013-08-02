@@ -1,7 +1,7 @@
-=== WP SVG Icon Set 1 ===
+=== WordPress Icons (SVG) ===
 Contributors: eherman24
 Donate link: http://evan-herman.com/
-Tags: svg, icon, icons, set1, evan, herman
+Tags: wordpress, icons, icon, wp, set1, evan, herman
 Requires at least: 3.0.1
 Tested up to: 3.5.2
 Stable tag: 1.0
