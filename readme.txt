@@ -103,7 +103,7 @@ August 2nd, 2013
 * Added smooth scroll back to top
 
 = 1.0 =
-Original release - July 20th, 2013.
+Original release - July 20th, 2013. 
 
 == Demo Page ==
 <p> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!</p>
