@@ -18,8 +18,7 @@ This plugin is great for developers who use icons on multiple sites and want to 
 
 **Future Development Planned**
 
-*Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate
-and review it, as this will only make future iterations of it better.*
+*Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate and review it, as this will only make future iterations of it better.*
 
 **Demo Page**
 <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Check out the Included Icons</a>
