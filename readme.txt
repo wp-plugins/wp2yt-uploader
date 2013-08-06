@@ -86,10 +86,9 @@ need light technical support you can reach me by email at <a href="mailto:evanmh
 or through the contact form on my website at <a href="http://www.Evan-Herman.com">www.Evan-Herman.com</a>.
 
 == Screenshots ==
-
 1. Main plugin screen. Pacman icon selected, generated code visible.
 2. Some more icons included in this plugin.
-3. All included icons in the icon selection screen in the dashboard.
+3. All included icons on the icon selection screen in the dashboard.
 
 == Changelog ==
 = 1.1 =
