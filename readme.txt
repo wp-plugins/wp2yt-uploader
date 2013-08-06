@@ -27,6 +27,7 @@ webfonts on to a new server everytime. With this plugin its one click and you're
 these any where in your themes.
 
 **Features**
+
 * OVER 500 ICONS INCLUDED
 * Insert Icons Directly Into Posts
 * Pro Version in Development with Customization Features
