@@ -26,11 +26,10 @@ This plugin is also great for developers who use icons on multiple sites and wan
 webfonts on to a new server everytime. With this plugin its one click and you're ready to begin working. You can use
 these any where in your themes.
 
-**OVER 500 ICONS INCLUDED**
-
-**Insert Icons Directly Into Posts**
-
-**Pro Version in Development with Customization Features**
+**Features**
+* OVER 500 ICONS INCLUDED
+* Insert Icons Directly Into Posts
+* Pro Version in Development with Customization Features
 
 **Usage**
 To include an icon on to any page of your site, simply click on the icon that you want to use and copy the provided code.
