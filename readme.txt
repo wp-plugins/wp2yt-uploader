@@ -35,16 +35,12 @@ these any where in your themes.
 *Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate
 and review it, as this will only make future iterations of it better.*
 
-*Special Thanks Goes To:*
-
-<p><a href="http://icomoon.io/">Icomoon</a> for an amazing base set of free icon's for use, many in this plugin.</p>
-<p><a href="http://www.alessioatzeni.com/">Alessio Atzeni</a> for the inclusion of a few 'Metoicons' icons in this plugin.</p>
-
-<a href="http://somerandomdude.com/">PJ Onori</a> for the inclusion of a few 'Iconic' icons in this plugin.
-
-and of course
-
-<a href="http://ma.tt/">Matt Mullenweg</a> for everything he does for the WordPress community. Without him none of this would be possible.
+**Special Thanks Goes To:**
+* [IcoMoon](http://www.icomoon.io) for an amazing base set of free icon's for use, many in this plugin.
+* [Alessio Atzeni](http://www.alessioatzeni.com/) for the inclusion of a few 'Metoicons' icons in this plugin.
+* [PJ Onori](http://somerandomdude.com) for the inclusion of a few 'Iconic' icons in this plugin.
+<p>and of course</p>
+* [Matt Mullenweg](http://www.ma.tt/) for everything he does for the WordPress community. Without him none of this would be possible.
 
 == Installation ==
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
