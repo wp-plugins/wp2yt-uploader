@@ -32,6 +32,31 @@ these any where in your themes.
 
 **Pro Version in Development with Customization Features**
 
+**Usage**
+To include an icon on to any page of your site, simply click on the icon that you want to use and copy the provided code.
+The icon code will look like the following:
+`<div data-icon="&#xe016;"></div>`
+
+It is also extremely simple to change the size of the icon . To do so, just add an inline font-size property to the div that is holding yoru icon.
+*For example:*
+`<div data-icon="&#xe016;" style="font-size:3em;"></div>`
+Will increase the icon size to 3em. You may also specify 'px' or '%' as the measurement.
+
+You may also change the color of the icon, for when you need to stick to a color scheme.
+*For example:*
+`<div data-icon="&#xe016;" style="color:#007ab7"></div>`
+Will change the icon color to blue.
+
+Another great feature is the ability to add CSS3 animation, such as color fade on hover. This is acheived by first adding an ID or class to the icon and utilizing the CSS3 pseudo classes.
+*For example:*
+CSS3 Code
+`#pac-man-icon:hover { color: #d9f200; -o-transition:.5s; -ms-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s; }`
+Icon Code
+`<div data-icon="&#xe016;" id="pac-man-icon"></div>`
+Will create a PacMan Icon, give it the ID of pac-man-icon, and assign the :hover pseudo class to the icon.
+When a user hovers over the icon, the icon will then fade colors to an appropriate PacMan yellow over .5 seconds.
+
+
 *Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate
 and review it, as this will only make future iterations of it better.*
 
