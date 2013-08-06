@@ -38,9 +38,7 @@ and review it, as this will only make future iterations of it better.*
 **Special Thanks Goes To:**
 
 * [IcoMoon](http://www.icomoon.io) for an amazing base set of free icon's for use, many in this plugin.
-
 * [Alessio Atzeni](http://www.alessioatzeni.com/) for the inclusion of a few 'Metoicons' icons in this plugin.
-
 * [PJ Onori](http://somerandomdude.com) for the inclusion of a few 'Iconic' icons in this plugin.
 
 <p>and of course</p>
