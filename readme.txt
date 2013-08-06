@@ -47,14 +47,21 @@ You may also change the color of the icon, for when you need to stick to a color
 Will change the icon color to blue.
 
 Another great feature is the ability to add CSS3 animation, such as color fade on hover. This is acheived by first adding an ID or class to the icon and utilizing the CSS3 pseudo classes.
+You can add the style directly before the icon, or you can simply add it to your existing CSS3 Stylesheet.
 *For example:*
 CSS3 Code
-`#pac-man-icon:hover { color: #d9f200; -o-transition:.5s; -ms-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s; }`
+`<style>#pac-man-icon:hover { color: #d9f200; -o-transition:.5s; -ms-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s; }</style>`
 Icon Code
 `<div data-icon="&#xe016;" id="pac-man-icon"></div>`
 Will create a PacMan Icon, give it the ID of pac-man-icon, and assign the :hover pseudo class to the icon.
 When a user hovers over the icon, the icon will then fade colors to an appropriate PacMan yellow over .5 seconds.
 
+These icons can also be used inside of buttons, dropdowns, menu items, unordered lists, category icons. The use is endless.
+For my final example I wanted to show how the icons can be used inside of a button.
+*For example:*
+`<button class="button-secondary"><div data-icon="&#xe016;" id="pac-man-icon"> This is my PacMan Button</div></button>`
+This will create a very nice looking button with your Icon to the left hand side of the button with the text' This is my PacMan Button'.
+*note: button-secondary is a class to assign to buttons on the admin dashboard of your site, it will not look great on the front end.*
 
 *Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate
 and review it, as this will only make future iterations of it better.*
@@ -65,7 +72,7 @@ and review it, as this will only make future iterations of it better.*
 * [Alessio Atzeni](http://www.alessioatzeni.com/) for the inclusion of a few 'Metoicons' icons in this plugin.
 * [PJ Onori](http://somerandomdude.com) for the inclusion of a few 'Iconic' icons in this plugin.
 
-<p>and of course</p>
+**and of course**
 
 * [Matt Mullenweg](http://www.ma.tt/) for everything he does for the WordPress community. Without him none of this would be possible.
 
