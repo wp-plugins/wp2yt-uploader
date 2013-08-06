@@ -36,7 +36,7 @@ To include an icon on to any page of your site, simply click on the icon that yo
 The icon code will look like the following:
 `<div data-icon="&#xe016;"></div>`
 
-It is also extremely simple to change the size of the icon . To do so, just add an inline font-size property to the div that is holding yoru icon.
+It is also extremely simple to change the size of the icon . To do so, just add an inline font-size property to the div that is holding your icon.
 *For example:*
 `<div data-icon="&#xe016;" style="font-size:3em;"></div>`
 Will increase the icon size to 3em. You may also specify 'px' or '%' as the measurement.
