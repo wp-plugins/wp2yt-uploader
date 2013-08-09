@@ -1,20 +1,20 @@
 === WordPress Icons - SVG ===
 Contributors: eherman24
 Donate link: http://evan-herman.com/
-Tags: wordpress, icons, evan, herman, icon, set, svg, wp
+Tags: wordpress, icons, evan, herman, icon, set, svg, wp, icomoon, ico, moon, wp, zoom, wp-zoom, wpzoom, broccolidry, metoicons, iconic, plugin, responsive, bootstrap, font, awesome, font awesome, twitter, glyphicons, glyph, web, font, webfont
 Requires at least: 3.0.1
 Tested up to: 3.6
 Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin will install 500+ SVG webfont icons for use on your site. Users can use the provided code in posts, themes and templates. 
+This plugin will install 500+ SVG glyph icons for use on your site. Users can use the provided code in posts, themes and templates. 
 
 == Description ==
 **Demo Page**
 <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Check out the Included Icons</a>
 
-I originally created this plugin for my own personal use on client projects. After witnessing the power of this plugin firsthand, I wanted 
+I originally created this plugin for my own personal use on client projects. After witnessing the power of this plugin first hand, I wanted 
 to give a little something back to the community who have helped me through the years. The 'WordPress SVG Icon Set' is extremely
 easy for any one to use. Two clicks of the mouse and you have an icon ready to be placed on to your site. 
 
@@ -23,7 +23,7 @@ great feature of this plugin is the ability to use the same icons across all dev
 ready devices. By setting a max-width on the icon, it then becomes responsive.
 
 This plugin is also great for developers who use icons on multiple sites and want to avoid the hassle of re-installing
-webfonts on to a new server everytime. With this plugin its one click and you're ready to begin working. You can use
+web fonts on to a new server every time. With this plugin its one click and you're ready to begin working. You can use
 these any where in your themes.
 
 **Features**
@@ -94,7 +94,7 @@ as large as you want with out any loss in quality.
 
 = Can you change the color of the icons? =
 
-Yes, by specificying an inline color property to the div. 
+Yes, by specifying an in-line color property to the div. 
 
 = Can you add animations to the icons? =
 
