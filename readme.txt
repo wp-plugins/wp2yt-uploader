@@ -87,6 +87,10 @@ and review it, as this will only make future iterations of it better.*
 
 == Frequently Asked Questions ==
 
+= When I include the provided code in a post, all that appears is the code. No icon appears. Why? =
+
+Make sure that you are entering the provided code in the 'text' section of the post editor. If you are putting the code into the 'visual' editor, it will not work.
+
 = Will these plugins loose quality as they scale up? =
 
 No. These icons are not .png or .jpg format. They are .svg (scalable vector graphics), which means you can scale them
