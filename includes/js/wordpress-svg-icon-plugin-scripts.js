@@ -10,16 +10,12 @@ jQuery(document).ready(function(){
 	
 	function buttonClick() {		
 		var glyphUnicode =  jQuery('input[type=text].glyph_unicode', this).val();
-				jQuery('.glyph').removeClass('selected');
-
-				jQuery(this).addClass('selected');
-
+				
 				jQuery('.fs1').css('color','#292929');
 				jQuery('input[type=text].copy_paste_input').val('<span data-icon="'+ glyphUnicode + '"></span>');
-				jQuery('input[type=text].glyph_unicode').css('background','#eee');
-				jQuery('input[type=text].glyph_unicode', this).css('background','#FF8000', 'font-color', '#000');
+				jQuery('input[type=text].glyph_unicode').css('background-color','#eee');
+				jQuery('input[type=text].glyph_unicode', this).css('background-color','#FF8000', 'font-color', '#000');
 				jQuery('.fs1', this).css('color','#FF8000');
-				
 				jQuery('.wp-svg-icon-preview').html('<div class="wp-svg-iconset1-preview" data-icon="'+ glyphUnicode + '"></div>');
 				jQuery('html, body').animate({ scrollTop: 0 }, 'slow');
 			};	

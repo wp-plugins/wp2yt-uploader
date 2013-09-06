@@ -21,9 +21,6 @@
 	-webkit-font-smoothing: antialiased;
 }
 
-.glyph:hover { background: #D6D6D6; }
-.selected { background: #d6d6d6; }
-
 /* Use the following CSS code if you want to have a class per icon */
 /*
 Instead of a list of all class selectors,

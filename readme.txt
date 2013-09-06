@@ -1,20 +1,20 @@
 === WordPress Icons - SVG ===
 Contributors: eherman24
 Donate link: http://evan-herman.com/
-Tags: wordpress, icons, evan, herman, icon, set, svg, wp
+Tags: wordpress, icons, evan, herman, icon, set, svg, wp, icomoon, ico, moon, wp, zoom, wp-zoom, wpzoom, broccolidry, metoicons, iconic, plugin, responsive, bootstrap, font, awesome, font awesome, twitter, glyphicons, glyph, web, font, webfont
 Requires at least: 3.0.1
 Tested up to: 3.6
 Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin will install 500+ SVG webfont icons for use on your site. Users can use the provided code in posts, themes and templates. 
+This plugin will install 500+ SVG glyph icons for use on your site. Users can use the provided code in posts, themes and templates. 
 
 == Description ==
 **Demo Page**
 <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Check out the Included Icons</a>
 
-I originally created this plugin for my own personal use on client projects. After witnessing the power of this plugin firsthand, I wanted 
+I originally created this plugin for my own personal use on client projects. After witnessing the power of this plugin first hand, I wanted 
 to give a little something back to the community who have helped me through the years. The 'WordPress SVG Icon Set' is extremely
 easy for any one to use. Two clicks of the mouse and you have an icon ready to be placed on to your site. 
 
@@ -23,17 +23,59 @@ great feature of this plugin is the ability to use the same icons across all dev
 ready devices. By setting a max-width on the icon, it then becomes responsive.
 
 This plugin is also great for developers who use icons on multiple sites and want to avoid the hassle of re-installing
-webfonts on to a new server everytime. With this plugin its one click and you're ready to begin working. You can use
+web fonts on to a new server every time. With this plugin its one click and you're ready to begin working. You can use
 these any where in your themes.
 
-**OVER 500 ICONS INCLUDED**
+**Features**
 
-**Insert Icons Directly Into Posts**
+* OVER 500 ICONS INCLUDED
+* Insert Icons Directly Into Posts
+* Pro Version in Development with Customization Features
 
-**Pro Version in Development with Customization Features**
+**Usage**
+To include an icon on to any page of your site, simply click on the icon that you want to use and copy the provided code.
+The icon code will look like the following:
+`<div data-icon="&#xe016;"></div>`
+
+It is also extremely simple to change the size of the icon . To do so, just add an inline font-size property to the div that is holding your icon.
+*For example:*
+`<div data-icon="&#xe016;" style="font-size:3em;"></div>`
+Will increase the icon size to 3em. You may also specify 'px' or '%' as the measurement.
+
+You may also change the color of the icon, for when you need to stick to a color scheme.
+*For example:*
+`<div data-icon="&#xe016;" style="color:#007ab7"></div>`
+Will change the icon color to blue.
+
+Another great feature is the ability to add CSS3 animation, such as color fade on hover. This is acheived by first adding an ID or class to the icon and utilizing the CSS3 pseudo classes.
+You can add the style directly before the icon, or you can simply add it to your existing CSS3 Stylesheet.
+*For example:*
+CSS3 Code
+`<style>#pac-man-icon:hover { color: #d9f200; -o-transition:.5s; -ms-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s; }</style>`
+Icon Code
+`<div data-icon="&#xe016;" id="pac-man-icon"></div>`
+Will create a PacMan Icon, give it the ID of pac-man-icon, and assign the :hover pseudo class to the icon.
+When a user hovers over the icon, the icon will then fade colors to an appropriate PacMan yellow over .5 seconds.
+
+These icons can also be used inside of buttons, dropdowns, menu items, unordered lists, category icons. The use is endless.
+For my final example I wanted to show how the icons can be used inside of a button.
+*For example:*
+`<button class="button-secondary"><div data-icon="&#xe016;" id="pac-man-icon"> This is my PacMan Button</div></button>`
+This will create a very nice looking button with your Icon to the left hand side of the button with the text' This is my PacMan Button'.
+*note: button-secondary is a class to assign to buttons on the admin dashboard of your site, it will not look great on the front end.*
 
 *Developing plugins is long and tedious work. If you benefit or enjoy this plugin please take the time to rate
 and review it, as this will only make future iterations of it better.*
+
+**Special Thanks Goes To:**
+
+* [IcoMoon](http://www.icomoon.io) for an amazing base set of free icon's for use, many in this plugin.
+* [Alessio Atzeni](http://www.alessioatzeni.com/) for the inclusion of a few 'Metoicons' icons in this plugin.
+* [PJ Onori](http://somerandomdude.com) for the inclusion of a few 'Iconic' icons in this plugin.
+
+**and of course**
+
+* [Matt Mullenweg](http://www.ma.tt/) for everything he does for the WordPress community. Without him none of this would be possible.
 
 == Installation ==
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
@@ -45,6 +87,10 @@ and review it, as this will only make future iterations of it better.*
 
 == Frequently Asked Questions ==
 
+= When I include the provided code in a post, all that appears is the code. No icon appears. Why? =
+
+Make sure that you are entering the provided code in the 'text' section of the post editor. If you are putting the code into the 'visual' editor, it will not work.
+
 = Will these plugins loose quality as they scale up? =
 
 No. These icons are not .png or .jpg format. They are .svg (scalable vector graphics), which means you can scale them
@@ -52,7 +98,7 @@ as large as you want with out any loss in quality.
 
 = Can you change the color of the icons? =
 
-Yes, by specificying an inline color property to the div. 
+Yes, by specifying an in-line color property to the div. 
 
 = Can you add animations to the icons? =
 
@@ -80,15 +126,11 @@ or through the contact form on my website at <a href="http://www.Evan-Herman.com
 
 == Screenshots ==
 
-1. Main plugin screen. Selected icon, preview and provided code can be seen.
-2. Some more icons.
-3. Main plugin screen with a different icon selected.
-4. Social networking icons, mail icons etc.
+1. Main plugin screen. Pacman icon selected, generated code visible.
+2. Some more icons included in this plugin.
+3. All included icons in the icon selection screen in the dashboard.
 
 == Changelog ==
-= 1.2 =
-* Replaced icon container holder from a <div> to a <span> - fixes line breaks when inserting icons into content
-
 = 1.1 =
 * Made it easier to select icons by making the entire div selectable
 * Added icon highlighting after selection
@@ -99,6 +141,9 @@ or through the contact form on my website at <a href="http://www.Evan-Herman.com
 * Original Release
 
 == Upgrade Notice ==
+= 1.2 =
+* Replaced icon container holder from a <div> to a <span> - fixes line breaks when inserting icons into content
+
 = 1.1 =
 August 2nd, 2013
 * Made it easier to select icons by making the entire div selectable
