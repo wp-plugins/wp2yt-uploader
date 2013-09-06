@@ -86,6 +86,9 @@ or through the contact form on my website at <a href="http://www.Evan-Herman.com
 4. Social networking icons, mail icons etc.
 
 == Changelog ==
+= 1.2 =
+* Replaced icon container holder from a <div> to a <span> - fixes line breaks when inserting icons into content
+
 = 1.1 =
 * Made it easier to select icons by making the entire div selectable
 * Added icon highlighting after selection
