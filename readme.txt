@@ -30,6 +30,8 @@ these any where in your themes.
 
 * OVER 500 ICONS INCLUDED
 * Insert Icons Directly Into Posts
+* Expansion section - updated with new icons frequently
+* Inclusion of user requested icons (with donation)
 * Pro Version in Development - plans to release as unpaid
 
 **Usage**
@@ -78,12 +80,12 @@ and review it, as this will only make future iterations of it better.*
 * [Matt Mullenweg](http://www.ma.tt/) for everything he does for the WordPress community. Without him none of this would be possible.
 
 == Installation ==
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
+1. Upload `wordpress-svg-icons-plugin.zip` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to the 'WP SVG Icon' plugin page in the dashboard
 4. Click on which icon you would like to use
 5. A preview of the icon will then appear in the preview box at the top. Copy the generated code out of the 'example' box.
-6. You may now paste the copied code anywhere you want the icon to appear. (even in posts or anywhere in your themes)
+6. You may now paste the copied code anywhere you want the icon to appear. (even in posts or anywhere in your templates)
 
 == Frequently Asked Questions ==
 
@@ -91,7 +93,7 @@ and review it, as this will only make future iterations of it better.*
 
 Make sure that you are entering the provided code in the 'text' section of the post editor. If you are putting the code into the 'visual' editor, it will not work.
 
-= Will these plugins loose quality as they scale up? =
+= Will these icons loose quality as they scale up? =
 
 No. These icons are not .png or .jpg format. They are .svg (scalable vector graphics), which means you can scale them
 as large as you want with out any loss in quality.
@@ -131,6 +133,7 @@ or through the contact form on my website at <a href="http://www.Evan-Herman.com
 1. Main plugin screen. Pacman icon selected, generated code visible.
 2. Some more icons included in this plugin.
 3. All included icons in the icon selection screen in the dashboard.
+4. The new expansion section, with the new linked in rounded icon
 
 == Changelog ==
 = 1.3 =
