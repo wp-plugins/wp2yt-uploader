@@ -4,7 +4,7 @@ Donate link: http://evan-herman.com/
 Tags: wordpress, icons, evan, herman, icon, set, svg, wp, icomoon, ico, moon, wp, zoom, wp-zoom, wpzoom, broccolidry, metoicons, iconic, plugin, responsive, bootstrap, font, awesome, font awesome, twitter, glyphicons, glyph, web, font, webfont
 Requires at least: 3.0.1
 Tested up to: 3.6
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +30,7 @@ these any where in your themes.
 
 * OVER 500 ICONS INCLUDED
 * Insert Icons Directly Into Posts
-* Pro Version in Development with Customization Features
+* Pro Version in Development - plans to release as unpaid
 
 **Usage**
 To include an icon on to any page of your site, simply click on the icon that you want to use and copy the provided code.
@@ -118,6 +118,8 @@ It's as easy as copy and paste.
 
 If you buy the pro version you will also receive support for one year, for those times you need to make something out of the ordinary happen.
 
+*Note: The pro version is in development and is planned to be released as unpaid*
+
 = Have a question, idea or found a bug? =
 
 If you have found any problems, have an idea for a future release, found a bug you would like me to correct or 
@@ -131,17 +133,34 @@ or through the contact form on my website at <a href="http://www.Evan-Herman.com
 3. All included icons in the icon selection screen in the dashboard.
 
 == Changelog ==
+= 1.3 =
+October 19th, 2013
+* Added a new expansion section
+* Added 1 new rounded linked in icon
+
+= 1.2 =
+September 20th, 2013
+* Replaced icon container holder from a <div> to a <span> - fixes line breaks when inserting icons into content
+
 = 1.1 =
+August 2nd, 2013
 * Made it easier to select icons by making the entire div selectable
 * Added icon highlighting after selection
 * Added smooth scroll back to top
 * Placed scripts in external file
 
 = 1.0 =
+July 20th, 2013
 * Original Release
 
 == Upgrade Notice ==
+= 1.3 =
+October 19th, 2013
+* Added a new expansion section
+* Added 1 new rounded linked in icon
+
 = 1.2 =
+September 20th, 2013
 * Replaced icon container holder from a <div> to a <span> - fixes line breaks when inserting icons into content
 
 = 1.1 =
@@ -151,7 +170,8 @@ August 2nd, 2013
 * Added smooth scroll back to top
 
 = 1.0 =
-Original release - July 20th, 2013. 
+July 20th, 2013
+* Original release 
 
 == Demo Page ==
 <p> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!</p>
