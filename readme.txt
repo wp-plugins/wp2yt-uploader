@@ -4,7 +4,7 @@ Donate link: http://evan-herman.com/
 Tags: wordpress, icons, evan, herman, icon, set, svg, wp, icomoon, ico, moon, wp, zoom, wp-zoom, wpzoom, broccolidry, metoicons, iconic, plugin, responsive, bootstrap, font, awesome, font awesome, twitter, glyphicons, glyph, web, font, webfont
 Requires at least: 3.0.1
 Tested up to: 3.7
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ This plugin will install 500+ SVG glyph icons for use on your site. Users can us
 
 == Description ==
 **Demo Page**
-<a href="http://evan-herman.com/wp-svg-icon-set-1-example/">Check out the Included Icons</a>
+<a href="http://evan-herman.com/wp-svg-icons/">Check Out The Plugin Demo Page</a>
 
 I originally created this plugin for my own personal use on client projects. After witnessing the power of this plugin first hand, I wanted 
 to give a little something back to the community who have helped me through the years. The 'WordPress SVG Icon Set' is extremely
@@ -33,6 +33,8 @@ these any where in your themes.
 * Expansion section - updated with new icons frequently
 * Inclusion of user requested icons (with donation)
 * Pro Version in Development - plans to release as unpaid
+* Pre-defined classes for easy icon styling
+* Demo/Example page with sample code and Icon Playground
 
 **Usage**
 To include an icon on to any page of your site, simply click on the icon that you want to use and copy the provided code.
@@ -143,6 +145,10 @@ I will get the icons included in the plugin within 24 hours (usually faster).
 4. The new expansion section, with the new linked in rounded icon
 
 == Changelog ==
+= 1.3.2 =
+* Added pre-defined classes for easy icon styling - October 29th, 2013
+* Check <a href="http://www.evan-herman.com/wp-svg-icons/"> the demo page </a> for more information.
+
 = 1.3.1 =
 * Fixed inconsistency with new rounded Linked in icon - October 23rd, 2013
 
@@ -163,6 +169,10 @@ I will get the icons included in the plugin within 24 hours (usually faster).
 * Original Release - July 20th, 2013
 
 == Upgrade Notice ==
+= 1.3.2 =
+* Added pre-defined classes for easy icon styling - October 29th, 2013
+* Check <a href="http://www.evan-herman.com/wp-svg-icons/"> the demo page </a> for more information.
+
 = 1.3.1 =
 * Fixed inconsistency with new rounded Linked in icon - October 23rd, 2013
 
@@ -182,4 +192,4 @@ I will get the icons included in the plugin within 24 hours (usually faster).
 * Original release - July 20th, 2013
 
 == Demo Page ==
-<p> Check out the <a href="http://evan-herman.com/wp-svg-icon-set-1-example/">demo page</a> before downloading. You can see all the icons that come with this plugin, and more on how to use them!</p>
+<p> Check out the <a href="http://evan-herman.com/wp-svg-icons/">demo page</a> for icon examples, the icon playground and code samples before downloading.</p>
