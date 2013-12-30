@@ -7,9 +7,8 @@ Tested up to: 3.8
 Stable tag: 1.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
-Upload content to your YouTube account and embed your recent uploads without having to leave your WordPress dashboard. Easily browse specified YouTube accounts and embed there content as well!
-
+
+Upload content to your YouTube account and embed your recent uploads without having to leave your WordPress dashboard.
 == Description ==
 
 ** Plugin Best Used With Modern Browsers **
