@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== WordPress to YouTube Uploader ===
 Contributors: eherman24
 Donate link: https://www.paypal.com/us/cgi-bin/webscr?cmd=_flow&SESSION=PVEZ8Otldy9xzgl1eydNbg8BBGS-kOugKbO6s0FjF0nfyXEylPkTpRwoeS0&dispatch=5885d80a13c0db1f8e263663d3faee8def8934b92a630e40b7fef61ab7e9fe63
 Tags: youtube, upload, uploader, to, wordpress, plugin, responsive, embed, embed, fluidvid.js, fluidvid, flexible, flex, fluid, you, tube, you tube, browser, browse, google, video, music, content, songs, dynamic, url, media, social, social network, social media, social plugin, comments, shortcode, youtube api, YouTube API, YouTube URL, Videos, video player, player, movie player, youtube player  
