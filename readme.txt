@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Upload content to your YouTube account and embed your recent uploads without having to leave your WordPress dashboard.
 == Description ==
 
-** Plugin Best Used With Modern Browsers **
+**Plugin Works Best With Modern Browsers**
 
 Plugin Site: <a href="http://www.evan-herman.com/wordpress-to-youtube-uploader/" target="_blank">WordPress To YouTube Uploader Site</a>
 Plugin Documentation: <a href="http://www.evan-herman.com/wp2yt-documentation/" target="_blank">WordPress To YouTube Uploader Documentation</a>
