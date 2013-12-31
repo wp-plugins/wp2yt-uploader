@@ -306,8 +306,8 @@ function wp2yt_menu_validate() {
 			// if not valid or not set, redirect to get access token => create cookie => store access key in cookie => delete video with new access token
 			
 			// get UniqueID of selected video
-			var thisUniqueID = jQuery(this).parents('#videos').find('input[name="uniqueVideoID"]').val();
-			var thisDeleteVideo = jQuery(this).parents('#videos');		
+			var thisUniqueID = jQuery(this).parents('.videos').find('input[name="uniqueVideoID"]').val();
+			var thisDeleteVideo = jQuery(this).parents('.videos');		
 				
 			// declare variables
 			<?php $googleAuthKey = get_option('stv_oauth2_text'); ?>
