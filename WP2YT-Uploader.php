@@ -4,7 +4,7 @@ Plugin Name: WP2YT Uploader
 Plugin URI: www.Evan-Herman.com/wp-plugins/wp2yt-uploaderPlugin
 Description: Upload videos right to your YouTube account, and insert them in to posts without having to leave your blog!
 Author: <a href="http://www.evan-herman.com">Evan Herman</a>
-Version: 1.0
+Version: 1.1
 
 	Copyright 2013  Evan Herman (email : Evan.M.Herman@gmail.com)
     This program is free software; you can redistribute it and/or modify

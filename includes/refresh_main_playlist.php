@@ -41,7 +41,7 @@
 			
 			<?php if($nVideo == '0') : ?>
 				<div class="no_videos_error" style="width:714px; padding-bottom:15px;">
-					<h3 style="color:red;"><img alt='' style="margin-right:10px; margin-bottom:0px; border:none; height:14px;" src="<?php echo plugins_url( '/WP2YT-Uploader/includes/images/red-x.png' );?>"> OH NO! <img alt='' style="margin-left:10px; margin-bottom:0px; border:none; height:14px;" src="<?php echo plugins_url( '/WP2YT-Uploader/includes/images/red-x.png' );?>"></h3>
+					<h3 style="color:red;"><img alt='' style="margin-right:10px; margin-bottom:0px; border:none; height:14px;" src="<?php echo plugins_url( '/wp2yt-uploader/includes/images/red-x.png' );?>"> OH NO! <img alt='' style="margin-left:10px; margin-bottom:0px; border:none; height:14px;" src="<?php echo plugins_url( '/wp2yt-uploader/includes/images/red-x.png' );?>"></h3>
 						<p><i>It appears that there is currently no content on <?php echo '<b>'.$account.'</b>'; ?>'s YouTube channel. If you are sure there are videos, double  
 						check that you have entered the account name properly. </i></p>
 						<br/>
