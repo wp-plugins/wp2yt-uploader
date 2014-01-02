@@ -31,24 +31,20 @@ After your video has been uploaded and processed by YouTube you are then able to
 You may add up to 4 alternate YouTube accounts to keep track of. After adding the accounts in the settings page their videos will appear inside of recent uploads, below your account content.
 This is extremely helpful if you consistently re-post or share your favorite videos on your blog. You can 'follow' users and keep updated with there most recent uploads, and embed their videos right into your posts.
 **Browse YouTube Analytics (beta)**
-
-Through the analytics section you can track important video analytic information for the 25 most recent uploaded videos. The analytics section comes with a fully interactive world map and tons of metric information displayed in tables. The analytics section provides users with such important information as:
-
-1. Upload new content directly to your YouTube account without ever having to leave your WordPress environment.
-1. Views Per Video
-1. Views Per Country
-1. Total Likes/Dis-Likes
-1. Total Comments
-1. Top Performing Videos
-1. Total Number Of Favorites
+Through the YouTube Plus analytics section you can track important video analytic information for the 25 most recent uploaded videos. The analytics section comes with a fully interactive world map and tons of metric information displayed in tables. The analytics section provides users with such important information as:
+1. Upload new content directly to your YouTube account without ever having to leave your WordPress environment.
+1. Views Per Video
+1. Views Per Country
+1. Total Likes/Dis-Likes
+1. Total Comments
+1. Top Performing Videos
+1. Total Number Of Favorites
 1. Mins. Watched
 
 **Insert New+Existing Content Directly Into Posts**
-
+
 *New Content*: After a user has uploaded a video to their YouTube account they then have the option of embeding that video directly in to a new post, or just leaving it there for later access. This saves the user a plethora of time by streamlining the process of uploading new content to YouTube and then embeding that content into a new post. Now everything can take place in one spot, the WordPress Dashboard.
-
-*Existing Content*: If you have previously uploaded content on your YouTube account, you can easily access the latest 25 videos where you can embed them into the post or preview them in a new tab. This is an extremely useful feature for users who maintain video heavy sites and need to grab past videos for inclusion in new posts.
-
+*Existing Content*: If you have previously uploaded content on your YouTube account, you can easily access the latest 25 videos where you can embed them into the post or preview them in a new tab. This is an extremely useful feature for users who maintain video heavy sites and need to grab past videos for inclusion in new posts.**SEO Friendly**YouTube Plus allows for SEO friendly video content. After embedding YouTube content anywhere in your theme, search engines will locate and index the video accordingly. By using YouTube plus all of your content gets the correct title, description, tags and thumbnail image that will be picked up by all of the popular search engines including Google.
 **Feautres**
 1. Upload new content directly to your YouTube account without ever having to leave your WordPress environment.
 1. Manage and maintain the content on your YouTube account. Easily deleting previously uploaded content is a breeze!
@@ -59,8 +55,7 @@ Through the analytics section you can track important video analytic information
 1. Very simple and intuitive interface 
 1. Access your YouTube analytics data (beta)
 1. Responsive YouTube videos
-1. Browse, Upload and Embed all from within the media modal when creating new posts or pages.
-**Future Release Features**1. Edit existing content (title, description etc.) from within YouTube Plus1. YouTube Search1. Lazy load of YouTube videos to increase page load speeds1. Front end YouTube uploader
+1. Browse, Upload and Embed all from within the media modal when creating new posts or pages.**Future Release Features**1. Edit existing content (title, description etc.) from within YouTube Plus1. YouTube Search1. Lazy load of YouTube videos to increase page load speeds1. Front end YouTube uploader
 Have an idea, question, concern or found a bug?<a href="http://www.evan-herman.com/contact"> Get In Contact With Me!</a>
 
 == Installation ==
@@ -90,7 +85,7 @@ Plugin Site: <a href="http://www.evan-herman.com/wordpress-to-youtube-uploader/"
 9. The YouTube Plus inside the media modal, see the ability to insert videos into posts.
 
 == Changelog ==
-
+= 1.1 =* Fixed file path issue with a some files
 = 1.0 =
 * Initial Release
 
