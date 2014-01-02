@@ -11,42 +11,25 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Upload content to your YouTube account and embed your recent uploads without having to leave your WordPress dashboard.
 == Description ==
 
-**Plugin Works Best With Modern Browsers**
+**Plugin Works Best In Modern Browsers**
 
-Plugin Site: <a href="http://www.evan-herman.com/wordpress-to-youtube-uploader/" target="_blank">WordPress To YouTube Uploader Site</a>
-Plugin Documentation: <a href="http://www.evan-herman.com/wp2yt-documentation/" target="_blank">WordPress To YouTube Uploader Documentation</a>
+Plugin Site: <a href="http://www.evan-herman.com/wordpress-to-youtube-uploader/" target="_blank">YouTube Plus Site</a>
+Plugin Documentation: <a href="http://www.evan-herman.com/wp2yt-documentation/" target="_blank">YouTube Plus Documentation</a>
 
 **Video Demo**
 http://www.youtube.com/watch?v=yyH7IoSyy2w
-
+YouTube Plus is the the most intricate YouTube plugin to date. Although other plugins allow you to embed YouTube videos, none allow you to upload to your YouTube or maintin your YouTube account directly to YouTube from the WordPress dashboard.
 If you maintain a WordPress site centered around video hosted on YouTube then this is the plugin for you. Never leave your WordPress blog to upload new content to YouTube or to embed videos into posts again. Everything you need to maintain your video centric site is here. Upload new content, delete old content, get other users videos and even track your YouTube analytics right from the WordPress dashboard.
+**Browse Your Account**-You can access and browse through recently uploaded content. From here users can preview videos, delete them or embed them into a new post.-Before embeding any video into a post, users can preview them to confirm that it is, infact, the video they intended to embed.-Now you can delete videos from your YouTube account right from the WordPress dashboard. No need to leave your blog to go remove videos from your account. Just find the video you want to remove...select 'Delete Video', and *poof* its gone.
 
-Featuring the most intricate YouTube Plugin to date. Although other plugins allow you to embed YouTube videos, none allow you to upload directly to YouTube from your WordPress dashboard.
-
-
-**Upload New Content**
-
+**Upload New Content**
 Upload new content to your personal YouTube account straight from your WordPress admin dashboard. Through the use of our three step content uploader users will have new content uploaded to their account in no time!
-
-After your video has been uploaded and processed by YouTube you are then able to embed any of those videos into a new post. The uploader comes with built in validation checking so your videos will be uploaded correctly everytime.
-
-
-**Browse Your Account**
-
--You can access and browse through recently uploaded content. From here users can preview videos, delete them or embed them into a new post.
-
--Before embeding any video into a post, users can preview them (in a new tab) to confirm that it is, infact, the video they intended to embed.
-
--Now you can delete videos from your YouTube account right from the WordPress dashboard. No need to leave your blog to go remove videos from your account. Just find the video you want to remove...select 'Delete Video', and *poof* its gone.
-
+
+After your video has been uploaded and processed by YouTube you are then able to embed any of those videos into a new post. The uploader comes with built in validation checking so your videos will be uploaded correctly everytime.**Delete Existing Content**With YouTube Plus you can delete existing content from your account through YouTube plus by simply clicking the delete button. We have built in validation so only you can delete content from your account. When clicking the delete button a useris granted a 1 hour access token which will allow them to remove content as they please for the hour. After the hour is up the user simply needs to refresh there access token (by requesting  a new one) and they can continue maintaining there YouTube with ease.
 
 **Keep Up With Your Favorite Users**
-
 You may add up to 4 alternate YouTube accounts to keep track of. After adding the accounts in the settings page their videos will appear inside of recent uploads, below your account content.
-
 This is extremely helpful if you consistently re-post or share your favorite videos on your blog. You can 'follow' users and keep updated with there most recent uploads, and embed their videos right into your posts.
-
-
 **Browse YouTube Analytics (beta)**
 
 Through the analytics section you can track important video analytic information for the 25 most recent uploaded videos. The analytics section comes with a fully interactive world map and tons of metric information displayed in tables. The analytics section provides users with such important information as:
@@ -67,18 +50,17 @@ Through the analytics section you can track important video analytic information
 *Existing Content*: If you have previously uploaded content on your YouTube account, you can easily access the latest 25 videos where you can embed them into the post or preview them in a new tab. This is an extremely useful feature for users who maintain video heavy sites and need to grab past videos for inclusion in new posts.
 
 **Feautres**
-
-1. Upload new content directly to your YouTube account without ever having to leave your WordPress environment.
-1. Manage and maintain the content on your YouTube account. Easily deleting previously uploaded content is a breeze!
-1. Easily embed new or previously uploaded videos right into posts or pages with a click of the mouse.
-1. Browse other specified YouTube accounts, and embed there content into your posts.
-1. View total views and likes per video. 
-1. email/password validation utility on settings page
-1. Very simple and intuitive interface 
-1. Access your YouTube analytics data (beta)
-1. Responsive YouTube videos
+1. Upload new content directly to your YouTube account without ever having to leave your WordPress environment.
+1. Manage and maintain the content on your YouTube account. Easily deleting previously uploaded content is a breeze!
+1. Easily embed new or previously uploaded videos right into posts or pages with a click of the mouse.
+1. Browse other specified YouTube accounts, and embed there content into your posts.
+1. View total views and likes per video. 
+1. email/password validation utility on settings page
+1. Very simple and intuitive interface 
+1. Access your YouTube analytics data (beta)
+1. Responsive YouTube videos
 1. Browse, Upload and Embed all from within the media modal when creating new posts or pages.
-
+**Future Release Features**1. Edit existing content (title, description etc.) from within YouTube Plus1. YouTube Search1. Lazy load of YouTube videos to increase page load speeds1. Front end YouTube uploader
 Have an idea, question, concern or found a bug?<a href="http://www.evan-herman.com/contact"> Get In Contact With Me!</a>
 
 == Installation ==
@@ -93,19 +75,19 @@ Have an idea, question, concern or found a bug?<a href="http://www.evan-herman.c
 
 If you have a question you can head over to the <a href="http://www.evan-herman.com/wp2yt-documentation/">documentation</a> page. If you can't find the answer there you can use the contact form at there to seek out further assistance.
 
-Plugin Site: <a href="http://www.evan-herman.com/wordpress-to-youtube-uploader/" target="_blank">WordPress To YouTube Uploader Site</a>
+Plugin Site: <a href="http://www.evan-herman.com/wordpress-to-youtube-uploader/" target="_blank">YouTube Plus Site</a>
 
 == Screenshots ==
 
 1. Browse your own personal account and easily preview or delete the video from this screen.
 2. Browse through other users content from the dashboard.
-3. Step #1 of the WordPress to YouTube uploader. Enter the title, description, keyword and category and move on to step #2.
-4. Step #2 of the WordPress to YouTube uploader. Specify which video you would like to upload with the file uploader.
-5. Step #3 of the WordPress to YouTube uploader displays a confirmation message with a link to your uploaded video.
-6. YouTube analytics inside of the the WordPress to YouTube uploader plugin.
-7. The WordPress to YouTube uploader plugin help page.
-8. The WordPress to YouTube uploader settings page.
-9. The WordPress to YouTube uploader inside the media modal, see the ability to insert videos into posts.
+3. Step #1 of the YouTube Plus. Enter the title, description, keyword and category and move on to step #2.
+4. Step #2 of the YouTube Plus. Specify which video you would like to upload with the file uploader.
+5. Step #3 of the YouTube Plus displays a confirmation message with a link to your uploaded video.
+6. YouTube analytics inside of the the YouTube Plus plugin.
+7. The YouTube Plus plugin help page.
+8. The YouTube Plus settings page.
+9. The YouTube Plus inside the media modal, see the ability to insert videos into posts.
 
 == Changelog ==
 
