@@ -29,7 +29,7 @@ these any where in your themes.
 **Basic Plugin Demo**
 http://www.youtube.com/watch?v=hXUJjQb82WY
 
-**Custom Font Pack Uploader Demo (coming soon()
+**Custom Font Pack Uploader Demo (coming soon)**
 http://www.youtube.com/watch?v=Nrkt5uXpmAU
 
 **Features**
