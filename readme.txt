@@ -26,13 +26,20 @@ This plugin is also great for developers who use icons on multiple sites and wan
 web fonts on to a new server every time. With this plugin its one click and you're ready to begin working. You can use
 these any where in your themes.
 
+**Basic Plugin Demo**
+http://www.youtube.com/watch?v=hXUJjQb82WY
+
+**Custom Font Pack Uploader Demo (coming soon()
+http://www.youtube.com/watch?v=Nrkt5uXpmAU
+
 **Features**
 
 * OVER 500 ICONS INCLUDED
+* Import your own custom svg icons (coming soon)
+* Download and import your own custom icon build from <a href="http://icomoon.io/app/#/select">IcoMoon</a> (coming soon)
 * Insert Icons Directly Into Posts
 * Expansion section - updated with new icons frequently
-* Inclusion of user requested icons (with donation)
-* Pro Version in Development - plans to release as unpaid
+* Pro Version still in Development - plans to release as unpaid
 * Pre-defined classes for easy icon styling
 * Demo/Example page with sample code and Icon Playground
 
