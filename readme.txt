@@ -163,7 +163,7 @@ I will get the icons included in the plugin within 24 hours (usually faster).
 1. Main plugin screen. Pacman icon selected, generated code visible.
 2. Some more icons included in this plugin.
 3. All included icons in the icon selection screen in the dashboard.
-4. The new expansion section, with the new linked in rounded icon
+4. The new expansion section, with the new linked in rounded icon5. New Custom Icon Pack importer page without a pack installed6. New Custom Icon Pack importer page with a Custom Icon Pack from icomoon installed
 
 == Changelog ==
 = 2.0 =* Added <a href="http://www.icomoon.io">Icomoon</a> icon pack importer * Fixed what dashboard pages styles/scripts get enqueued* Adjusted styles to maintain consistency - January 15th, 2014
