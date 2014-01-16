@@ -12,15 +12,15 @@ Users can now import custom icon packs! This plugin will also install 500+ SVG g
 
 == Description ==
 
-**Brand New Feature** **Icomoon Icon Importer**
+**Brand New Feature** **Icomoon Icon Importer**
 We've listened to your feature requests, and after many countless hours behind the keyboard developing, we're pleased to announce our newest addition to WP SVG Icons.
 
 Now, you're no longer limited to the icons that come pre-packaged with the plugin. Create your own custom icon combinations and start using them on your site in a matter of minutes.
 **How To:**
-1. Visit <a href="http://icomoon.io/app/#/select">IcoMoon</a> and begin selecting icons you want to use. 1. Import icomoon icons from the library
-1. select which icons you want to include in your pack1. Click 'Font' at the bottom of the browser window
-1. Click 'Preferences' and input a font-name and a customized prefix (must end in - for best results)
-1. Click 'Download'
+1. Visit <a href="http://icomoon.io/app/#/select">IcoMoon</a> and begin selecting icons you want to use. 1. Import icomoon icons from the library
+1. select which icons you want to include in your pack1. Click 'Font' at the bottom of the browser window
+1. Click 'Preferences' and input a font-name and a customized prefix (must end in - for best results)
+1. Click 'Download'
 1. Import the .zip right into the plugin and start using your fonts! No coding required!
 Keep the feature requests coming, I'm listening!!!
 
