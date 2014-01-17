@@ -166,26 +166,26 @@ I will get the icons included in the plugin within 24 hours (usually faster).
 4. The new expansion section, with the new linked in rounded icon5. New Custom Icon Pack importer page without a pack installed6. New Custom Icon Pack importer page with a Custom Icon Pack from icomoon installed
 
 == Changelog === 2.2 =* Remove $hook parameter that was conditionally loading styles on admin end - prevented users from using icons in the dashboard
-= 2.0 =* Added <a href="http://www.icomoon.io">Icomoon</a> icon pack importer * Fixed what dashboard pages styles/scripts get enqueued* Adjusted styles to maintain consistency - January 15th, 2014
+= 2.0 =* Added <a href="http://www.icomoon.io">Icomoon</a> icon pack importer * Fixed what dashboard pages styles/scripts get enqueued* Adjusted styles to maintain consistency - January 15th, 2014
 
 = 1.3.2 =
-* Added pre-defined classes for easy icon styling - October 29th, 2013
+* Added pre-defined classes for easy icon styling - October 29th, 2013
 * Check <a href="http://www.evan-herman.com/wp-svg-icons/"> the demo page </a> for more information.
 
 = 1.3.1 =
 * Fixed inconsistency with new rounded Linked in icon - October 23rd, 2013
 
 = 1.3 =
-* Added a new expansion section
+* Added a new expansion section
 * Added 1 new rounded Linked in icon - October 19th, 2013
 
 = 1.2 =
 * Replaced icon container holder from a `<div>` to a `<span>` - fixes line breaks when inserting icons into content - September 20th, 2013
 
 = 1.1 =
-* Made it easier to select icons by making the entire div selectable
-* Added icon highlighting after selection
-* Added smooth scroll back to top
+* Made it easier to select icons by making the entire div selectable
+* Added icon highlighting after selection
+* Added smooth scroll back to top
 * Placed scripts in external file - August 2nd, 2013
 
 = 1.0 =
@@ -193,31 +193,29 @@ I will get the icons included in the plugin within 24 hours (usually faster).
 
 == Upgrade Notice === 2.2 =* Remove $hook parameter that was conditionally loading styles on admin end - prevented users from using icons in the dashboard
 = 2.0 =
-* Added <a href="http://www.icomoon.io">Icomoon</a> icon pack importer 
-* Fixed what dashboard pages styles/scripts get enqueued
-* Adjusted styles to maintain consistency - January 15th, 2014
+* Added <a href="http://www.icomoon.io">Icomoon</a> icon pack importer 
+* Fixed what dashboard pages styles/scripts get enqueued
+* Adjusted styles to maintain consistency - January 15th, 2014
 
 = 1.3.2 =
-* Added pre-defined classes for easy icon styling - October 29th, 2013
-* Check <a href="http://www.evan-herman.com/wp-svg-icons/"> the demo page </a> for more information.
-
+* Added pre-defined classes for easy icon styling - October 29th, 2013
+* Check <a href="http://www.evan-herman.com/wp-svg-icons/"> the demo page </a> for more information.
 = 1.3.1 =
-* Fixed inconsistency with new rounded Linked in icon - October 23rd, 2013
-
+* Fixed inconsistency with new rounded Linked in icon - October 23rd, 2013
 = 1.3 =
-* Added a new expansion section
+* Added a new expansion section
 * Added 1 new rounded linked in icon - October 19th, 2013
-
+
 = 1.2 =
 * Replaced icon container holder from a <div> to a <span> - fixes line breaks when inserting icons into content - September 20th, 2013
-
+
 = 1.1 =
-* Made it easier to select icons by making the entire div selectable
-* Added icon highlighting after selection
+* Made it easier to select icons by making the entire div selectable
+* Added icon highlighting after selection
 * Added smooth scroll back to top - August 2nd, 2013
-
+
 = 1.0 =
 * Original release - July 20th, 2013
-
+
 == Demo Page ==
 <p> Check out the <a href="http://evan-herman.com/wp-svg-icons/">demo page</a> for icon examples, the icon playground and code samples before downloading.</p>
