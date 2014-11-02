@@ -40,7 +40,7 @@ if(!defined('YT4WP_AUTHOR'))						define('YT4WP_AUTHOR',				'Evan Herman');
 if(!defined('YT4WP_SITE'))							define('YT4WP_SITE',				site_url().'/');
 if(!defined('YT4WP_PREFIX'))						define('YT4WP_PREFIX',				'YT4WP_');
 if(!defined('YT4WP_PATH'))							define('YT4WP_PATH',				ABSPATH.'wp-content/plugins/wp2yt-uploader/');
-if(!defined('YT4WP_URL'))							define('YT4WP_URL',				plugins_url('youtube-for-wordpress/'));
+if(!defined('YT4WP_URL'))							define('YT4WP_URL',				plugins_url('wp2yt-uploader/'));
 if(!defined('YT4WP_URL_WP'))						define('YT4WP_URL_WP',				get_bloginfo('url'));
 if(!defined('YT4WP_URL_WP_ADM'))					define('YT4WP_URL_WP_ADM',			YT4WP_URL_WP.'/wp-admin/');
 /** Database Tables **/

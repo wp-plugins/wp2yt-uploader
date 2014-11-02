@@ -463,7 +463,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 							<ul>
 							   <li>
 								 <p>If you're not interested in purchasing an add-on or a support license, why not share and rate the plugin?</p>
-								 <span class="yt4wp-srs-button-container"><a class="button-secondary yt4wp-srs-button">Review</a><a class="button-secondary yt4wp-srs-button">Donate</a><a class="button-secondary yt4wp-srs-button">Follow</a><a class="button-secondary yt4wp-srs-button" href="http://www.twitter.com/yt4wp" target="_blank">Share</a></span>
+								 <span class="yt4wp-srs-button-container"><a href="https://wordpress.org/support/view/plugin-reviews/wp2yt-uploader" target="_blank" class="button-secondary yt4wp-srs-button">Review</a><a href="http://www.evan-herman.com/contact/?contact-reason=I%20want%20to%20make%20a%20donation%20for%20all%20your%20hard%20work" target="_blank" class="button-secondary yt4wp-srs-button">Donate</a><a href="https://twitter.com/yt4wp" target="_blank" class="button-secondary yt4wp-srs-button">Follow</a><a class="button-secondary yt4wp-srs-button" href="http://www.twitter.com/yt4wp" target="_blank">Share</a></span>
 							   </li>
 						  </ul>
 						</div>
