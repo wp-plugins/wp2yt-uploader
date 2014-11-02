@@ -62,6 +62,8 @@ Yes, you can sign up for the release newsletter on the <a href="http://www.youtu
 7. YouTube for WordPress Insert Video into Posts and Pages
 8. YouTube for WordPress Media Element Player (Embedded Video)
 9. YouTube for WordPress Widget video playback in fancybox
+10. YouTube for WordPress Uploader Step #1
+11. YouTube for WordPress Uploader mid-upload at 79%
 
 == Changelog ==
 
