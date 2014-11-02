@@ -503,7 +503,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 							</span>
 						</a>
 						<a href="http://www.YouTubeforWordPress.com" target="_blank" class="yt4wp_header_logo">
-							<img src="<?php echo plugins_url().'/youtube-for-wordpress/images/evan_herman_logo.png'; ?>" alt="YouTube for WordPress Site" width=80 style="margin-top:.75em;" title="YouTube for WordPress Site" />
+							<img src="<?php echo plugins_url().'/wp2yt-uploader/images/evan_herman_logo.png'; ?>" alt="YouTube for WordPress Site" width=80 style="margin-top:.75em;" title="YouTube for WordPress Site" />
 						</a>
 					</div>
 				<?php
