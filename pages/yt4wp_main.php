@@ -89,6 +89,11 @@ $screen_base = get_current_screen()->base;
 		} else {
 		// this is the modal
 		// on the add new post or page
+		
+		// create our edit video form
+		$this->generateEditVideoForm();
+		// create our edit playlist form
+		$this->generateEditPlaylistForm();
 	?>
 		<style>
 		#TB_window {

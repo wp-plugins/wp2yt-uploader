@@ -5263,8 +5263,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 					extract( shortcode_atts( array (
 						'playlist_id' => ''
 					), $atts ) );
-					
-					return '<div class="ytplus-video-container"><iframe src="//www.youtube.com/embed/videoseries?list=' . $playlist_id . '" allowfullscreen="" frameborder="0"></iframe></div>
+					 
+					return '<div class="ytplus-video-container"><iframe src="http://www.youtube.com/embed?listType=playlist&amp;list=' . $playlist_id . '" allowfullscreen="" frameborder="0"></iframe></div>
 					<!--YouTube-Plus-video-container--www.Evan-Herman.com-->';
 				}
 
