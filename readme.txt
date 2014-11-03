@@ -10,31 +10,67 @@ License: GPLv2 or later
 YouTube for WordPress is a complete YouTube solution for WordPress installations.
 
 == Description ==
-YouTube for WordPress is a complete YouTube solution for WordPress installations, allowing you to maintain any YouTube account directly from your WordPress dashboard. 
+
+[YouTube for WordPress Demo Site](http://www.youtubeforwordpress.com) // [YouTube for WordPress Documentation](http://www.youtubeforwordpress.com/support/documentation/) // 
+
+Introducing a brand new , fully redesigned YouTube browsing experience brought directly to your WordPress dashboard.
+
+YouTube for WordPress is the most valuable YouTube solution for WordPress installations, allowing you to maintain any YouTube account directly from your WordPress dashboard. 
 
 http://www.youtube.com/watch?v=5DxDbLxpykE
 
 **Plugin Works Best In Modern Browsers**
 
-YouTube for WordPress is built up on the latest version of the YouTube API (v3.0) enabling for some truly amazing features out of the box. Some features include (but are not limited to) uploading new content to your account, browsing your entire channel, searching YouTube for new videos/playlists/channels, keeping up with your subscriptions, insert single videos or entire playlists and so much more.
+YouTube for WordPress is built up on the latest version of the YouTube API (v3.0) enabling some truly amazing features out of the box. Some features include (but are not limited to) uploading new content to your account, browsing your entire channel, searching YouTube for new videos/playlists/channels, keeping up with your subscriptions, insert single videos or entire playlists and so much more.
 
 Anyone using YouTube as their video hosting solution should be using this plugin.  Check out the YouTube for WordPress demo site for examples, documentation, tutorials, support and premium add-ons.
 
-For more information regarding premium add-ons, please review the <a href="http://www.youtubeforwordpress.com/add-ons-overview/" target="_blank">Add Ons Overview</a> page.
+**Add-Ons**
+
+For more information regarding premium add-ons, please review the <a href="http://www.youtubeforwordpress.com/add-ons-overview/" target="_blank">Add Ons Overview</a> page. Some add-ons we have scheduled for release include:
+
+1. YouTube Embedded Player Customizer
+2. Front End User Uploads
+3. YouTube Analytics
+4. Post Creation/Mass Video Import
+5. Playlist Manager
+6. Automatic Account Monitoring
+7. Live Streaming
+
+<em>and more...</em>
+
+
+**Themes**
+
+Along with some premium add-ons, we have a few premium themes in the works as well that will be released down the road.
+
+
+**Support**
+
+YouTube for WordPress may be the most highly supported YouTube WordPress plugin to date. As changes are made to the Google/YouTube API this plugin will continue to grow, and extend it's functionality. Due to the overwhelming popularity of this plugin, support will be provided to support license holders first. All other support will be provided through the WordPress plugin repository support forums, located [here](https://wordpress.org/support/plugin/wp2yt-uploader). At the moment, only free support is provided. In the coming weeks, we will be transitioning over to a licensing and support ticket system.
 
 For a full list of features please visit the <a href="http://www.youtubeforwordpress.com/feature/upload-content/" target="_blank">Features</a> section of the YouTube for WordPress site.
 
 For support options, please visit the main YouTube for WordPress <a href="http://www.youtubeforwordpress.com/support/" target="_blank">support page</a>
 
+
+**Documentation and Examples**
+
+You can find the complete documentation up on the [YouTube for WordPress site](http://www.youtubeforwordpress.com/support/documentation/). You can also find a few [examples](http://www.youtubeforwordpress.com/examples/playlist-shortcode/) of some features you can start using right out of the box!
+
+<em>Note : the YouTube for WordPress documentation is a work in progress. as time progresses, the documentation , developer documentation and examples sections will grow ten fold with specific working examples.</em>
+
+
 <em>Please check back frequently for updates to the documentation, examples and add-ons section of the site. As time progresses, tutorials and more advanced examples will be added to the documentation.</em>
 
 
 == Installation ==
-1. Download the plugin .zip file
+1. Download the YouTube for WordPress plugin .zip file
 2. Log in to yourdomain.com/wp-admin
 3. Click Plugins -> Add New -> Upload
+4. Upload the wp2yt-uploader.zip file
 4. Activate the plugin
-5. Head over to the setup <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/" target="_blank">documentation</a> and follow the tutorial to get things setup properly.
+5. Head over to the setup <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/" target="_blank">documentation</a> and follow along with the tutorial to get things setup properly.
 
 == Frequently Asked Questions ==
 = Is there some sort of documentation for YouTube for WordPress? =
@@ -49,8 +85,14 @@ You'll need to purchase a support license to gain access to the support ticketin
 = Do you have somewhere where you post announcements, like a blog? =
 You can follow along with the announcements on the <a href="http://www.youtubeforwordpress.com/roadmap/" target="_blank">roadmap</a> page. Any future release announcements will be posted there.
 
-= Is there a newletter I can signup for, to receive updates about add-on releases and security notifications? =
+= Is there a newsletter I can sign up for, to receive updates about add-on releases and security notifications? =
 Yes, you can sign up for the release newsletter on the <a href="http://www.youtubeforwordpress.com/" target="_blank">YouTube for WordPress site</a>, located in the footer.
+
+= Do you provide a list of hooks and filter that I can take advantage of, to extend the plugin to suit my needs? =
+Yes, when building the plugin we took into account that the plugin may not suit <em>all</em> user needs out of the box. We have included a whole slew of hooks and filters for users to take advantage of. You can find a complete list of the hooks in the [YouTube for WordPress](http://www.youtubeforwordpress.com/support/documentation/) developer documentation section of the documentation page.
+
+== Developer Docs. ==
+Please view the developer documentation on the [YouTube for WordPress](http://www.youtubeforwordpress.com/support/documentation/developer-docs/customizing-embedded-player/) documentation page.
 
 == Screenshots ==
 1. YouTube for WordPress Settings Overview
