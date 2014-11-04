@@ -21,9 +21,36 @@ http://www.youtube.com/watch?v=5DxDbLxpykE
 
 **Plugin Works Best In Modern Browsers**
 
+**Features**
+1. Customizeable YouTube player to fit the look and feel of your site
+2. Upload new content directly to your account and assign them to a playlist
+3. Browse through your entire channel (uploads, playlists, likes, favorites, watch history)
+4. Insert any content directly from your account
+5. Search YouTube directly from your dashboard for videos, playlists or browse entire channels!
+6. Explore new channels and subscribe or unsubscribe directly from the plugin dashboard
+7. Easy to use shortcodes for everything!
+8. Translation ready
+9. Extremely extensible for custom functionality not built in
+10. The best support around
+11. Awesome documentation (and constantly growing)
+
 YouTube for WordPress is built up on the latest version of the YouTube API (v3.0) enabling some truly amazing features out of the box. Some features include (but are not limited to) uploading new content to your account, browsing your entire channel, searching YouTube for new videos/playlists/channels, keeping up with your subscriptions, insert single videos or entire playlists and so much more.
 
 Anyone using YouTube as their video hosting solution should be using this plugin.  Check out the YouTube for WordPress demo site for examples, documentation, tutorials, support and premium add-ons.
+
+**Easy to Use Shortcodes**
+
+YouTube for WordPress provides some extremely easy to use shortcodes. You can either manually enter shortcodes onto a page, or use the 'Insert to Post' to quickly and easily embed videos or playlists into a post  (and automatically generate the shortcode for you).
+
+Some shortcodes that come bundled with YouTube for WordPress 
+
+1. `[yt4wp-video video_id="123456"]` - single videos embed
+2. `[yt4wp-playlist playlist_id="123456"]` - playlist embed
+3. `[yt4wp-grid playlist_id="123456"]` - playlist grid layout
+4. `[yt4wp-grid channel_id="123456"]` - channel grid layout
+5. `[yt4wp-grid search_term="WordPress Tutorials"]` - search term grid layout
+
+<a href="http://www.youtubeforwordpress.com/support/documentation/plugin-docs/shortcodes/" target="_blank">View Documentation and Examples</a>
 
 **Add-Ons**
 
