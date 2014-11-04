@@ -22,6 +22,7 @@ http://www.youtube.com/watch?v=5DxDbLxpykE
 **Plugin Works Best In Modern Browsers**
 
 **Features**
+
 1. Customizeable YouTube player to fit the look and feel of your site
 2. Upload new content directly to your account and assign them to a playlist
 3. Browse through your entire channel (uploads, playlists, likes, favorites, watch history)
