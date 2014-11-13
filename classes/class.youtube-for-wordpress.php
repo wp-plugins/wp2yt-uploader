@@ -5383,11 +5383,9 @@ if( !class_exists( "YT4WPBase" ) ) {
 						delete_option( 'yt_pass' );
 						unregister_setting( 'use_yt_analytics_checkbox' );
 					}
-					// update the version of the plugin to 2.0
-					$this->optionVal['version'] = '2.0';
 					return true;
 				}
-
+			
 		 
 		/*******************************************************************************/
 		/**						Server Configuration Checks							**/ 
