@@ -4900,12 +4900,12 @@ if( !class_exists( "YT4WPBase" ) ) {
 				  if ( get_option( 'yt4wp_user_refresh_token' ) == '' ) {
 				  
 					 $context .= "<a href='#' onclick='return false;' title='Error : Invalid Refresh Token' href='#' class='button youtube-plus' disabled='disabled'>
-						<span class='dashicons dashicons-format-video' style='font-size:18px;line-height:1.5;padding-right:.25em;color:#888;'></span>YouTube for WordPress</a>";
+						<span class='dashicons dashicons-format-video' style='font-size:18px;line-height:1.5;padding-right:.25em;color:#888;'></span>YouTube for WP</a>";
 						
 				  } else {
 				  
 					 $context .= "<a href='#TB_inline?width=900&height=600&inlineId=youtube-plus-container' title='{$title}' href='#' class='button thickbox youtube-plus'>
-						<span class='dashicons dashicons-format-video' style='font-size:18px;line-height:1.5;padding-right:.25em;color:#888;'></span>YouTube for WordPress</a>";
+						<span class='dashicons dashicons-format-video' style='font-size:18px;line-height:1.5;padding-right:.25em;color:#888;'></span>YouTube for WP</a>";
 						
 				  }
 				  return $context;
