@@ -19,10 +19,10 @@ class yt_plus_upload_widget extends WP_Widget {
 			'yt_plus_upload_widget', 
 
 			// Widget name will appear in UI
-			__('YouTube Plus : User Upload Widget', 'yt-plus-pro'), 
+			__('YouTube Plus : User Upload Widget', 'yt-plus-translation-text-domain'), 
 
 			// Widget description
-			array( 'description' => __( 'Allow visitors to upload content from a simple sidebar widget.', 'yt-plus-pro' ), ) 
+			array( 'description' => __( 'Allow visitors to upload content from a simple sidebar widget.', 'yt-plus-translation-text-domain' ), ) 
 		);
 	}
 	
@@ -36,7 +36,7 @@ class yt_plus_upload_widget extends WP_Widget {
 		 function form($instance) {    					
 				 $YT4WPBase	= new YT4WPBase();
 				?>
-				<h3 style="width:100%;text-align:center;">Available In The Pro Version</h3>
+				<h3 style="width:100%;text-align:center;">Add-On Coming Soon</h3>
 				<p>
 					Allow visitors to upload videos directly to your YouTube account, where you can then review the video before publishing it.
 					You can limit video submissions to logged in users and easily build a user submitted playlist to display around your site easily.

@@ -4,7 +4,7 @@ Donate link: http://www.evan-herman.com/contact/?contact-reason=I%20want%20to%20
 Tags: YouTube, youtube, upload, uploader, to, wordpress, plugin, responsive, embed, embed, fluidvid.js, fluidvid, flexible, flex, fluid, you, tube, you tube, browser, browse, google, video, music, content, songs, dynamic, url, media, social, social network, social media, social plugin, comments, shortcode, youtube api, YouTube API, YouTube URL, Videos, video player, player, movie player, youtube player , upload, browse, subscriptions, unsubscribe, playlist, mediaelement, add-on, support 
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 
 YouTube for WordPress is a complete YouTube solution for WordPress installations.
@@ -40,6 +40,8 @@ http://www.youtube.com/watch?v=5DxDbLxpykE
 YouTube for WordPress is built up on the latest version of the YouTube API (v3.0) enabling some truly amazing features out of the box. Some features include (but are not limited to) uploading new content to your account, browsing your entire channel, searching YouTube for new videos/playlists/channels, keeping up with your subscriptions, insert single videos or entire playlists and so much more.
 
 Anyone using YouTube as their video hosting solution should be using this plugin.  Check out the YouTube for WordPress demo site for examples, documentation, tutorials, support and premium add-ons.
+
+***YouTube for WordPress requires a Google OAUTH and API Key - for help with obtaining your keys, please visit our <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/" target="_blank">support article</a>***
 
 **Easy to Use Shortcodes**
 
@@ -90,7 +92,6 @@ You can find the complete documentation up on the [YouTube for WordPress site](h
 
 <em>Note : the YouTube for WordPress documentation is a work in progress. as time progresses, the documentation , developer documentation and examples sections will grow ten fold with specific working examples.</em>
 
-
 <em>Please check back frequently for updates to the documentation, examples and add-ons section of the site. As time progresses, tutorials and more advanced examples will be added to the documentation.</em>
 
 
@@ -103,11 +104,14 @@ You can find the complete documentation up on the [YouTube for WordPress site](h
 5. Head over to the setup <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/" target="_blank">documentation</a> and follow along with the tutorial to get things setup properly.
 
 == Frequently Asked Questions ==
+= This seems very complicated, I really need help getting things set up. =
+If you need help getting things set up, we have a <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/" target="_blank">tutorial</a> set up on the site to walk you through the process of attaining an API key from Google. At first glance, it seems a bit overwhelming, but it you can get things set up and the plugin running in under 5 minutes. 
+
 = Is there some sort of documentation for YouTube for WordPress? =
 Yes, you can find the documentation on the demo site, located <a href="http://www.youtubeforwordpress.com/support/documentation/" target="_blank">here</a> 
 
 = What are the minimum requirements? =
-The YouTube for WordPress plugin requires a minimum of WordPress version 3.9+, MySQL 5+ and PHP 5.4+ in order to function properly. You will also need to have CURL enabled at the server level to communicate with the YouTube API.
+YouTube for WordPress requires a minimum of WordPress version 3.9+, MySQL 5+ and PHP 5.3+ in order to function properly. You will also need to have CURL enabled at the server level to communicate with the YouTube API.
 
 = I need help with something specific. How do I go about receiving support? =
 You'll need to purchase a support license to gain access to the support ticketing system. Once you have a support license, you can submit support requests and someone will get back to you in a short period of time. Otherwise you can open up a thread in the support forums here in the repository.
@@ -139,12 +143,19 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Changelog ==
 
+= 2.0.1 - November 13th, 2014 =
+* Update: Lowered PHP requirements to PHP 5.3
+* Update: Removed PHP 5.4 functions
+* Update: Updating a few strings
+* Update: Added correct text domains on all strings
+* Update: Updated "YouTube Plus" text to "YouTube for WordPress" 
+
 = 2.0 - November 2nd, 2014 =
-* Complete overhaul of the entire plugin. Re-released as YouTube for WordPress
-* Updated the YouTube API to v3.0
-* Released new site http://www.youtubeforwordpress.com/
-* Removed old plugin settings
-* Updated screenshots and readme files
+* Update: Complete overhaul of the entire plugin. Re-released as YouTube for WordPress
+* Update: Updated the YouTube API to v3.0
+* Update: Updated screenshots and readme files
+* Fix: Removed old plugin settings
+* Feature: Released new site http://www.youtubeforwordpress.com/
 
 = 1.3 =
 * Added YouTube parameter customization
@@ -161,6 +172,9 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 * Initial Release of YouTube Plus
 
 == Upgrade Notice ==
+= 2.0.1 - November 13th, 2014
+In the latest release we've lowered the minimum requirements to PHP 5.3. We've also gone through and added missing text-domains to strings and updated a few text strings.
+
 = 2.0 - November 2nd, 2014 =
 Warning : Do not upgrade from version 1.3 or earlier. Legacy support was not built in, so your `[iframe][/iframe]` shortcodes will no longer function properly. It is recommended that you install this plugin fresh, after uninstalling the previous version. 
 

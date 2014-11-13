@@ -9,11 +9,9 @@
 	* Throwing an error
 	*/
 
-	if (session_status() == PHP_SESSION_NONE) {
+	if (session_id() == PHP_SESSION_NONE) {
 		session_start();
 	}
-
-	// check if yt plus session is started
 	
 	/*
 	 * You can acquire an OAuth 2.0 client ID and client secret from the
@@ -22,9 +20,8 @@
 	 * <https://developers.google.com/youtube/v3/guides/authentication>
 	 * Please ensure that you have enabled the YouTube Data API for your project.
 	 */
-	$ytPlusBase = new YT4WPBase();
-	$OAUTH2_CLIENT_ID = $ytPlusBase->optionVal['yt4wp-oauth2-key'];
-	$OAUTH2_CLIENT_SECRET = $ytPlusBase->optionVal['yt4wp-oauth2-secret'];
+	$OAUTH2_CLIENT_ID = $this->optionVal['yt4wp-oauth2-key'];
+	$OAUTH2_CLIENT_SECRET = $this->optionVal['yt4wp-oauth2-secret'];
 
 	$client = new Google_Client();
 	$client->setClientId($OAUTH2_CLIENT_ID);

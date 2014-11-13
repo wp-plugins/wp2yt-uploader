@@ -9,7 +9,7 @@ if(!empty($_POST)
 	switch($_POST['form_action'])
 		{
 			
-/** YouTube Plus Ajax Requests **/
+/** YouTube for WordPress Ajax Requests **/
 
 default:
 	echo '-1';

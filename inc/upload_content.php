@@ -167,7 +167,7 @@ if ( $client->isAccessTokenExpired() ) {
 					<h3>'.__("YouTube Access Token Has Expired - Please ReAuthenticate", "yt-plus-translation-text-domain") .'</h3>
 					<p>'.__("You need to", "yt-plus-translation-text-domain") .' <a href="'.$authUrl.'">'.__("authorize access", "yt-plus-translation-text-domain") .'</a> '.__("before proceeding.", "yt-plus-translation-text-domain") .'<p>
 									
-					<p>'.__('If this is your first time setting up the plugin, you may want to read the documentation on setting up your Google API Project, please visit the following documentation :','yt-plus-pro') . ' <a href="http://YouTubeforWordPress.com/support/documentation/setup/setup-google-project/" target="_blank">'.__('Setup the Google Project','yt-plus-pro').'</a>
+					<p>'.__('If this is your first time setting up the plugin, you may want to read the documentation on setting up your Google API Project, please visit the following documentation :','yt-plus-translation-text-domain') . ' <a href="http://YouTubeforWordPress.com/support/documentation/setup/setup-google-project/" target="_blank">'.__('Setup the Google Project','yt-plus-translation-text-domain').'</a>
 
 					</div>'; 
 			// If the user hasn't authorized the app, initiate the OAuth flow

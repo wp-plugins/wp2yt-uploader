@@ -295,23 +295,23 @@ jQuery(document).ready(function () {
 	<?php }
 
 	// Check the Users PHP Version Numbers 
-	if ( $php_version < '5.4' ) {
+	if ( $php_version < '5.3' ) {
 	?>
 		<div class="update-nag" style="margin-bottom:2.5em;width:97.5% !important;">
-			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'LocalHost Detected :', 'youtube-for-wordpress-translation' ); ?></h3></span>
-			<p><?php _e( 'It looks like your site has an outdated version of PHP. YouTube for WordPress requires a minimum of PHP 5.4.', 'youtube-for-wordpress-translation' ); ?></p>
-			<p><?php _e( 'Your site is currently running PHP v.', 'youtube-for-wordpress-translation' ) . $php_version; ?></p>
+			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'Outdated Version of PHP :', 'youtube-for-wordpress-translation' ); ?></h3></span>
+			<p><?php _e( 'It looks like your site is running an outdated version of PHP. YouTube for WordPress requires a minimum of PHP 5.3.', 'youtube-for-wordpress-translation' ); ?></p>
+			<p><?php _e( 'Your site is currently running PHP v.', 'youtube-for-wordpress-translation' ); echo $php_version; ?></p>
 		</div>
 	<?php 
-	} 
+	}  
 	
 	// Check the Users MySQL Version Numbers 
 	if ( $sql_version < '5.0.0' ) {
 	?>
 		<div class="update-nag" style="margin-bottom:2.5em;width:97.5% !important;">
 			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'LocalHost Detected :', 'youtube-for-wordpress-translation' ); ?></h3></span>
-			<p><?php _e( 'It looks like your site has an outdated version of MySQL. YouTube for WordPress requires a minimum of MySQL 5.0.0.', 'youtube-for-wordpress-translation' ); ?></p>
-			<p><?php _e( 'Your site is currently running MySQL v.', 'youtube-for-wordpress-translation' ) . $sql_version; ?></p>
+			<p><?php _e( 'It looks like your site is running an outdated version of MySQL. YouTube for WordPress requires a minimum of MySQL 5.0.0.', 'youtube-for-wordpress-translation' ); ?></p>
+			<p><?php _e( 'Your site is currently running MySQL v.', 'youtube-for-wordpress-translation' ); echo $sql_version; ?></p>
 		</div>
 	<?php 
 	} ?>
@@ -468,7 +468,7 @@ jQuery(document).ready(function () {
 					<td></td>
 					<!-- Advanced Debug Description -->
 					<td class="yt4wp-settings-description">
-						<?php _e( "Enable if you're having problems with your forms sending data to YouTube. Enabling Advanced Error Messaging will show you the exact error codes YouTube is returning.","yt-plus-pro" ); ?>
+						<?php _e( "Enable if you're having problems with your forms sending data to YouTube. Enabling Advanced Error Messaging will show you the exact error codes YouTube is returning.","yt-plus-translation-text-domain" ); ?>
 					</td>
 				</tr>
 
@@ -503,7 +503,7 @@ jQuery(document).ready(function () {
 							<th scope="row"><label><?php _e('PHP Version','youtube-for-wordpress-translation'); ?></label></th>
 							<td>
 								<?php	
-								if ( $php_version < '5.4' ) {
+								if ( $php_version < '5.3' ) {
 									echo '<div class="dashicons dashicons-no-alt" style="margin-right:2em;color:red;"></div>' . $php_version ;
 								} else {
 									echo '<div class="dashicons dashicons-yes" style="margin-right:2em;color:green;"></div>' . $php_version;

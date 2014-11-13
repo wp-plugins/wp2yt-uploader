@@ -1011,7 +1011,7 @@ label[for="single-optin-message"], label[for="double-optin-message"] {
 	}
 	
 	/*****
-		Start New YouTube Plus Pro Styles
+		Start New YouTube for WordPress Styles
 	*****/		
 	.youtube-plus-video-preview-btn {
 		font-size:10px;
@@ -1198,7 +1198,7 @@ label[for="single-optin-message"], label[for="double-optin-message"] {
 				padding-top: .5em !important;
 			}
 			
-	/** YouTube Plus Widget Styles **/
+	/** YouTube for WordPress Widget Styles **/
 	.widget.youtube-plus-rss-feed a {
 		display:block;
 	}	

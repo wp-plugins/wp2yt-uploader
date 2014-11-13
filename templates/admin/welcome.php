@@ -45,11 +45,11 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 
 			<div class="col-md-9">
 				<h2 id="yt4wp-page-header" style="font-size:2.5em;margin:0;">
-					<?php _e('Welcome to YouTube for WordPress','yt-plus-pro'); echo ' ' . $this->optionVal['version']; ?>!
+					<?php _e('Welcome to YouTube for WordPress','yt-plus-translation-text-domain'); echo ' ' . $this->optionVal['version']; ?>!
 				</h2>
 				
 				<p class="about-text">
-					<?php printf( __( 'Thank you for updating to the latest version! YouTube for WordPress %s is ready to make integration with YouTube, safer and easier! Check out some of the newest features below.', 'yt-plus-pro' ), $this->optionVal['version'] ); ?>
+					<?php printf( __( 'Thank you for updating to the latest version! YouTube for WordPress %s is ready to make integration with YouTube, safer and easier! Check out some of the newest features below.', 'yt-plus-translation-text-domain' ), $this->optionVal['version'] ); ?>
 				</p>
 			</div>
 		

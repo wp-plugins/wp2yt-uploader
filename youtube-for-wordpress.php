@@ -4,7 +4,7 @@
 Plugin Name: YouTube for WordPress
 Plugin URI: http://www.evan-herman.com/wp2yt-uploader/
 Description: Upload videos, browse your account, and insert them in to posts without having to leave your blog! Now built with YouTube API v3 and lots of love
-Version: 2.0
+Version: 2.0.1
 Author: Evan Herman
 Author URI: http://www.evan-herman.com
 License: GPL2
@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /** Configuration **/
 if(!defined('YT4WP_DEBUG'))						define('YT4WP_DEBUG',		         false);
-if(!defined('YT4WP_VERSION_CURRENT'))				define('YT4WP_VERSION_CURRENT',	'2.0');
+if(!defined('YT4WP_VERSION_CURRENT'))				define('YT4WP_VERSION_CURRENT',	'2.0.1');
 if(!defined('YT4WP_REQ_PHP'))						define('YT4WP_REQ_PHP',			'5.3');
 if(!defined('YT4WP_AUTHOR'))						define('YT4WP_AUTHOR',				'Evan Herman');
 if(!defined('YT4WP_SITE'))							define('YT4WP_SITE',				site_url().'/');

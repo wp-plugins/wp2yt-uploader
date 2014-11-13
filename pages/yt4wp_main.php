@@ -55,7 +55,7 @@ $screen_base = get_current_screen()->base;
 	?>
 		<!-- tabs -->
 		<!-- add hook here for new menu items -->
-		<h2 class="nav-tab-wrapper yt-plus-pro-nav-tab-wrapper">
+		<h2 class="nav-tab-wrapper yt-plus-translation-text-domain-nav-tab-wrapper">
 			<a href="?page=youtube-for-wordpress&tab=youtube_plus_upload" class="nav-tab <?php echo $active_tab == 'youtube_plus_upload' ? 'nav-tab-active' : ''; ?>"><?php _e('Upload','youtube-for-wordpress-translation'); ?></a>
 			<a class="nav-tab <?php echo $active_tab == 'youtube_plus_browse' ? 'nav-tab-active' : ''; ?>" <?php if($refresh_token == '' && !isset($_GET['code'])) { ?>style="opacity:.45;" disabled="disabled;" onclick="return false;" href="#"<?php } else { ?> href="?page=youtube-for-wordpress&tab=youtube_plus_browse" <?php } ?>><?php _e('Browse','youtube-for-wordpress-translation'); ?></a>
 			<a class="nav-tab <?php echo $active_tab == 'youtube_plus_search' ? 'nav-tab-active' : ''; ?>" <?php if($refresh_token == '' && !isset($_GET['code']) ) { ?>style="opacity:.45;" disabled="disabled;" onclick="return false;" href="#"<?php } else { ?> href="?page=youtube-for-wordpress&tab=youtube_plus_search"  <?php } ?>><?php _e('Search','youtube-for-wordpress-translation'); ?></a>

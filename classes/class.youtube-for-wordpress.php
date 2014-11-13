@@ -130,7 +130,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					// Add Custom Insert Media Button
 					add_action('media_buttons_context',  array(&$this , 'youtube_for_wordpress_insert_button' ) );
 					
-					// Add YouTube Plus Pop Up Window to Admin Footer
+					// Add YouTube for WordPress Pop Up Window to Admin Footer
 					add_action( 'admin_footer',  array(&$this , 'add_yt4wp_popup' ) );
 					
 					// Add custom RSS feed function
@@ -400,7 +400,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 			
 
 
-		/***** YouTube Plus Actions
+		/***** YouTube for WordPress Actions
 		 ****************************************************************************************************/
 		 
 			/*
@@ -487,8 +487,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 						<a href="http://www.YouTubeforWordPress.com/support/" target="_blank">
 							<span class="yt_plus_need_support">
 								<strong>
-									<?php _e( 'Need Help?', 'yt-plus-pro' ); ?> <br />
-									<?php _e( 'Get In Contact!', 'yt-plus-pro' ); ?> <br />
+									<?php _e( 'Need Help?', 'yt-plus-translation-text-domain' ); ?> <br />
+									<?php _e( 'Get In Contact!', 'yt-plus-translation-text-domain' ); ?> <br />
 									<div class="dashicons dashicons-plus-alt"></div>
 								</strong>
 							</span>
@@ -496,8 +496,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 						<a href="https://wordpress.org/support/view/plugin-reviews/wp2yt-uploader" target="_blank">
 							<span class="yt_plus_leave_us_a_review">
 								<strong>
-									<?php _e( 'Loving the plugin?', 'yt-plus-pro' ); ?> <br />
-									<?php _e( 'Leave us a nice review', 'yt-plus-pro' ); ?> <br />
+									<?php _e( 'Loving the plugin?', 'yt-plus-translation-text-domain' ); ?> <br />
+									<?php _e( 'Leave us a nice review', 'yt-plus-translation-text-domain' ); ?> <br />
 									<div class="dashicons dashicons-star-filled"></div><div class="dashicons dashicons-star-filled"></div><div class="dashicons dashicons-star-filled"></div><div class="dashicons dashicons-star-filled"></div><div class="dashicons dashicons-star-filled"></div>
 								</strong>
 							</span>
@@ -1170,7 +1170,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					* On callback, it tries to restart the session
 					* Throwing an error
 					*/
-					if (session_status() == PHP_SESSION_NONE) {
+					if (session_id() == PHP_SESSION_NONE) {
 							session_start();
 						}
 
@@ -1843,7 +1843,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 						* On callback, it tries to restart the session
 						* Throwing an error
 						*/
-						if (session_status() == PHP_SESSION_NONE) {
+						if (session_id() == PHP_SESSION_NONE) {
 							session_start();
 						}
 
@@ -2840,7 +2840,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					* Throwing an error
 					*/
 
-					if (session_status() == PHP_SESSION_NONE) {
+					if (session_id() == PHP_SESSION_NONE) {
 						session_start();
 					}
 
@@ -4692,7 +4692,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 						wp_localize_script( 'js-upload_page_script' , 'local_data' , array( 'chunk_max_size' => str_replace( 'M' , '000000' , $chunk_max_size ) , 'current_page' => get_current_screen()->base ) );
 						wp_enqueue_script( 'js-upload_page_script');
 												
-						// register + localize the global Minified YouTube Plus Script File
+						// register + localize the global Minified YouTube for WordPress Script File
 						
 							wp_register_script('youtube_plus.min.js',	YT4WP_URL.'js/youtube_plus.min.js', array('jquery'));
 							wp_localize_script( 'youtube_plus.min.js', 'localized_data', $localized_array );	
@@ -4771,14 +4771,14 @@ if( !class_exists( "YT4WPBase" ) ) {
 			
 			public function addAdministrationMenu() {
 					// Top Level Menu
-					add_menu_page( __('YouTube for WP','yt-plus-pro'), __('YouTube for WP','yt-plus-pro'), 'manage_options', 'youtube-for-wordpress', array(&$this, 'generateYouTubeDetails'), 'dashicons-video-alt3', 400);
+					add_menu_page( __('YouTube for WP','yt-plus-translation-text-domain'), __('YouTube for WP','yt-plus-translation-text-domain'), 'manage_options', 'youtube-for-wordpress', array(&$this, 'generateYouTubeDetails'), 'dashicons-video-alt3', 400);
 					// Sub Items
-					add_submenu_page('youtube-for-wordpress', __('YouTube for WP','yt-plus-pro'), __('YouTube for WP','yt-plus-pro'), 'manage_options', 'youtube-for-wordpress', array(&$this, 'generateYouTubeDetails'));	
-					add_submenu_page('youtube-for-wordpress', __('Settings','yt-plus-pro'), __('Settings','yt-plus-pro'), 'manage_options', 'youtube-for-wordpress-settings', array(&$this, 'generatePageOptions'));
-					add_submenu_page('youtube-for-wordpress', __('Add Ons','yt-plus-pro'), __('Add Ons','yt-plus-pro'), 'manage_options', 'youtube-for-wordpress-add-ons', array(&$this, 'generatePageAddOns'));
+					add_submenu_page('youtube-for-wordpress', __('YouTube for WP','yt-plus-translation-text-domain'), __('YouTube for WP','yt-plus-translation-text-domain'), 'manage_options', 'youtube-for-wordpress', array(&$this, 'generateYouTubeDetails'));	
+					add_submenu_page('youtube-for-wordpress', __('Settings','yt-plus-translation-text-domain'), __('Settings','yt-plus-translation-text-domain'), 'manage_options', 'youtube-for-wordpress-settings', array(&$this, 'generatePageOptions'));
+					add_submenu_page('youtube-for-wordpress', __('Add Ons','yt-plus-translation-text-domain'), __('Add Ons','yt-plus-translation-text-domain'), 'manage_options', 'youtube-for-wordpress-add-ons', array(&$this, 'generatePageAddOns'));
 					
 					// hidden pages, still directly accessable
-					add_submenu_page( 'options.php', __('Welcome','yt-plus-pro'), __('Welcome','yt-plus-pro'), 'administrator', 'youtube-for-wordpress-welcome', array(&$this, 'generateWelcomePage'));
+					add_submenu_page( 'options.php', __('Welcome','yt-plus-translation-text-domain'), __('Welcome','yt-plus-translation-text-domain'), 'administrator', 'youtube-for-wordpress-welcome', array(&$this, 'generateWelcomePage'));
 				}
 
 
@@ -4900,12 +4900,12 @@ if( !class_exists( "YT4WPBase" ) ) {
 				  if ( get_option( 'yt4wp_user_refresh_token' ) == '' ) {
 				  
 					 $context .= "<a href='#' onclick='return false;' title='Error : Invalid Refresh Token' href='#' class='button youtube-plus' disabled='disabled'>
-						<span class='dashicons dashicons-format-video' style='font-size:18px;line-height:1.5;padding-right:.25em;color:#888;'></span>YouTube Plus</a>";
+						<span class='dashicons dashicons-format-video' style='font-size:18px;line-height:1.5;padding-right:.25em;color:#888;'></span>YouTube for WordPress</a>";
 						
 				  } else {
 				  
 					 $context .= "<a href='#TB_inline?width=900&height=600&inlineId=youtube-plus-container' title='{$title}' href='#' class='button thickbox youtube-plus'>
-						<span class='dashicons dashicons-format-video' style='font-size:18px;line-height:1.5;padding-right:.25em;color:#888;'></span>YouTube Plus</a>";
+						<span class='dashicons dashicons-format-video' style='font-size:18px;line-height:1.5;padding-right:.25em;color:#888;'></span>YouTube for WordPress</a>";
 						
 				  }
 				  return $context;
@@ -5366,7 +5366,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*/
 			
 			private function runUpdateTasks_1_0() {
-				// check if the user had previously used YouTube Plus
+				// check if the user had previously used YouTube for WordPress
 					// if so, we just want to clera out the old...outdated...unused settings
 					if ( get_option( 'yt_pass' ) ) {					
 						// maybe an entirely new plugin...

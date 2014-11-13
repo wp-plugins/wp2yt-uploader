@@ -12,7 +12,7 @@ global $YT4WPBase;
 * Throwing an error
 */
 
-if (session_status() == PHP_SESSION_NONE) {
+if (session_id() == PHP_SESSION_NONE) {
 	session_start();
 }
 
