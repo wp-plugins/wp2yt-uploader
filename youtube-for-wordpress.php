@@ -2,7 +2,7 @@
 /*
 #_________________________________________________ PLUGIN
 Plugin Name: YouTube for WordPress
-Plugin URI: http://www.evan-herman.com/wp2yt-uploader/
+Plugin URI: http://www.youtubeforwordpress.com
 Description: Upload videos, browse your account, and insert them in to posts without having to leave your blog! Now built with YouTube API v3 and lots of love
 Version: 2.0.1
 Author: Evan Herman
