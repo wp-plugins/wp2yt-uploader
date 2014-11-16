@@ -5215,9 +5215,9 @@ if( !class_exists( "YT4WPBase" ) ) {
 							);
 							// wrap our embedded video in a shadow container
 							if ( $shadow == "1" ) {
-								return '<div class="video-container-shadow">' . wp_video_shortcode( $attr ) . '</div><!--YouTube-Plus-video-container-- http://www.YouTubeforWordPress.com -->>';
+								return '<div class="video-container-shadow">' . wp_video_shortcode( $attr ) . '</div><!--YouTube-Plus-video-container-- http://www.YouTubeforWordPress.com -->';
 							} else {
-								return wp_video_shortcode( $attr ) . '<!--YouTube-Plus-video-container-- http://www.YouTubeforWordPress.com -->>';
+								return wp_video_shortcode( $attr ) . '<!--YouTube-Plus-video-container-- http://www.YouTubeforWordPress.com -->';
 							}
 						} else {
 							// embed the player with a standard youtube iframe
@@ -5247,7 +5247,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					), $atts ) );
 					 
 					return '<div class="ytplus-video-container"><iframe src="http://www.youtube.com/embed?listType=playlist&amp;list=' . $playlist_id . '" allowfullscreen="" frameborder="0"></iframe></div>
-					<!--YouTube-Plus-video-container-- http://www.YouTubeforWordPress.com -->>';
+					<!--YouTube-Plus-video-container-- http://www.YouTubeforWordPress.com -->';
 				}
 
 				
