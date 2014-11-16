@@ -8,10 +8,9 @@
 	* On callback, it tries to restart the session
 	* Throwing an error
 	*/
-
-	if (session_id() == PHP_SESSION_NONE) {
-		session_start();
-	}
+	if(!isset($_SESSION)) { 
+			session_start();
+		}
 	
 	/*
 	 * You can acquire an OAuth 2.0 client ID and client secret from the
@@ -88,8 +87,15 @@
 		// the plugin -- this is all done behind the scenes ;)
 		if ( get_option( 'yt4wp_user_refresh_token' ) != '' ) {
 		
-			$client->refreshToken( get_option( 'yt4wp_user_refresh_token' ) );
-			$_SESSION['token'] = $client->getAccessToken();
+			try {
+				$client->refreshToken( get_option( 'yt4wp_user_refresh_token' ) );
+				$_SESSION['token'] = $client->getAccessToken();
+			} catch( Exception $e ) {
+				echo '<span id="response_message" class="yt4wp-error-alert special" style="margin-top:0;"><p><strong>Oh No!</strong> ' . $e->getMessage() . '. Double check that your client keys are correct.<p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
+				$errors = true;
+				/* Write the error to our error log */
+				$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
+			}
 			
 		} else {
 		

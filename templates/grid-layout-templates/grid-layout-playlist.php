@@ -1,10 +1,11 @@
 <?php
 
+// Front end layout
+// for our Playlists grid 
+// @since v2.0
+
 // enqueue masonry for layouts
 wp_enqueue_script( 'masonry' , array('jquery') );
-
-
-
 
 // include the required php files - containers api key
 include_once YT4WP_PATH.'lib/google_api_wrapper_api_key.php';

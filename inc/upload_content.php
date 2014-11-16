@@ -1,23 +1,21 @@
 <?php
 
-/*
-*	Known Bugs
-*		- Uploading video now double uploads and causes two entries (not sure why)
-*
+/* 
+YouTube for WordPress Main Upload Page
+Maintained and Supported by http://YouTubeforWordPress.com
 */
 
-		// load thickbox styles etc.
-		add_thickbox();
+// load thickbox styles etc.
+add_thickbox();
 
 // Call set_include_path() as needed to point to your client library.
 require_once YT4WP_PATH.'inc/Google/Client.php';
 require_once YT4WP_PATH.'inc/Google/Service/YouTube.php';
 
-
-if(!isset($_SESSION)) 
-    { 
+if(!isset($_SESSION)) { 
 		session_start();
 	}
+	
 /*
  * You can acquire an OAuth 2.0 client ID and client secret from the
  * Google Developers Console <https://console.developers.google.com/>
@@ -28,21 +26,14 @@ if(!isset($_SESSION))
 $OAUTH2_CLIENT_ID = $this->optionVal['yt4wp-oauth2-key'];
 $OAUTH2_CLIENT_SECRET = $this->optionVal['yt4wp-oauth2-secret'];
 
-
-
+// initialize the body, and a new Google Client class
 $htmlBody = '';
 $client = new Google_Client();
 
-
+// Set the Scopes
 $client->setClientId($OAUTH2_CLIENT_ID);
 $client->setClientSecret($OAUTH2_CLIENT_SECRET);
 $client->setScopes('https://www.googleapis.com/auth/youtube');
-
-
-/*
-$_SESSION["token"] = '';
-update_option('yt4wp_user_refresh_token','');
-*/
 
 // store our screen_base variable when not created
 if ( !isset( $screen_base ) ) {
@@ -68,41 +59,75 @@ if ( is_admin() ) {
 	$redirect = esc_url( $redirect_prefix . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] );
 }
 
+// Setup the redirect URL
 $client->setRedirectUri($redirect);
+// Set the access type to offline
 $client->setAccessType('offline');
 
 // Define an object that will be used to make all API requests.
 $youtube = new Google_Service_YouTube($client);
 
-
-
+// Check for a returned code after authenticating
 if ( isset($_GET['code']) ) {
-
-	if ( $client->authenticate($_GET['code']) ) {
 	
-	  $_SESSION['token'] = $client->getAccessToken();
-	  
-	  $token_decode = json_decode($_SESSION['token']);
-	  
-		if ( isset( $token_decode->refresh_token ) ) { 
-			update_option( 'yt4wp_user_refresh_token' , $token_decode->refresh_token );
-			$client->setAccessToken($_SESSION['token']);
-		} else {
-			$htmlBody .= '<span class"yt4wp-error-alert">Oops, it looks like we ran into an error. Please refresh the page and try again.</span>';
-		}
+	// try and authenticate the returned code
+	try {
+	
+		if ( $client->authenticate($_GET['code']) ) {
 		
+		  $_SESSION['token'] = $client->getAccessToken();
+		  
+		  $token_decode = json_decode($_SESSION['token']);
+		  
+			if ( isset( $token_decode->refresh_token ) ) { 
+				?>
+				<script>
+				jQuery(document).ready(function(){
+					setTimeout(function() {
+						jQuery( '.success_redirect_preloader' ).fadeIn();
+					}, 1000 );
+				});
+				</script>
+				<?php
+				update_option( 'yt4wp_user_refresh_token' , $token_decode->refresh_token );
+				$client->setAccessToken($_SESSION['token']);
+				echo '<meta http-equiv="refresh" content="1.5;url=' . admin_url() . 'admin.php?page=youtube-for-wordpress" />';
+				// display a nice success message, and redirect the user
+				$message = '<div id="initial_setup_message" class="yt4wp-setup-alert"><div id="sucess_redirect_box"><span class="dashicons dashicons-yes" style="width:100%;color:#40ad6e;margin-bottom:.25em;font-size:1.75em;"></span>' . __( "Successfuly authenticated. Redirecting you now..." , "yt-plus-translation-text-domain" ) . '<img src="' . admin_url() . '/images/wpspin_light.gif" class="success_redirect_preloader"></div></div>';
+				wp_die( $message );
+				exit;
+			} else {
+				$htmlBody .= '<span class"yt4wp-error-alert">Oops, it looks like we ran into an error. Please refresh the page and try again.</span>';
+			}
+			
+		}
+	// catch any exceptions that may be thrown, and display it back to the user
+	} catch ( Exception $e ) {
+		// setup the error message
+		$message = '<div id="response_message" class="yt4wp-error-alert">
+					<h3>There was an error in your request</h3>
+					<p>'.$e->getMessage().'.</p>
+					<p>If you keep receiving this error, please <a href="http://www.youtubeforwordpress.com/support/submit-ticket/" target="_blank" title="Submit a support ticket">open a support ticket</a> with the YouTube for WordPress support team, and reference the following error number : Error #' . $e->getCode() . '</p>
+					</div>';
+		
+		
+		/* Write the error to our error log */
+		$error_message = $e->getMessage();
+		$error_code = $e->getCode();
+		$this->writeErrorToErrorLog( $error_message , $error_code );
+		
+		// kill
+		wp_die( $message );
 	}
-}
+	
+} 
 
-/*
-update_option('yt4wp_user_refresh_token','');
-$_SESSION['token'] = '';
-*/
 
-// test expiration of token
+
+// test expiration of the users token
 // echo $client->isAccessTokenExpired($_SESSION['token']);
 if ( $client->isAccessTokenExpired() ) {
-
+	
 	// check if the user has ANY data stored in the token session
 	// if they do, but the token has expired, we simply call a refresh
 	// on the refresh token to retreive new access tokens
@@ -116,8 +141,10 @@ if ( $client->isAccessTokenExpired() ) {
 			$_SESSION['token'] = $client->getAccessToken();
 			$client->setAccessToken($client->getAccessToken());
 		} catch (Exception $e) {
-			$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><strong>Oh No!</strong> We have encountered a serious error : <code>%s</code> Please refresh the page and try again. If, after a refresh, you\'re still seeing this error head over to the settings page, revoke permissions and try again. If the error persits please open a support ticket with the YouTube for WordPress <a href="http://www.youtubeforwordpress.com/support" target="_blank">support team</a> and reference the following error number: Error # %s</span>',
+			$htmlBody .= sprintf("<span id='response_message' class='yt4wp-error-alert'><p><strong>Oh No!</strong> %s. Double check that you have entered your client ID and client secret keys correctly.<p>If the error persits please <a href='http://www.youtubeforwordpress.com/support' target='_blank' title='Submit a Ticket'>open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></span>",
 				htmlspecialchars($e->getMessage()),$e->getCode());
+			/* Write the error to our error log */
+			$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 		}
 		
 	} else {
@@ -155,24 +182,55 @@ if ( $client->isAccessTokenExpired() ) {
 					});
 				</script>
 			<?php
-			// disable all tabs, but the upload tab
-		
-			$state = mt_rand();
-			$client->setState($state);
-			$_SESSION['state'] = $state;
-			$authUrl = $client->createAuthUrl();
 			
-			// this runs only the first time the user ever installs the plugin
-			 echo '<style>.yt4wp-error-alert:before{ padding:0 !important; padding-right:10px !important; padding-top:15px !important;}.yt4wp-error-alert p { padding-left:30px !important; }</style><div id="response_message" class="yt4wp-error-alert">
-					<h3>'.__("YouTube Access Token Has Expired - Please ReAuthenticate", "yt-plus-translation-text-domain") .'</h3>
-					<p>'.__("You need to", "yt-plus-translation-text-domain") .' <a href="'.$authUrl.'">'.__("authorize access", "yt-plus-translation-text-domain") .'</a> '.__("before proceeding.", "yt-plus-translation-text-domain") .'<p>
-									
-					<p>'.__('If this is your first time setting up the plugin, you may want to read the documentation on setting up your Google API Project, please visit the following documentation :','yt-plus-translation-text-domain') . ' <a href="http://YouTubeforWordPress.com/support/documentation/setup/setup-google-project/" target="_blank">'.__('Setup the Google Project','yt-plus-translation-text-domain').'</a>
+			
 
-					</div>'; 
-			// If the user hasn't authorized the app, initiate the OAuth flow
-			echo '<p style="text-align:right; font-size:11px; font-style:italic;opacity:.8;">' . __("If you keep hitting this error, you may want to try and revoke permissions first. ", "yt-plus-translation-text-domain") . '</p>';
-			echo '<p><a onclick="return false;" class="switch-yt-channels" style="font-size:13px;padding:4px 10px;float:right;display:block;position:relative; margin-top:0 !important;">Revoke Permissions</a></p>';
+				// this runs only the first time the user ever installs the plugin
+				 echo '<div id="initial_setup_message" class="yt4wp-setup-alert">
+						<h2>'.__("Welcome to YouTube for WordPress", "yt-plus-translation-text-domain") .'</h2>';
+					
+					if ( $this->optionVal['yt4wp-api-key'] == '' || $this->optionVal['yt4wp-oauth2-secret'] == '' || $this->optionVal['yt4wp-oauth2-key'] == '' ) {
+						
+						echo '<p>'.__( "It looks like you need to set things up before you can connect " , "yt-plus-translation-text-domain" ) . get_bloginfo("name" ) . __( " with your YouTube account." , "yt-plus-translation-text-domain" ) . '</p>';
+						
+						// three buttons here
+						?>
+						<a class="yt4wp-setup-button" href="<?php echo admin_url() . 'admin.php?page=youtube-for-wordpress-settings'; ?>">
+							<span class="dashicons dashicons-admin-tools"></span><?php _e( 'Settings' , 'yt-plus-translation-text-domain' ); ?>
+						</a>
+						<a class="yt4wp-setup-button" href="http://www.youtubeforwordpress.com/documentation/" target="_blank">
+							<span class="dashicons dashicons-book-alt"></span><?php _e( 'Documentation' , 'yt-plus-translation-text-domain' ); ?>
+						</a>
+						<a class="yt4wp-setup-button" href="http://www.youtubeforwordpress.com/contact/?contact-reason=I%20Need%20Support" target="_blank">
+							<span class="dashicons dashicons-format-status"></span><?php _e( 'Support' , 'yt-plus-translation-text-domain' ); ?>
+						</a>
+						<?php						
+						echo '<p>&nbsp;</p>';
+						echo "<p><em>" . __( "if this is your first time using the plugin, it's recommended you check out our " , "yt-plus-translation-text-domain") . "<a href='http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/' target='_blank' title='Setup Help'>" . __( "tutorial" , "yt-plus-translation-text-domain" ) . "</a>" . __( " on setting up the plugin." , "yt-plus-translation-text-domain" ) . "</em></p>";
+					
+					} else {
+						
+						$state = mt_rand();
+						$client->setState($state);
+						$_SESSION['state'] = $state;
+						$authUrl = $client->createAuthUrl();
+						
+						echo '<p>' . __( "You need to authorize access using your Google account before you can continue" , "yt-plus-translation-text-domain" ) . '</p>';
+						?>
+						<!-- Authenticate Button -->
+							<a href="<?php echo $authUrl; ?>" style="display:block;width:275px;margin:0 auto;margin-bottom:1em;">
+								<input type="submit" class="purchase-add-on-button authenticate-google-account" value="Authenticate Now">
+							</a>
+						<?php					
+					}
+					
+				echo '</div>'; 
+						
+				// If the user hasn't authorized the app, initiate the OAuth flow
+				/*
+				echo '<p style="text-align:right; font-size:11px; font-style:italic;opacity:.8;">' . __("If you keep hitting this error, you may want to try and revoke permissions first. ", "yt-plus-translation-text-domain") . '</p>';
+				echo '<p><a onclick="return false;" class="switch-yt-channels" style="font-size:13px;padding:4px 10px;float:right;display:block;position:relative; margin-top:0 !important;">Revoke Permissions</a></p>';
+				*/
 		}
 	}
 	
@@ -231,7 +289,7 @@ if ( @$_SESSION['token'] && !$client->isAccessTokenExpired()) {
 		
 		<h3>Content Upload</h3>
 		<p>Upload content to your YouTube account. Drop a file into the dropzone below, or use the browse button to select a file.</p>
-		
+		<span class="yt-upload-info"><?php echo __( 'Maximum upload file size' , 'yt-plus-translation-text-domain' ) . ': ' . esc_html( size_format( wp_max_upload_size() ) ); ?></span>
 		<hr />
 				
 		<div id="upload_form_container">
@@ -312,7 +370,7 @@ if ( @$_SESSION['token'] && !$client->isAccessTokenExpired()) {
 											$privacy_icon_class = 'unlocked';
 											break;
 									}
-									echo '<option title="' . YT4WP_URL . '/css/images/' . esc_attr( $privacy_icon_class ) . '.svg" value="' . $myPlaylist['id'] . '" name="video-playlist-setting">' . $myPlaylist['snippet']['title'] . '</option>';
+									echo '<option title="' . YT4WP_URL . 'css/images/' . esc_attr( $privacy_icon_class ) . '.svg" value="' . $myPlaylist['id'] . '" name="video-playlist-setting">' . $myPlaylist['snippet']['title'] . '</option>';
 								}
 							 ?>
 						 </select>
@@ -387,8 +445,8 @@ if ( @$_SESSION['token'] && !$client->isAccessTokenExpired()) {
 			// reliable connection as fewer chunks lead to faster uploads. Set a lower
 			// value for better recovery on less reliable connections.
 			// $chunkSizeBytes = 1 * 1024 * 1024;
-			$chunkSizeBytes = 1 * 1024 * 1024;
-
+			$chunkSizeBytes = 2 * 1024 * 1024;
+			
 			// Setting the defer flag to true tells the client to return a request which can be called
 			// with ->execute(); instead of making the API call immediately.
 			$client->setDefer(true);
@@ -461,15 +519,11 @@ if ( @$_SESSION['token'] && !$client->isAccessTokenExpired()) {
 			// $htmlBody .= 'The Privacy Setting Is ...... '. $_POST['video-privacy-settings'];
 			
 		  } catch (Google_ServiceException $e) {
-				
-				$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p>A service error occurred: <code>%s</code></p></span>',
-					htmlspecialchars($e->getMessage()));
-					
-		  } catch (Google_Exception $e) {
-				
-				$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p>A client error occurred: <code>%s</code></p></span>',
-					htmlspecialchars($e->getMessage()));
-					
+				$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p>An error has occurred: %s. Error #%s</p></span>',
+					htmlspecialchars($e->getMessage(),$e->getCode()));	
+		  } catch (Google_Exception $e) {	
+				$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p>An error has occurred: %s. Error #%s</p></span>',
+					htmlspecialchars($e->getMessage(),$e->getCode()));	
 		  }
 	// if $_FILES error returns 1
 	} else if ( isset( $_FILES['videolocation']['error'] ) && $_FILES['videolocation']['error'] == 1 ) {	

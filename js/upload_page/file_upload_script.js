@@ -13,29 +13,44 @@ jQuery(function(){
 					
 			progressInterval: 10,
 			
-			maxChunkSize: local_data.chunk_max_size , // 10 MB
-		
+			// maxChunkSize: local_data.chunk_max_size / parseInt(2) , // wp_max_upload_size()
+					
 			// This element will accept file drag/drop uploading
 			dropZone: jQuery('#drop'),
 
 			// This function is called when a file is added to the queue;
 			// either via the browse button, or via drag/drop:
 			add: function (e, data) {
+				
+				jQuery('#acceptable_filetypes').remove();
 							
 				if (!(/\.(mov|mpeg4|mp4|avi|wmv|mpegps|3gpp|webm)$/i).test(data.files[0].name)) {
 					// if an unacceptable file type was dropped in
 					
 						if ( jQuery('#acceptable_filetypes').is(':visible') ) {
+							jQuery('#acceptable_filetypes').html('<h3 style="color:#a94442;">Error : Please use an acceptable file type</h3><p>YouTube accepts the following video formats</p><ul><li>.mov</li><li>.mpeg4</li><li>.mp4</li><li>.avi</li><li>.wmv</li><li>.mpegpsMPEGPS</li><li>.flv</li><li>.3gpp</li><li>.webm</li></ul>');
 							return;
 						} else {	
-							jQuery('#drop').after('<div id="acceptable_filetypes" style="display:none;"><h2 style="color:red;">Error - Please use an acceptable file type :</h2><ul><li>.MOV</li><li>.MPEG4</li><li>.MP4</li><li>.AVI</li><li>.WMV</li><li>.MPEGPS</li><li>.FLV</li><li>.3GPP</li><li>.WebM</li></ul></div>');
-							jQuery('#acceptable_filetypes').fadeIn();
+							jQuery('#drop').after('<div id="acceptable_filetypes" style="display:none;" class="yt4wp-error-alert"><h3 style="color:#a94442;">Error : Please use an acceptable file type</h3><p>YouTube accepts the following video formats</p><ul><li>.mov</li><li>.mpeg4</li><li>.mp4</li><li>.avi</li><li>.wmv</li><li>.mpegpsMPEGPS</li><li>.flv</li><li>.3gpp</li><li>.webm</li></ul></div>');
+							setTimeout(function() {
+								jQuery('#acceptable_filetypes').fadeIn();
+							},200);
 						}	
 					return;
 					
-				} else {
-					// if an acceptable file type was used
-					jQuery('#acceptable_filetypes').remove();
+				}
+				
+				if( data.files[0]['size'] > local_data.chunk_max_size ) {
+					if ( jQuery('#acceptable_filetypes').is(':visible') ) {
+							jQuery('#acceptable_filetypes').html('<h3 style="color:#a94442;">Error : File too large</h3><p>The file you are attempting to upload is larger than the maximum allowed by your server ('+local_data.formatted_max_upload_size+').</p><p>Please get in touch with your host provider and ask them to increase this limit.</p><p>&nbsp;</p><p>For help, please see the <a href="http://www.youtubeforwordpress.com/documentation/" title="YouTube for WordPress Documentation">documentation</a> page on common errors.</p>');
+							return;
+						} else {	
+							jQuery('#drop').after('<div id="acceptable_filetypes" style="display:none;" class="yt4wp-error-alert"><h3 style="color:#a94442;">Error : File too large</h3><p>The file you are attempting to upload is larger than the maximum allowed by your server ('+local_data.formatted_max_upload_size+').</p><p>Please get in touch with your host provider and ask them to increase this limit.</p><p>&nbsp;</p><p>For help, please see the <a href="http://www.youtubeforwordpress.com/documentation/" title="YouTube for WordPress Documentation">documentation</a> page on common errors.</p></div>');
+							setTimeout(function() {	
+								jQuery('#acceptable_filetypes').fadeIn();
+							},200);
+						}	
+					return;
 				}
 							
 							
@@ -55,14 +70,6 @@ jQuery(function(){
 				
 				jQuery("#youtube-plus-pro-upload-form").undelegate(".submit-video-button","click").delegate(".submit-video-button","click", function () {
 					data.submit();
-					// initialize the knob plugin
-					jQuery('#upload_form_container').find('#progress_container').fadeIn().find('input').knob({"readOnly":true,'inputColor':'#818181','font':'"Open Sans"'}).trigger(
-						'configure',
-						{
-							'fgColor' : '#66CC66',
-							'angleOffset' : '-125'
-						}
-					);
 					return false;
 				});
 				
@@ -71,18 +78,28 @@ jQuery(function(){
 			
 			start: function(e, data) {
 				// disable the input fields on form submission
-				jQuery('#youtube-plus-pro-upload-form').fadeOut('fast');
+				jQuery('#youtube-plus-pro-upload-form').fadeOut( 'fast' , function() {
+					// initialize the knob plugin
+					jQuery('#upload_form_container').find('#progress_container').fadeIn().find('input').knob({"readOnly":true,'inputColor':'#818181','font':'"Open Sans"'}).trigger(
+						'configure',
+						{
+							'fgColor' : '#66CC66',
+							'angleOffset' : '-125'
+						}
+					);
+				});
 			},
 
 			fail:function(e, data){
 				// Something has gone wrong!
 				// data.context.addClass('error');
 				console.log(data);
-				jQuery('#progress_bar').hide();
-				jQuery('#youtube-plus-pro-upload-form').fadeIn('fast').prepend('<div class="yt4wp-error-alert"><strong> Oh No!</strong> There was an error uploading content. Try again. If the error persists, please submit a ticket with the YouTube for WordPress <a href="http://www.youtubeforwordpress.com/support/submit-ticket/" target="_blank">Support</a> team.</div>');
+				jQuery('#progress_container').hide( 'fast' , function() {
+					jQuery('#youtube-plus-pro-upload-form').fadeIn('fast').prepend('<div class="yt4wp-error-alert"><p><strong> Oh No!</strong> There was an error uploading content. Try again. If the error persists, please <a href="http://www.youtubeforwordpress.com/support/submit-ticket/" target="_blank">submit a ticket</a> with the YouTube for WordPress Support team.</p></div>');
+				});
 			},
 			
-			done:function(e, data){	
+			done:function(e, data) {	 
 				jQuery(document).find('.youTube_api_key_preloader').remove();
 				if ( local_data.current_page == 'toplevel_page_youtube-for-wordpress' ) {		
 					jQuery('#video_success_response').html('<h3>Content Successfuly Uploaded</h3><p>Your new content should now be viewable from within the <a style="margin-top:-6px;" class="button-secondary" href="?page=youtube-for-wordpress&amp;tab=youtube_plus_browse">browse</a> tab, but may be unavailable until it completes processing.</p><br /><a href="#" class="upload_another_video button-secondary">Upload Another</a>').show();
@@ -119,13 +136,14 @@ jQuery(function(){
 				jQuery('#upload_form_container').find('#progress_container').find('input').trigger('configure',{'fgColor':newColor});
 				jQuery('#upload_form_container').find('#progress_container').find('input').val(progress).trigger('change');
 
-				console.log('Progress : '+progress);
-				console.log('Bitrate : '+data.bitrate);
-				console.log('Color : '+newColor);
+				// console.log('Progress : '+progress);
+				// console.log('Bitrate : '+data.bitrate);
+				console.log('Data Loaded : '+data.loaded);
+				console.log('Data Total : '+data.total);
 				
 				if ( progress == 100 ) {
 					setTimeout(function() {
-						jQuery('#upload_form_container').find( '#progress_container' ).fadeOut('fast', function() {
+						jQuery('#upload_form_container').find( '#progress_container' ).fadeOut( 'fast', function() {
 							jQuery(this).after('<img class="youTube_api_key_preloader" src="'+localized_data.preloader_url+'" alt="preloader" >').delay(600).next().fadeTo('slow',1);
 						});
 					}, 1800);

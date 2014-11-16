@@ -9,10 +9,9 @@ require_once YT4WP_PATH.'inc/Google/Service/YouTube.php';
 * On callback, it tries to restart the session
 * Throwing an error
 */
-
-if (session_id() == PHP_SESSION_NONE) {
-	session_start();
-}
+if(!isset($_SESSION)) { 
+		session_start();
+	}
 
 /*
  * You can acquire an OAuth 2.0 client ID and client secret from the

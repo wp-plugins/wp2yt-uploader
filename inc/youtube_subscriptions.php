@@ -69,10 +69,13 @@ if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"])
 	$htmlBody = '';
     $htmlBody .= sprintf('<p>A service error occurred: <code>%s</code></p>',
       htmlspecialchars($e->getMessage()));
+	$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
   } catch (Google_Exception $e) {
 	$htmlBody = '';
     $htmlBody .= sprintf('<p>A client error occurred: <code>%s</code></p>',
       htmlspecialchars($e->getMessage()));
+	// write the error to the error log
+	$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
   }
 
   $_SESSION['token'] = $client->getAccessToken();

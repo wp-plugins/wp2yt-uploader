@@ -3,12 +3,12 @@
 */
 
 /** Other Sidebar Areas **/
-.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar,.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar{
+.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar,.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar,.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar{
    width: 20%;
    float: right;
    margin-top: 10px;
 }
-	.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .cta , .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .cta, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .cta{
+	.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar .cta , .youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .cta , .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .cta, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .cta{
 	   background: #fff;
 	   padding: 20px;
 	   margin: 0 0 40px;
@@ -21,9 +21,11 @@
 	   -moz-box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 	   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 	}
-	.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .cta.padding-bottom, .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .cta.padding-bottom, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .cta.padding-bottom{
+	.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar .cta.padding-bottom, .youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .cta.padding-bottom, .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .cta.padding-bottom, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .cta.padding-bottom{
 		padding-bottom: 60px;
 	}
+	.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar h3,
+	.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar h4,
 	.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar h3,
 	.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar h4,
 	.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar h3,
@@ -34,21 +36,23 @@
 		margin-bottom: .7em;
 	}
 	
-	.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .item , .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .item, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .item{
+	.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar .item , .youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .item , .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .item, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .item{
 		overflow: hidden;
 		padding: 0 0 10px;
 	}
-		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .item h4 , .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .item h4, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .item h4{
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar .item h4 , .youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .item h4 , .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .item h4, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .item h4{
 			margin: 0 0 5px;
 			font-size: 0.9em;
 			text-transform: uppercase;
 			opacity: 0.5;
 		}
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar h4 , 
 		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar h4 , 
 		.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar h4,
 		.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar h4{
 			margin-bottom: 5px;
 		}
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar p , 
 		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar p , 
 		.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar p,
 		.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar p{
@@ -56,18 +60,21 @@
 			margin: 0 0 5px;
 			font-size: 13px;
 		}
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar ul,
 		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar ul,
 		.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar ul,
 		.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar ul{
 		   margin: 0 0 10px;
 		   overflow: hidden;
 		}
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar li, 
 		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar li, 
 		.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar li,
 		.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar li{
 			font-size: 13px;
 			margin: 0 0 10px;
 		}
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar .item i,
 		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .item i,
 		.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .item i,
 		.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .item i{
@@ -82,12 +89,14 @@
 			margin:0 7px 0 0;
 		}
 		
+			.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar .item i.fa-check,
 			.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .item i.fa-check,
 			.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .item i.fa-check,
 			.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .item i.fa-check{
 				background: #90be59;
 				color: #fff;
 			}
+			.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar .item i.fa-exclamation,
 			.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar .item i.fa-exclamation,
 			.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar .item i.fa-exclamation, 
 			.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar .item i.fa-exclamation{
@@ -96,6 +105,7 @@
 			}
 			
 	
+	.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar a.visit,
 	.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar a.visit,
 	.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar a.visit,
 	.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar a.visit{
@@ -110,6 +120,7 @@
 		z-index: 2;
 		text-decoration: none;
 	}
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar a.visit i,
 		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar a.visit i,
 		.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar a.visit i,
 		.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar a.visit i{
@@ -119,11 +130,13 @@
 			position: relative;
 			top:3px;
 		}
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar a.visit:hover,
 		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar a.visit:hover,
 		.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar a.visit:hover, 
 		.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar a.visit:hover{
 			background: #C31D1D;
 		}
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar a.visit:active,
 		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar a.visit:active,
 		.youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar a.visit:active,
 		.admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar a.visit:active{
@@ -150,7 +163,7 @@
 		
 	@media only screen and (max-width: 991px) {
 	
-		.youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar, .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar {
+		.youtube-for-wp_page_youtube-for-wordpress-support #yt4wp-settings-sidebar, .youtube-for-wp_page_youtube-for-wordpress-settings #yt4wp-settings-sidebar, .youtube-for-wp_page_youtube-for-wordpress-add-ons #yt4wp-settings-sidebar, .admin_page_youtube-for-wordpress-welcome #yt4wp-settings-sidebar {
 			width: 100%;
 			padding: 0 2em;
 		}

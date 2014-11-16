@@ -1,14 +1,5 @@
 <?php
 
-
-//
-//	RSS Widget Template
-//  RSS feed widget template
-//      - need to figure out a way to create a dynamic RSS URL
-//      - provide username....user id... channel name... channel id... 
-//		- I'm not sure what's best
-//
-
 // Creating the widget 
 
 class yt_plus_upload_widget extends WP_Widget {

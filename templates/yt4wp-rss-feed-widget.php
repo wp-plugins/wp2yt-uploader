@@ -65,10 +65,9 @@ class yt_plus_widget extends WP_Widget {
 	* On callback, it tries to restart the session
 	* Throwing an error
 	*/
-
-	if (session_id() == PHP_SESSION_NONE) {
-		session_start();
-	}
+	if(!isset($_SESSION)) { 
+			session_start();
+		}
 
 	// check if yt plus session is started
 	

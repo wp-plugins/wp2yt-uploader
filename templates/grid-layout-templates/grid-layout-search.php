@@ -1,5 +1,9 @@
 <?php
 
+// Front end layout
+// for our Search grid 
+// @since v2.0
+
 // enqueue masonry for layouts
 wp_enqueue_script( 'masonry' , array('jquery') );
 

@@ -27,18 +27,6 @@ case 'update_options':
 		}
 	else echo '-1';
 	break;
-
-/*
-* Update YouTube Debug Options
-*/	
-case 'update_debug_options':
-	$action	= $YT4WPBase->updateDebugOptions($_POST);
-	if($action)
-		{
-		echo '1';
-		}
-	else echo '-1';
-	break;
 	
 /*
 * Update YouTube License Options
@@ -50,6 +38,14 @@ case 'update_license_options':
 		echo '1';
 		}
 	else echo '-1';
+	break;
+	
+/*
+* Update YouTube Debug Options
+*/	
+case 'update_error_log_count_option':
+	$action	= $YT4WPBase->updateErrorLogCountOption( $_POST['new_count'] );
+	die();
 	break;
 
 /*
@@ -135,6 +131,7 @@ case 'youtube_plus_paginate_search_youtube_frontend':
 	
 case 'upload_content_to_YouTube':
 	$upload_new_video = $YT4WPBase->newUploadToYouTube($_POST['video_location'],$_POST['video_titlte'],$_POST['video_description'],$_POST['screen_base']);
+	die();
 	break;		
 
 case 'edit_video_button_click':
@@ -203,7 +200,12 @@ case 'load_tab_content':
 case 'yt_plus_revoke_user_permissions':
 	$loadTabDataAjax = $YT4WPBase->logOutAndRevokeAccessToken($_POST['access_token']);
 		break;
-	
+		
+/* Delete the contents of our error log */
+case 'clear_yt4wp_error_log':
+	$clear_yt4wp_error_log = $YT4WPBase->clear_yt4wp_error_log();
+		break;
+			
 		}
 	}
 ?>

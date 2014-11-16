@@ -4,7 +4,7 @@ Donate link: http://www.evan-herman.com/contact/?contact-reason=I%20want%20to%20
 Tags: YouTube, youtube, upload, uploader, to, wordpress, plugin, responsive, embed, embed, fluidvid.js, fluidvid, flexible, flex, fluid, you, tube, you tube, browser, browse, google, video, music, content, songs, dynamic, url, media, social, social network, social media, social plugin, comments, shortcode, youtube api, YouTube API, YouTube URL, Videos, video player, player, movie player, youtube player , upload, browse, subscriptions, unsubscribe, playlist, mediaelement, add-on, support 
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 
 YouTube for WordPress is a complete YouTube solution for WordPress installations.
@@ -143,6 +143,26 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Changelog ==
 
+= 2.0.2 - November 16th, 2014 =
+* Update: Removed advanced debug option
+* Update: Improved error messaging, now more user friendly
+* Update: Imrpoved initial welcome screen so it doesn't look so much like a warning
+* Update: Added new error loging to debug settings page for better error tracking and support handling
+* Update: Various style improvements throughout
+* Update: Wrapped a few more strings in proper text-domain
+* Update: Set default player to media element player
+* Update: Removed a few undeclaired variabled throwing warnings
+* Update: Re-wrote some of the file upload script
+* New: Added a new helper function ( `writeErrorToErrorLog( $error_message , $error_code )` - which allows errors to be written to the new error log )
+* New: Added a new helper function ( `clear_yt4wp_error_log()` - which clears all errors from the error log )
+* New: Added a new support page with information about receiving support
+* New: Added new error checks to the upload page (prevent uploads larger than server allowed)
+* New: Added max_upload_filesize text to the upload page
+* New: Eyeball icon on settings page to be able to check current values of keys
+* Removed: runUpdateTasks() function, wasn't being utilized. Moved all updates to `runUpdateCheck()`
+* Removed: Unused Google Services ( reduced excessive file size )
+* Removed: Google PHP Unit Tests ( reduced excessive file size )
+
 = 2.0.1 - November 13th, 2014 =
 * Update: Lowered PHP requirements to PHP 5.3
 * Update: Removed PHP 5.4 functions
@@ -172,6 +192,9 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 * Initial Release of YouTube Plus
 
 == Upgrade Notice ==
+= 2.0.2 - November 16th, 2014
+Tons of updates in this release including but not limited to better error messaging, style improvements, usability enhancements and more.
+
 = 2.0.1 - November 13th, 2014
 In the latest release we've lowered the minimum requirements to PHP 5.3. We've also gone through and added missing text-domains to strings and updated a few text strings.
 
