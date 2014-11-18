@@ -143,7 +143,7 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Changelog ==
 
-=2.0.1.1 - November 17th, 2014 =
+= 2.0.1.1 - November 17th, 2014 =
 * Update: Fixed error with comment not closing, throwing page layouts off
 
 = 2.0.2 - November 16th, 2014 =
