@@ -11,7 +11,7 @@ YouTube for WordPress is a complete YouTube solution for WordPress installations
 
 == Description ==
 
-**Help us make YouTube for WordPress better by taking the user [feedback survey](http://www.youtubeforwordpress.com/user-feedback-survey/)**
+**Help us make YouTube for WordPress better by taking the [user feedback survey](http://www.youtubeforwordpress.com/user-feedback-survey/)**
 
 [YouTube for WordPress Demo Site](http://www.youtubeforwordpress.com) // [YouTube for WordPress Documentation](http://www.youtubeforwordpress.com/support/documentation/)
 
