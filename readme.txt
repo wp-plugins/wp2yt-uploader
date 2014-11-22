@@ -11,9 +11,9 @@ YouTube for WordPress is a complete, all in one, YouTube solution for WordPress 
 
 == Description ==
 
-[YouTube for WordPress Demo Site](http://www.youtubeforwordpress.com) // [YouTube for WordPress Documentation](http://www.youtubeforwordpress.com/support/documentation/)
+[YouTube for WordPress Demo Site](http://www.youtubeforwordpress.com/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab) // [YouTube for WordPress Documentation](http://www.youtubeforwordpress.com/support/documentation/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab)
 
-If you run into issues <em>please</em> contact support and let us help you work out any issues you are facing : [Contact Support](http://www.youtubeforwordpress.com/contact/)
+If you run into issues <em>please</em> contact support and let us help you work out any issues you are facing : [Contact Support](http://www.youtubeforwordpress.com/contact/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab)
 
 Introducing a brand new , fully redesigned YouTube browsing experience brought directly to your WordPress dashboard.
 
@@ -41,7 +41,7 @@ YouTube for WordPress is built up on the latest version of the YouTube API (v3.0
 
 Anyone using YouTube as their video hosting solution should be using this plugin.  Check out the YouTube for WordPress demo site for examples, documentation, tutorials, support and premium add-ons.
 
-***YouTube for WordPress requires a Google OAUTH and API Key - for help with obtaining your keys, please visit our <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/" target="_blank">support article</a>***
+***YouTube for WordPress requires a Google OAUTH and API Key - for help with obtaining your keys, please visit our <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab" target="_blank">support article</a>***
 
 **Easy to Use Shortcodes**
 
@@ -55,11 +55,11 @@ Some shortcodes that come bundled with YouTube for WordPress
 4. `[yt4wp-grid channel_id="123456"]` - channel grid layout
 5. `[yt4wp-grid search_term="WordPress Tutorials"]` - search term grid layout
 
-<a href="http://www.youtubeforwordpress.com/support/documentation/plugin-docs/shortcodes/" target="_blank">View Documentation and Examples</a>
+<a href="http://www.youtubeforwordpress.com/support/documentation/plugin-docs/shortcodes/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab" target="_blank">View Documentation and Examples</a>
 
 **Add-Ons**
 
-For more information regarding premium add-ons, please review the <a href="http://www.youtubeforwordpress.com/add-ons-overview/" target="_blank">Add Ons Overview</a> page. Some add-ons we have scheduled for release include:
+For more information regarding premium add-ons, please review the <a href="http://www.youtubeforwordpress.com/add-ons-overview/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab" target="_blank">Add Ons Overview</a> page. Some add-ons we have scheduled for release include:
 
 1. YouTube Embedded Player Customizer
 2. Front End User Uploads
@@ -81,14 +81,14 @@ Along with some premium add-ons, we have a few premium themes in the works as we
 
 YouTube for WordPress may be the most highly supported YouTube WordPress plugin to date. As changes are made to the Google/YouTube API this plugin will continue to grow, and extend it's functionality. Due to the overwhelming popularity of this plugin, support will be provided to support license holders first. All other support will be provided through the WordPress plugin repository support forums, located [here](https://wordpress.org/support/plugin/wp2yt-uploader). At the moment, only free support is provided. In the coming weeks, we will be transitioning over to a licensing and support ticket system.
 
-For a full list of features please visit the <a href="http://www.youtubeforwordpress.com/feature/upload-content/" target="_blank">Features</a> section of the YouTube for WordPress site.
+For a full list of features please visit the <a href="http://www.youtubeforwordpress.com/feature/upload-content/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab" target="_blank">Features</a> section of the YouTube for WordPress site.
 
-For support options, please visit the main YouTube for WordPress <a href="http://www.youtubeforwordpress.com/support/" target="_blank">support page</a>
+For support options, please visit the main YouTube for WordPress <a href="http://www.youtubeforwordpress.com/support/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab" target="_blank">support page</a>
 
 
 **Documentation and Examples**
 
-You can find the complete documentation up on the [YouTube for WordPress site](http://www.youtubeforwordpress.com/support/documentation/). You can also find a few [examples](http://www.youtubeforwordpress.com/examples/playlist-shortcode/) of some features you can start using right out of the box!
+You can find the complete documentation up on the [YouTube for WordPress site](http://www.youtubeforwordpress.com/support/documentation/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab). You can also find a few [examples](http://www.youtubeforwordpress.com/examples/playlist-shortcode/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab) of some features you can start using right out of the box!
 
 <em>Note : the YouTube for WordPress documentation is a work in progress. as time progresses, the documentation , developer documentation and examples sections will grow ten fold with specific working examples.</em>
 
@@ -101,14 +101,14 @@ You can find the complete documentation up on the [YouTube for WordPress site](h
 3. Click Plugins -> Add New -> Upload
 4. Upload the wp2yt-uploader.zip file
 4. Activate the plugin
-5. Head over to the setup <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/" target="_blank">documentation</a> and follow along with the tutorial to get things setup properly.
+5. Once installed and activated, head over to the <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=installation_tab" target="_blank">setup documentation</a> and follow along with the tutorial to get things setup properly.
 
 == Frequently Asked Questions ==
 = This seems very complicated, I really need help getting things set up. =
-If you need help getting things set up, we have a <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/" target="_blank">tutorial</a> set up on the site to walk you through the process of attaining an API key from Google. At first glance, it seems a bit overwhelming, but it you can get things set up and the plugin running in under 5 minutes. 
+If you need help getting things set up, we have a <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=faq_tab" target="_blank">tutorial</a> set up on the site to walk you through the process of attaining an API key from Google. At first glance, it seems a bit overwhelming, but it you can get things set up and the plugin running in under 5 minutes. 
 
 = Is there some sort of documentation for YouTube for WordPress? =
-Yes, you can find the documentation on the demo site, located <a href="http://www.youtubeforwordpress.com/support/documentation/" target="_blank">here</a> 
+Yes, you can find the documentation on the demo site, located <a href="http://www.youtubeforwordpress.com/support/documentation/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=faq_tab" target="_blank">here</a> 
 
 = What are the minimum requirements? =
 YouTube for WordPress requires a minimum of WordPress version 3.9+, MySQL 5+ and PHP 5.3+ in order to function properly. You will also need to have CURL enabled at the server level to communicate with the YouTube API.
@@ -117,16 +117,16 @@ YouTube for WordPress requires a minimum of WordPress version 3.9+, MySQL 5+ and
 You'll need to purchase a support license to gain access to the support ticketing system. Once you have a support license, you can submit support requests and someone will get back to you in a short period of time. Otherwise you can open up a thread in the support forums here in the repository.
 
 = Do you have somewhere where you post announcements, like a blog? =
-You can follow along with the announcements on the <a href="http://www.youtubeforwordpress.com/roadmap/" target="_blank">roadmap</a> page. Any future release announcements will be posted there.
+You can follow along with the announcements on the <a href="http://www.youtubeforwordpress.com/roadmap/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=faq_tab" target="_blank">roadmap</a> page. Any future release announcements will be posted there.
 
 = Is there a newsletter I can sign up for, to receive updates about add-on releases and security notifications? =
-Yes, you can sign up for the release newsletter on the <a href="http://www.youtubeforwordpress.com/" target="_blank">YouTube for WordPress site</a>, located in the footer.
+Yes, you can sign up for the release newsletter on the <a href="http://www.youtubeforwordpress.com/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=faq_tab" target="_blank">YouTube for WordPress site</a>, located in the footer.
 
 = Do you provide a list of hooks and filter that I can take advantage of, to extend the plugin to suit my needs? =
-Yes, when building the plugin we took into account that the plugin may not suit <em>all</em> user needs out of the box. We have included a whole slew of hooks and filters for users to take advantage of. You can find a complete list of the hooks in the [YouTube for WordPress](http://www.youtubeforwordpress.com/support/documentation/) developer documentation section of the documentation page.
+Yes, when building the plugin we took into account that the plugin may not suit <em>all</em> user needs out of the box. We have included a whole slew of hooks and filters for users to take advantage of. You can find a complete list of the hooks in the [YouTube for WordPress](http://www.youtubeforwordpress.com/support/documentation/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=faq_tab) developer documentation section of the documentation page.
 
 == Developer Docs. ==
-Please view the developer documentation on the [YouTube for WordPress](http://www.youtubeforwordpress.com/support/documentation/developer-docs/customizing-embedded-player/) documentation page.
+Please view the developer documentation on the [YouTube for WordPress](http://www.youtubeforwordpress.com/support/documentation/developer-docs/customizing-embedded-player/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=other-notes-tab) documentation page.
 
 == Screenshots ==
 1. YouTube for WordPress Settings Overview
@@ -149,7 +149,7 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 * Enhancement: Included a new option for automatic plugin updates in the background, to keep all users on the same version (can be disabled)
 * Update: Removed file upload limit errors, as chunked uploads should avoid this limitation (max_execution_time is the limiter)
 * Update: Stripped out some unecessary code
-* Update: Updated both `[yt4wp-grid]` shortcode functions, view the exmaples : <a href="http://www.youtubeforwordpress.com/examples/search-grid-shortcode/?utm_source=yt4wp-changelog&utm_medium=text-link&utm_campaign=yt4wp-changelog">Search Grid</a>, <a href="http://www.youtubeforwordpress.com/examples/playlist-grid-shortcode/?utm_source=yt4wp-changelog&utm_medium=text-link&utm_campaign=yt4wp-changelog">Playlist Grid</a>
+* Update: Updated both `[yt4wp-grid]` shortcode functions, view the exmaples : <a href="http://www.youtubeforwordpress.com/examples/search-grid-shortcode/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=changelog-tab">Search Grid</a>, <a href="http://www.youtubeforwordpress.com/examples/playlist-grid-shortcode/?utm_source=yt4wp-changelog&utm_medium=text-link&utm_campaign=changelog-tab">Playlist Grid</a>
 * Fixed: Authentication redirect bug. When a user is authenticated and removes there keys, they are then logged out and permissions are revoked.
 * Fixed: `[yt4wp-grid]` bug where grid always displayed at the top of the page 
 * Fixed: Bug removing the error log update arrow
