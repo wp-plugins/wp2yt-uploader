@@ -130,13 +130,13 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Screenshots ==
 1. YouTube for WordPress Settings Overview
-2. YouTube for WordPress Widget Settings
-3. YouTube for WordPress Browse User Content
+2. YouTube for WordPress Search Page
+3. YouTube for WordPress Media Element Player (Embedded Video)
 4. YouTube for WordPress Advanced Channel Browsing Overview
-5. YouTube for WordPress Search Page
+5. YouTube for WordPress Widget Settings
 6. YouTube for WordPress Browse Subscriptions
 7. YouTube for WordPress Insert Video into Posts and Pages
-8. YouTube for WordPress Media Element Player (Embedded Video)
+8. YouTube for WordPress Browse User Content
 9. YouTube for WordPress Widget video playback in fancybox
 10. YouTube for WordPress Uploader Step #1
 11. YouTube for WordPress Uploader mid-upload at 79%
@@ -156,7 +156,7 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 * Fixed: Thickbox styles on post and page edit screens interefering with other plugins
 * Fixed: Split styles and enqueued on pages where needed. Print icon styles in admin_print_scripts hook.
 
-=2.0.2.1 - November 17th, 2014 =
+= 2.0.2.1 - November 17th, 2014 =
 * Update: Fixed error with comment not closing, throwing page layouts off
 
 = 2.0.2 - November 16th, 2014 =
