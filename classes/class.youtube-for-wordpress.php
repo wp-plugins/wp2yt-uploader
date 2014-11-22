@@ -60,11 +60,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					if( !get_option( 'yt4wp_user_refresh_token' ) ) {
 						add_option('yt4wp_user_refresh_token' , '');
 					}
-					
-					// Do any update tasks if needed
-					// to add new/missing options :)
-					$this->runUpdateCheck();
-					
+										
 				}
 				
 			/*
@@ -85,8 +81,9 @@ if( !class_exists( "YT4WPBase" ) ) {
 			public function uninstall() { 
 					// delete options on plugin uninstall
 					delete_option(YT4WP_OPTION);
-					delete_option('api_validation');
 					delete_option('yt4wp_user_refresh_token');
+					delete_option( 'yt4wp_activation_date' );				
+					delete_option( 'youtube_for_wordpress_do_activation_redirect' );				
 				}
 			
 		/***** INITIAL SETUP
@@ -106,6 +103,10 @@ if( !class_exists( "YT4WPBase" ) ) {
 					if(!is_array(@$_SESSION[$this->sessName])) {
 							$_SESSION[$this->sessName]	= array();
 						}
+						
+					// Do any update tasks if needed
+					// to add new/missing options :)
+					$this->runUpdateCheck();	
 								 
 					// Add the CSS/JS files
 					add_action('admin_enqueue_scripts',		array(&$this, 'addStyles'));
@@ -175,8 +176,10 @@ if( !class_exists( "YT4WPBase" ) ) {
 					add_action( 'admin_init', array( &$this , 'yt4wp_stop_bugging_me' ), 5 );
 					
 					/* Check if the user wants to kep YouTube for WordPress auto updates @since v2.0.3 */
-					if ( $this->optionVal['yt4wp-auto-background-updates'] == 1 ) {
-						add_filter( 'auto_update_plugin', array( &$this , 'include_youtube_for_wordpress_in_auto_updates' ), 10, 2 );	
+					if ( isset( $this->optionVal['yt4wp-auto-background-updates'] ) ) {
+						if ( $this->optionVal['yt4wp-auto-background-updates'] == 1 ) {
+							add_filter( 'auto_update_plugin', array( &$this , 'include_youtube_for_wordpress_in_auto_updates' ), 10, 2 );	
+						}
 					}
 					
 					add_action( 'admin_enqueue_scripts' , array( &$this , 'styleYT4WP_Admin_Icon' ) );
