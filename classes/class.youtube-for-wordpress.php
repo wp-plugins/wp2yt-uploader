@@ -251,7 +251,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 							$review_message = sprintf( __( "You have been using <strong>YouTube for WordPress</strong> for 2 weeks now. We hope you're enjoying the power and all the features packed into the free version.  If so, please leave us a review, we'd love to hear what you have to say. <br /><br /> <a href='%s' target='_blank' class='button-secondary'>Leave A Review</a> <a href='%s?utm_source=yt4wp-2week-notice&utm_medium=button&utm_campaign=yt4wp-2week-notice' target='_blank' class='button-secondary'>Fill Out Our User Feedback Survey</a> <a href='%s' class='button-secondary'>Dismiss</a>" ), $reviewurl, $user_feedback_url, $nobugurl );
 						}
 						echo '<style>#yt_plus_review_this_plugin_container{display:none;}</style>'; 
-						echo '<div class="updated" style="font-size:15px;"><p>';
+						echo '<div class="updated"><p style="font-size:15px;">';
 							echo $review_message;
 						echo "</p></div>";
 					}
