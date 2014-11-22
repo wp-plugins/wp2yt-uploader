@@ -81,6 +81,7 @@ if ( isset($_GET['code']) ) {
 		  
 			if ( isset( $token_decode->refresh_token ) ) { 
 				?>
+				<style>#initial_setup_message{margin-top:8em;}.nav-tab-wrapper{display:none;}</style>
 				<script>
 				jQuery(document).ready(function(){
 					setTimeout(function() {

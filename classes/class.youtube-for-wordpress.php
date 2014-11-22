@@ -103,11 +103,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					if(!is_array(@$_SESSION[$this->sessName])) {
 							$_SESSION[$this->sessName]	= array();
 						}
-						
-					// Do any update tasks if needed
-					// to add new/missing options :)
-					$this->runUpdateCheck();	
-								 
+														 
 					// Add the CSS/JS files
 					add_action('admin_enqueue_scripts',		array(&$this, 'addStyles'));
 					add_action('admin_enqueue_scripts',		array(&$this, 'addScripts'));
@@ -182,8 +178,13 @@ if( !class_exists( "YT4WPBase" ) ) {
 						}
 					}
 					
+					// enqueue admin icon styles in the header
 					add_action( 'admin_enqueue_scripts' , array( &$this , 'styleYT4WP_Admin_Icon' ) );
-									
+					
+					// Do any update tasks if needed
+					// to add new/missing options :)
+					$this->runUpdateCheck();	
+					
 				}
 				
 			/* 
@@ -245,9 +246,9 @@ if( !class_exists( "YT4WPBase" ) ) {
 						global $current_user;
 						get_currentuserinfo();
 						if ( isset( $current_user->user_firstname ) ) {
-							$review_message = sprintf( __( "Hey " . $current_user->user_firstname . ", You've been using <strong>YouTube for WordPress</strong> for 2 weeks now. We hope you're enjoying the power and all the features packed into the free version.  If so, please leave us a review, we'd love to hear what you have to say. <br /><br /> <a href='%s' target='_blank' class='button-secondary'>Leave A Review</a> <a href='%s' target='_blank' class='button-secondary'>Fill Out Our User Feedback Survey</a> <a href='%s' class='button-secondary'>Dismiss</a>" ), $reviewurl, $user_feedback_url, $nobugurl );
+							$review_message = sprintf( __( "Hey " . $current_user->user_firstname . ", You've been using <strong>YouTube for WordPress</strong> for 2 weeks now. We hope you're enjoying the power and all the features packed into the free version.  If so, please leave us a review, we'd love to hear what you have to say. <br /><br /> <a href='%s' target='_blank' class='button-secondary'>Leave A Review</a> <a href='%s?utm_source=yt4wp-2week-notice&utm_medium=button&utm_campaign=yt4wp-2week-notice' target='_blank' class='button-secondary'>Fill Out Our User Feedback Survey</a> <a href='%s' class='button-secondary'>Dismiss</a>" ), $reviewurl, $user_feedback_url, $nobugurl );
 						} else {
-							$review_message = sprintf( __( "You have been using <strong>YouTube for WordPress</strong> for 2 weeks now. We hope you're enjoying the power and all the features packed into the free version.  If so, please leave us a review, we'd love to hear what you have to say. <br /><br /> <a href='%s' target='_blank' class='button-secondary'>Leave A Review</a> <a href='%s' target='_blank' class='button-secondary'>Fill Out Our User Feedback Survey</a> <a href='%s' class='button-secondary'>Dismiss</a>" ), $reviewurl, $user_feedback_url, $nobugurl );
+							$review_message = sprintf( __( "You have been using <strong>YouTube for WordPress</strong> for 2 weeks now. We hope you're enjoying the power and all the features packed into the free version.  If so, please leave us a review, we'd love to hear what you have to say. <br /><br /> <a href='%s' target='_blank' class='button-secondary'>Leave A Review</a> <a href='%s?utm_source=yt4wp-2week-notice&utm_medium=button&utm_campaign=yt4wp-2week-notice' target='_blank' class='button-secondary'>Fill Out Our User Feedback Survey</a> <a href='%s' class='button-secondary'>Dismiss</a>" ), $reviewurl, $user_feedback_url, $nobugurl );
 						}
 						echo '<style>#yt_plus_review_this_plugin_container{display:none;}</style>'; 
 						echo '<div class="updated" style="font-size:15px;"><p>';
@@ -314,8 +315,9 @@ if( !class_exists( "YT4WPBase" ) ) {
 					*
 					* @since v2.0.2.1
 					*/
-					if ( ! isset( $this->optionVal['yt4wp-auto-background-updates'] ) ) {
+					if ( !$this->optionVal['yt4wp-auto-background-updates'] ) {
 						$this->optionVal['yt4wp-auto-background-updates'] = '1';
+						update_option(YT4WP_OPTION, $this->optionVal);
 					}
 					
 					/* add new yt4wp-limit-error-log-count options
@@ -323,8 +325,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 					*
 					* @since v2.0.2
 					*/
-					if ( ! isset( $this->optionVal['yt4wp-limit-error-log-count'] ) ) {
-						$this->updateErrorLogCountOption('5'); 
+					if ( !$this->optionVal['yt4wp-limit-error-log-count'] ) {
+						!$this->optionVal['yt4wp-limit-error-log-count'] = '5'; 
 					}
 					
 				}
@@ -460,8 +462,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						$new_count = 20;
 					}
 					$this->optionVal['yt4wp-limit-error-log-count'] = $new_count;
-					update_option(YT4WP_OPTION, $this->optionVal);
-					echo $this->optionVal['yt4wp-limit-error-log-count'];
 				}
 		
 			/*
