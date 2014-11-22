@@ -12,12 +12,24 @@
 .cta:nth-child(2) {
 	display: none !important;
 }
+.wrap #yt_plus_review_this_plugin_container {
+	top: 3.25em;
+}
+#yt4wp-icon {
+	height: 47px;
+	width: 47px;
+}
 </style>
 
 <div class="wrap ytplus-page-about">
-	<div id="yt4wp-icon" class="icon32"></div>
-		
+	
+		<?php 
+			// Display the Help/Contact Banner
+			$this->yt_plus_contact_support_banner(); 
+		?>
+			
 	<h2 id="yt4wp-page-header" style="margin-bottom:0;">
+		<div id="yt4wp-icon" class="icon32"></div>
 		<?php _e('YouTube for WordPress - Add Ons','youtube-for-wordpress-translation'); ?>
 	</h2>
 	

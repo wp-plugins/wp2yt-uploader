@@ -134,7 +134,7 @@ if ( $client->isAccessTokenExpired() ) {
 	//
 	// we do this to avoid re-authorizing every time you use
 	// the plugin -- this is all done behind the scenes ;)
-	if ( get_option( 'yt4wp_user_refresh_token' ) != '' ) {
+	if ( get_option( 'yt4wp_user_refresh_token' ) != '' && ( $this->optionVal['yt4wp-oauth2-key'] != '' && $this->optionVal['yt4wp-oauth2-secret'] != '' && $this->optionVal['yt4wp-api-key'] != '' ) ) {
 		
 		try {
 			$client->refreshToken( get_option( 'yt4wp_user_refresh_token' ) );
@@ -196,17 +196,17 @@ if ( $client->isAccessTokenExpired() ) {
 						// three buttons here
 						?>
 						<a class="yt4wp-setup-button" href="<?php echo admin_url() . 'admin.php?page=youtube-for-wordpress-settings'; ?>">
-							<span class="dashicons dashicons-admin-tools"></span><?php _e( 'Settings' , 'yt-plus-translation-text-domain' ); ?>
+							<span class="dashicons dashicons-admin-tools"></span><?php _e( 'Settings' , 'youtube-for-wordpress' ); ?>
 						</a>
 						<a class="yt4wp-setup-button" href="http://www.youtubeforwordpress.com/documentation/" target="_blank">
-							<span class="dashicons dashicons-book-alt"></span><?php _e( 'Documentation' , 'yt-plus-translation-text-domain' ); ?>
+							<span class="dashicons dashicons-book-alt"></span><?php _e( 'Documentation' , 'youtube-for-wordpress' ); ?>
 						</a>
 						<a class="yt4wp-setup-button" href="http://www.youtubeforwordpress.com/contact/?contact-reason=I%20Need%20Support" target="_blank">
-							<span class="dashicons dashicons-format-status"></span><?php _e( 'Support' , 'yt-plus-translation-text-domain' ); ?>
+							<span class="dashicons dashicons-format-status"></span><?php _e( 'Support' , 'youtube-for-wordpress' ); ?>
 						</a>
 						<?php						
 						echo '<p>&nbsp;</p>';
-						echo "<p><em>" . __( "if this is your first time using the plugin, it's recommended you check out our " , "yt-plus-translation-text-domain") . "<a href='http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/' target='_blank' title='Setup Help'>" . __( "tutorial" , "yt-plus-translation-text-domain" ) . "</a>" . __( " on setting up the plugin." , "yt-plus-translation-text-domain" ) . "</em></p>";
+						echo "<p><em>" . __( "if this is your first time using the plugin, it's recommended you check out our " , "yt-plus-translation-text-domain") . "<a href='http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/' target='_blank' title='Setup Help'>" . __( "tutorial" , "yt-plus-translation-text-domain" ) . "</a>" . __( " on setting everything up." , "yt-plus-translation-text-domain" ) . "</em></p>";
 					
 					} else {
 						
@@ -219,7 +219,7 @@ if ( $client->isAccessTokenExpired() ) {
 						?>
 						<!-- Authenticate Button -->
 							<a href="<?php echo $authUrl; ?>" style="display:block;width:275px;margin:0 auto;margin-bottom:1em;">
-								<input type="submit" class="purchase-add-on-button authenticate-google-account" value="Authenticate Now">
+								<input type="submit" class="purchase-add-on-button authenticate-google-account" value="<?php _e( 'Authorize Now' , 'youtube-for-wordpress' ); ?>">
 							</a>
 						<?php					
 					}
@@ -289,7 +289,7 @@ if ( @$_SESSION['token'] && !$client->isAccessTokenExpired()) {
 		
 		<h3>Content Upload</h3>
 		<p>Upload content to your YouTube account. Drop a file into the dropzone below, or use the browse button to select a file.</p>
-		<span class="yt-upload-info"><?php echo __( 'Maximum upload file size' , 'yt-plus-translation-text-domain' ) . ': ' . esc_html( size_format( wp_max_upload_size() ) ); ?></span>
+		<span class="yt-upload-info"><?php /* echo __( 'Maximum upload file size' , 'youtube-for-wordpress' ) . ': ' . esc_html( size_format( wp_max_upload_size() ) ); */ ?></span>
 		<hr />
 				
 		<div id="upload_form_container">

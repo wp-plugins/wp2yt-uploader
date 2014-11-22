@@ -44,13 +44,6 @@ a.button-secondary.youtube-plus-delete-video-button:hover {
 	color:#DD3D36;
 }
 
-body.wp-admin .wp-menu-image.dashicons-before.dashicons-video-alt3:before, body.wp-admin *[id*="yt_plus_widget"] > div.widget-top > div.widget-title > h4:before {
-	background: -webkit-linear-gradient(top, #E13838, #411);
-	background: linear-gradient(top, #E13838, #411);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-}
-
 /* TinyMCE Button Class */
 /* Icon Fonts */
 .mce-i-yt4wp-mc-icon-yt4wp-button-image:before {
@@ -1449,6 +1442,18 @@ label[for="single-optin-message"], label[for="double-optin-message"] {
 				margin: 0 .15em !important;
 			}
 			
+			.drawer a > .dashicons {
+				color: #727272 !important;
+			}
+			
+			.drawer a:disabled > .dashicons, .drawer a:disabled:hover > .dashicons {
+				color: #727272 !important;
+			}
+			
+			.drawer a:hover > .dashicons {
+				color: #333 !important;
+			}
+			
 			
 		.yt-plus-outside-hidden {
 			overflow:hidden;
@@ -2182,3 +2187,5 @@ label[for="single-optin-message"], label[for="double-optin-message"] {
 		padding: 0 5px;
 	}
 	*/
+	
+	/* Drawer Icons */

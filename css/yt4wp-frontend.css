@@ -61,7 +61,7 @@
 	
 		
 	/** Front End Masonry Styles **/
-	.youtube-plus-rss-feed a.fancybox {
+	.yt4wp-rss-feed a.fancybox {
 		display: block;
 		margin: 1.5em 0;
 	}
@@ -73,13 +73,13 @@
 			list-style: none !important;
 		}	
 	
-	.youtube-plus-video-single-list-item {
+	.yt4wp-video-single-list-item {
 		width: 30%;
 		min-width: 174px;
 		word-break: break-word;
 	}
 	
-	.youtube-plus-video-single-list-item .youtube-plus-video-thumbnail {
+	.yt4wp-video-single-list-item .yt4wp-video-thumbnail {
 		width: 100%;
 	}	
 			
@@ -98,7 +98,7 @@
 			/* Let Masonry containers be 100% on mobile */
 			@media screen and (max-width: 450px) {
 				
-				.youtube-plus-video-single-list-item {
+				.yt4wp-video-single-list-item {
 					width: 100%;
 				}
 				

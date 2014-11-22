@@ -1,5 +1,20 @@
 jQuery(function(){
 	
+	// each time a user clicks Authorize Now, lets ajax revoke permissions
+	// to prevent this login loop from occuring
+	jQuery( 'body' ).on( 'click' , '.authenticate-google-account' , function() {
+		jQuery.ajax({
+			type: 'POST',
+			url: ajaxurl,
+			data: {
+				action: 'yt_plus_settings_form',
+				form_action: 'logout_and_revoke_access_token',
+				access_token: ''
+			},
+			dataType: 'json'
+		});
+	});
+	
     jQuery( 'body' ).on( 'click' , '#drop a' , function(){
         // Simulate a click on the file input button
         // to show the file browser dialog
@@ -40,6 +55,7 @@ jQuery(function(){
 					
 				}
 				
+				/* Limit file size uploads to the max_file_upload
 				if( data.files[0]['size'] > local_data.chunk_max_size ) {
 					if ( jQuery('#acceptable_filetypes').is(':visible') ) {
 							jQuery('#acceptable_filetypes').html('<h3 style="color:#a94442;">Error : File too large</h3><p>The file you are attempting to upload is larger than the maximum allowed by your server ('+local_data.formatted_max_upload_size+').</p><p>Please get in touch with your host provider and ask them to increase this limit.</p><p>&nbsp;</p><p>For help, please see the <a href="http://www.youtubeforwordpress.com/documentation/" title="YouTube for WordPress Documentation">documentation</a> page on common errors.</p>');
@@ -52,7 +68,7 @@ jQuery(function(){
 						}	
 					return;
 				}
-							
+				*/		
 							
 				var file_name = data.files[0].name;
 				var video_title = file_name.split('.')[0];

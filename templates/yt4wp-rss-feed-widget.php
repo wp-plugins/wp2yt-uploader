@@ -14,10 +14,10 @@ class yt_plus_widget extends WP_Widget {
 			'yt_plus_widget', 
 
 			// Widget name will appear in UI
-			__('YouTube for WordPress : RSS Feed', 'yt-plus-translation-text-domain'), 
+			__('YouTube for WordPress : RSS Feed', 'youtube-for-wordpress'), 
 
 			// Widget description
-			array( 'description' => __( 'Display latest content from a YouTube user or channel.', 'yt-plus-translation-text-domain' ), ) 
+			array( 'description' => __( 'Display latest content from a YouTube user or channel.', 'youtube-for-wordpress' ), ) 
 		);
 	}
 
@@ -410,7 +410,7 @@ END;
 						}); // on
 					}); // ready
 				</script>
-				<div class="youtube-plus-rss-feed widget masonry-brick">
+				<div class="yt4wp-rss-feed widget masonry-brick">
 					<h3 class="widget-title"><?php echo $dynamic_widget_title; ?></h3>
 				<?php
 				// set the limit to the widget option
@@ -460,14 +460,14 @@ END;
 					if ( isset( $instance[ 'title' ] ) ) {
 						$title = $instance[ 'title' ];
 					} else {
-						$title = __( 'Sign Up For Our Newsletter', 'yt-plus-translation-text-domain' );
+						$title = __( 'Sign Up For Our Newsletter', 'youtube-for-wordpress' );
 					}
 					
 					// submit button text
 					if ( isset( $instance[ 'submit_button_text' ] ) ) {
 						$submit_button_text = $instance[ 'submit_button_text' ];
 					} else {
-						$submit_button_text = __( 'Sign Me Up', 'yt-plus-translation-text-domain' );
+						$submit_button_text = __( 'Sign Me Up', 'youtube-for-wordpress' );
 					}
 			 ?>
 				<p>
@@ -476,19 +476,19 @@ END;
 				
 				<?php if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) { ?>
 				<p>
-					<label for="<?php echo $this->get_field_id( 'rss_feed_title' ); ?>"><?php _e('Widget Title :','yt-plus-translation-text-domain'); ?> <br />
+					<label for="<?php echo $this->get_field_id( 'rss_feed_title' ); ?>"><?php _e('Widget Title :','youtube-for-wordpress'); ?> <br />
 							<input class="widefat" id="<?php echo $this->get_field_id( 'rss_feed_title' ); ?>" name="<?php echo $this->get_field_name( 'rss_feed_title' ); ?>"  value="<?php if( !isset($instance["rss_feed_title"]) || $instance["rss_feed_title"] == '' ) { echo ''; } elseif ( $instance["rss_feed_title"] > 50 ) { echo '50'; } else { echo $instance["rss_feed_title"]; } ?>" name="rss_feed_title" >
 					</label>
 				</p>
 				
 				<p id="user_selection">
-					<label for="<?php echo $this->get_field_id( 'select_user' ); ?>"><?php _e('Select Feed :','yt-plus-translation-text-domain'); ?> <br />
+					<label for="<?php echo $this->get_field_id( 'select_user' ); ?>"><?php _e('Select Feed :','youtube-for-wordpress'); ?> <br />
 						<?php $this->buildWidgetRSSDropDown($instance); ?>
 					</label>
 				</p>
 				
 				<p>
-					<label for="<?php echo $this->get_field_id( 'feed_limit' ); ?>"><?php _e('Feed Limit :','yt-plus-translation-text-domain'); ?> <br />
+					<label for="<?php echo $this->get_field_id( 'feed_limit' ); ?>"><?php _e('Feed Limit :','youtube-for-wordpress'); ?> <br />
 						<input class="widefat" id="<?php echo $this->get_field_id( 'feed_limit' ); ?>" name="<?php echo $this->get_field_name( 'feed_limit' ); ?>"  value="<?php if( !isset($instance["feed_limit"]) || $instance["feed_limit"] == '' ) { echo '5'; } elseif ( $instance["feed_limit"] > 50 ) { echo '50'; } else { echo $instance["feed_limit"]; } ?>" type="number" min="1" max="50">
 					</label>
 				</p>
@@ -499,7 +499,7 @@ END;
 							$explode_selected_user = explode( '~~' , $instance["select_user"] );
 							$selected_user = $explode_selected_user[1];
 						?>
-						<label for="<?php echo $this->get_field_id( 'selected_feed' ); ?>"><?php _e('Feed To Display :','yt-plus-translation-text-domain'); ?> <br />
+						<label for="<?php echo $this->get_field_id( 'selected_feed' ); ?>"><?php _e('Feed To Display :','youtube-for-wordpress'); ?> <br />
 							<select id="<?php echo $this->get_field_id('selected_feed'); ?>" name="<?php echo $this->get_field_name('selected_feed'); ?>" type="text" style="width:100%;">
 								<!-- construct selectable options based on imported lists -->
 								<option value="uploads" <?php if ( isset( $instance["selected_feed"] ) ) { selected($instance["selected_feed"], 'uploads' ); } ?>><?php echo $selected_user; ?> Uploads</option>
@@ -510,7 +510,7 @@ END;
 				
 				<!-- toggle the this setting to randomize the feed -->
 				<p id="randomize_rss_feed">
-					<label for="<?php echo $this->get_field_id( 'randomize_feed' ); ?>"><?php _e('Randomize Feed? :','yt-plus-translation-text-domain'); ?> <br />
+					<label for="<?php echo $this->get_field_id( 'randomize_feed' ); ?>"><?php _e('Randomize Feed? :','youtube-for-wordpress'); ?> <br />
 						<select id="<?php echo $this->get_field_id('randomize_feed'); ?>" name="<?php echo $this->get_field_name('randomize_feed'); ?>" type="text" style="width:100%;">
 							<!-- construct selectable options based on imported lists -->
 							<option value="1" <?php if ( isset( $instance["randomize_feed"] ) ) { selected($instance["randomize_feed"], '1' ); } ?>>Yes</option>

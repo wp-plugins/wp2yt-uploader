@@ -5,11 +5,21 @@
 .support-sub-text {
 	font-size: 16px;
 }
+.wrap #yt_plus_review_this_plugin_container {
+	top: .75em;
+}
 </style>
+
+	
 <div class="wrap ytplus-page-about">
-	<div id="yt4wp-icon" class="icon32"></div>
-		
+
+		<?php 
+			// Display the Help/Contact Banner
+			$this->yt_plus_contact_support_banner(); 
+		?>
+			
 	<h2 id="yt4wp-page-header" style="margin-bottom:0;">
+		<div id="yt4wp-icon" class="icon32"></div>
 		<?php _e('YouTube for WordPress - Support','youtube-for-wordpress-translation'); ?>
 	</h2>
 	
@@ -31,7 +41,7 @@
 				<p><strong>WordPress Support Forum - </strong><a href="https://wordpress.org/support/plugin/wp2yt-uploader" target="_blank">WordPress.org</a></p>
 				<p style="opacity:.6;"><strong>Support Forum - </strong><a href="#" onclick="return false;">Coming Soon</a></p>
 				<p>&nbsp;</p>
-				<p><em>note : when receiving support, we will most likely ask for information from the debug settings page.</em></p>
+				<p><em>note : when receiving support, we will most likely ask for information from the <a href="<?php echo admin_url( 'admin.php?page=youtube-for-wordpress-settings&tab=debug_settings#yt4wp-youtube-form-debug-options' ); ?>" title="Debug Settings">debug settings page</a>.</em></p>
 	
 			
 		</div>

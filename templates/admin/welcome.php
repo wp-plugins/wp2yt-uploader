@@ -28,11 +28,11 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 
 			<div class="col-md-9">
 				<h2 id="yt4wp-page-header" style="font-size:2.5em;margin:0;">
-					<?php _e('Welcome to YouTube for WordPress','yt-plus-translation-text-domain'); echo ' v' . YT4WP_VERSION_CURRENT; ?>!
+					<?php _e('Welcome to YouTube for WordPress','youtube-for-wordpress'); echo ' v' . YT4WP_VERSION_CURRENT; ?>!
 				</h2>
 				
 				<p class="about-text">
-					<?php printf( __( 'Thank you for updating to the latest version! YouTube for WordPress v%s is ready to make integration with YouTube, safer and easier! Check out some of the newest features below.', 'yt-plus-translation-text-domain' ), YT4WP_VERSION_CURRENT ); ?>
+					<?php printf( __( 'Thank you for updating to the latest version! YouTube for WordPress v%s is ready to make integration with YouTube, safer and easier! Check out some of the newest features below.', 'youtube-for-wordpress' ), YT4WP_VERSION_CURRENT ); ?>
 				</p>
 			</div>
 		

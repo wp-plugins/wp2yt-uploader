@@ -45,13 +45,25 @@ if( !class_exists( "YT4WPBase" ) ) {
 					// redirect the user on plugin activation
 					// to our MailChimp settings page
 					add_option('youtube_for_wordpress_do_activation_redirect', true);
-							
+					
+					// add a new option to store the plugin activation date/time
+					// @since v2.0.3
+					// this is used to notify the user that they should review after 2 weeks
+					if ( !get_option( 'yt4wp_activation_date' ) ) {
+						$now = strtotime( "now" );
+						add_option( 'yt4wp_activation_date', $now );
+					}
+					
 					// create our refresh token option
-					if( get_option( 'yt4wp_user_refresh_token' ) ) {
-						return;
-					} else { // else create it
+					// this is used to store our returned refresh token from the YouTube API
+					// used in nearly all API calls
+					if( !get_option( 'yt4wp_user_refresh_token' ) ) {
 						add_option('yt4wp_user_refresh_token' , '');
-					}	
+					}
+					
+					// Do any update tasks if needed
+					// to add new/missing options :)
+					$this->runUpdateCheck();
 					
 				}
 				
@@ -90,6 +102,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 			
 					// If it's not already set up, initialize our yt4wp session
 					if(session_id() == '') session_start();
+					
 					if(!is_array(@$_SESSION[$this->sessName])) {
 							$_SESSION[$this->sessName]	= array();
 						}
@@ -152,16 +165,108 @@ if( !class_exists( "YT4WPBase" ) ) {
 					if( !$this->optionVal ) {
 						$this->getOptionValue();
 					}
-										
-					// Do any update tasks if needed
-					// to add missing options
-					$this->runUpdateCheck();
 					
-					// Register Our Widget
+					// Register Our Widget 
 					$this->registerYouTubePlusWidgets();
 					
+					// check the users plugin installation date
+					add_action( 'admin_init', array( &$this , 'yt4wp_check_installation_date' ) );
+					// dismissable notice admin side
+					add_action( 'admin_init', array( &$this , 'yt4wp_stop_bugging_me' ), 5 );
+					
+					/* Check if the user wants to kep YouTube for WordPress auto updates @since v2.0.3 */
+					if ( $this->optionVal['yt4wp-auto-background-updates'] == 1 ) {
+						add_filter( 'auto_update_plugin', array( &$this , 'include_youtube_for_wordpress_in_auto_updates' ), 10, 2 );	
+					}
+					
+					add_action( 'admin_enqueue_scripts' , array( &$this , 'styleYT4WP_Admin_Icon' ) );
+									
 				}
+				
+			/* 
+			*	styleYT4WP_Admin_Icons()
+			*	style the yt4wp icon with a nice red gradient
+			*	@since v2.3
+			*/
+			public function styleYT4WP_Admin_Icon() {
+					echo '<style>body.wp-admin .wp-menu-image.dashicons-before.dashicons-video-alt3:before, body.wp-admin *[id*="yt_plus_widget"] > div.widget-top > div.widget-title > h4:before {
+								background: -webkit-linear-gradient(top, #E13838, #411);
+								background: linear-gradient(top, #E13838, #411);
+								-webkit-background-clip: text;
+								-webkit-text-fill-color: transparent;}</style>';
+				}
+			
+			/* 
+			*	include_youtube_for_wordpress_in_auto_updates();
+			*
+			*	Keep this plugin automatically updated!
+			*	since @v2.0.3
+			*/
+			public function include_youtube_for_wordpress_in_auto_updates( $update, $item ) {
+					return ( in_array( $item->slug, array(
+						'wp2yt-uploader',
+					) ) );
+				}
+			
+			/*
+				yt4wp_check_installation_date()
+				checks the user installation date, and adds our action if it's past to ask the user for a review :)
+				@since v2.0.3
+			*/
+			public function yt4wp_check_installation_date() {
+					$stop_bugging_me = "";
+					$stop_bugging_me = get_option('yt4wp_review_stop_bugging_me');
+					if( !$stop_bugging_me ) {
+						$install_date = get_option( 'yt4wp_activation_date' );
+						$past_date = strtotime( '-14 days' );
+						if ( $past_date >= $install_date && current_user_can( 'install_plugins' ) ) {
+							add_action( 'admin_notices', array( &$this , 'yt4wp_display_review_us_notice' ) );
+						}
+					}
+				}
+			
+			/* 
+				Display our admin notification
+				asking for a review, and for user feedback 
+				@since v2.0.3
+			*/
+			public function yt4wp_display_review_us_notice() {	
+					/* Lets only display our admin notice on YT4WP pages to not annoy the hell out of people :) */
+					if ( in_array( get_current_screen()->base , array( 'toplevel_page_youtube-for-wordpress' , 'youtube-for-wp_page_youtube-for-wordpress-settings' , 'youtube-for-wp_page_youtube-for-wordpress-add-ons' , 'youtube-for-wp_page_youtube-for-wordpress-support' , 'post' ) ) ) {
+						// Review URL - Change to the URL of your plugin on WordPress.org
+						$reviewurl = 'http://wordpress.org/support/view/plugin-reviews/wp2yt-uploader';
+						$user_feedback_url = 'http://www.youtubeforwordpress.com/user-feedback-survey/';
+						$http_https = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+						$current_url = "$http_https$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+						$nobugurl = add_query_arg( 'yt4wpnobug', '1', $current_url );
+						global $current_user;
+						get_currentuserinfo();
+						if ( isset( $current_user->user_firstname ) ) {
+							$review_message = sprintf( __( "Hey " . $current_user->user_firstname . ", You've been using <strong>YouTube for WordPress</strong> for 2 weeks now. We hope you're enjoying the power and all the features packed into the free version.  If so, please leave us a review, we'd love to hear what you have to say. <br /><br /> <a href='%s' target='_blank' class='button-secondary'>Leave A Review</a> <a href='%s' target='_blank' class='button-secondary'>Fill Out Our User Feedback Survey</a> <a href='%s' class='button-secondary'>Dismiss</a>" ), $reviewurl, $user_feedback_url, $nobugurl );
+						} else {
+							$review_message = sprintf( __( "You have been using <strong>YouTube for WordPress</strong> for 2 weeks now. We hope you're enjoying the power and all the features packed into the free version.  If so, please leave us a review, we'd love to hear what you have to say. <br /><br /> <a href='%s' target='_blank' class='button-secondary'>Leave A Review</a> <a href='%s' target='_blank' class='button-secondary'>Fill Out Our User Feedback Survey</a> <a href='%s' class='button-secondary'>Dismiss</a>" ), $reviewurl, $user_feedback_url, $nobugurl );
+						}
+						echo '<style>#yt_plus_review_this_plugin_container{display:none;}</style>'; 
+						echo '<div class="updated" style="font-size:15px;"><p>';
+							echo $review_message;
+						echo "</p></div>";
+					}
+				}
+			
 
+			/* 
+				Remove the Review us notification when user clicks 'Dismiss'
+				@since v2.0.3
+			*/
+			public function yt4wp_stop_bugging_me() {
+				$nobug = "";
+				if ( isset( $_GET['yt4wpnobug'] ) ) {
+						$nobug = esc_attr( $_GET['yt4wpnobug'] );
+					}
+				if ( 1 == $nobug ) {
+						add_option( 'yt4wp_review_stop_bugging_me', TRUE );
+					}
+			}
 			
 			/*
 			*  getOptionValue()
@@ -183,7 +288,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 						'yt4wp-region' => 'US',
 						'yt4wp-language' => 'en',
 						'yt4wp-license-key'	=> '',
-						'yt4wp-limit-error-log-count' => '5'
+						'yt4wp-limit-error-log-count' => '5',
+						'yt4wp-auto-background-updates' => '1'
 					);
 					$ov = get_option(YT4WP_OPTION, $defaultVals);
 					$this->optionVal	= $ov;
@@ -200,6 +306,15 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*/			
 			private function runUpdateCheck() {
 			
+					/* add new yt4wp-auto-background-updates option
+					* ie user updates from version < 2.0.2.1
+					*
+					* @since v2.0.2.1
+					*/
+					if ( ! isset( $this->optionVal['yt4wp-auto-background-updates'] ) ) {
+						$this->optionVal['yt4wp-auto-background-updates'] = '1';
+					}
+					
 					/* add new yt4wp-limit-error-log-count options
 					* ie user updates from version < 2.0.2
 					*
@@ -312,6 +427,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 						$this->optionVal['yt4wp-api-key']	= trim($fd['yt4wp-api-key']);
 						$this->optionVal['yt4wp-embed-player-style'] = $fd['yt4wp-embed-player-style'];
 						$this->optionVal['yt4wp-include-stat-count-in-query'] = $fd['yt4wp-include-stat-count-in-query'];
+						$this->optionVal['yt4wp-auto-background-updates'] = isset( $fd['yt4wp-auto-background-updates'] ) ? $fd['yt4wp-auto-background-updates'] : '';
 						
 						// only save the region and language options once the user has sucessfully authed
 						if ( get_option( 'yt4wp_user_refresh_token' ) != '' ) {
@@ -374,6 +490,16 @@ if( !class_exists( "YT4WPBase" ) ) {
 				?>
 					<div id="yt4wp-settings-sidebar">
 					<?php 
+						// referrel variable
+						if ( isset( $_GET['tab'] ) ) {
+							$referrel_page = $_GET['page'] . '-' . $_GET['tab'] . '-';
+						} else {
+							if ( isset( $_GET['page'] ) ) {
+								$referrel_page = $_GET['page'] . '-';
+							} else {
+								$referrel_page = get_current_screen()->base; 
+							}
+						}
 						$page_base = get_current_screen()->base; 
 						if ( $page_base == 'admin_page_youtube-for-wordpress-welcome' && get_option( 'yt4wp_user_refresh_token' ) == '' ) { ?>
 							<div class="cta padding-bottom">
@@ -390,20 +516,20 @@ if( !class_exists( "YT4WPBase" ) ) {
 							   <li>
 								 <p>
 								  <strong>Looking for Support?</strong><br/>
-								  <a href="https://youtubeforwordpress.com/support/" target="blank">Support</a> - Purchase a license for access to our support ticketing system and 24/7 email support.
+								  <a href="https://youtubeforwordpress.com/support/?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=text-link&utm_campaign=yt4wp-sidebar" target="blank">Support</a> - Purchase a license for access to our support ticketing system and 24/7 email support.
 								 </p>
 							   </li>
 							   <li>
 								  <p>
 									  <strong>Looking for something else?</strong><br/>
 									  <ul>
-										<li><a href="http://www.YouTubeforWordPress.com/" target="blank">Tutorials</a> - Learn more about the plugin through the various tutorials setup on the site.</li>
-										<li><a href="http://www.YouTubeforWordPress.com/documentation/" target="blank">Documentation</a> - Get help with the initial setup and tips and tricks on certain functionality of YouTUbe for WordPress.</li>
+										<li><a href="http://www.YouTubeforWordPress.com/?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=text-link&utm_campaign=yt4wp-sidebar" target="blank">Tutorials</a> - Learn more about the plugin through the various tutorials setup on the site.</li>
+										<li><a href="http://www.YouTubeforWordPress.com/documentation/?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=text-link&utm_campaign=yt4wp-sidebar" target="blank">Documentation</a> - Get help with the initial setup and tips and tricks on certain functionality of YouTUbe for WordPress.</li>
 									  </ul>
 								  </p>
 							   </li>
 						  </ul>
-						  <a class="visit" target="blank" href="http://www.YouTubeforWordPress.com/buy-yt4wp/"><i class="dashicons dashicons-arrow-right" style="line-height:.6"></i> Purchase a License</a>
+						  <a class="visit" target="blank" href="http://www.YouTubeforWordPress.com/buy-yt4wp/?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=cta-button&utm_campaign=yt4wp-sidebar"><i class="dashicons dashicons-arrow-right" style="line-height:.6"></i> Purchase a License</a>
 						</div>
 					<!-- upsell add-ons info -->
 						<div class="cta padding-bottom">
@@ -413,17 +539,17 @@ if( !class_exists( "YT4WPBase" ) ) {
 							   <li>
 								<p>
 								  <strong>Extend. Expand. Upgrade. </strong><br/>
-								  Premium add-ons extend YouTube for WordPress beyond what it is capeable outside of the box. Check out some of the current <a href="http://www.youtubeforwordpress.com" target="_blank">Add Ons</a> as well as some planned for future release.
+								  Premium add-ons extend YouTube for WordPress beyond what it is capeable outside of the box. Check out some of the current <a href="http://www.youtubeforwordpress.com/?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=text-link&utm_campaign=yt4wp-sidebar" target="_blank">Add Ons</a> as well as some planned for future release.
 								</p>
 							   </li>
 							   <li>
 								<p>
 								  <strong>Developers </strong><br/>
-								  You too can develop premium add-ons to sell in our digital marketplace. <a href="#" onclick="return false;">learn more</a>
+								  You too can develop premium add-ons to sell in our digital marketplace. <a href="http://www.youtubeforwordpress.com/support/documentation?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=text-link&utm_campaign=yt4wp-sidebar" onclick="return false;">learn more</a>
 								</p>
 							   </li>
 						  </ul>
-						  <a class="visit" target="blank" href="http://www.YouTubeforWordPress.com/add-ons-overview/"><i class="dashicons dashicons-arrow-right" style="line-height:.6"></i> View Add-Ons</a>
+						  <a class="visit" target="blank" href="http://www.YouTubeforWordPress.com/add-ons-overview/?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=cta-button&utm_campaign=yt4wp-sidebar"><i class="dashicons dashicons-arrow-right" style="line-height:.6"></i> View Add-Ons</a>
 						</div>
 					<!-- support the development info -->
 						<div class="cta">
@@ -432,7 +558,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 							<ul>
 							   <li>
 								 <p>If you're not interested in purchasing an add-on or a support license, why not share and rate the plugin?</p>
-								 <span class="yt4wp-srs-button-container"><a href="https://wordpress.org/support/view/plugin-reviews/wp2yt-uploader" target="_blank" class="button-secondary yt4wp-srs-button">Review</a><a href="http://www.evan-herman.com/contact/?contact-reason=I%20want%20to%20make%20a%20donation%20for%20all%20your%20hard%20work" target="_blank" class="button-secondary yt4wp-srs-button">Donate</a><a href="https://twitter.com/yt4wp" target="_blank" class="button-secondary yt4wp-srs-button">Follow</a><a class="button-secondary yt4wp-srs-button" href="http://www.twitter.com/yt4wp" target="_blank">Share</a></span>
+								 <span class="yt4wp-srs-button-container"><a href="https://wordpress.org/support/view/plugin-reviews/wp2yt-uploader" target="_blank" class="button-secondary yt4wp-srs-button">Review</a><a href="http://www.evan-herman.com/contact/?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=button&utm_campaign=yt4wp-sidebar&contact-reason=I%20want%20to%20make%20a%20donation%20for%20all%20your%20hard%20work&donation-for=YouTube%20for%20WordPress" target="_blank" class="button-secondary yt4wp-srs-button">Donate</a><a href="https://twitter.com/yt4wp" target="_blank" class="button-secondary yt4wp-srs-button">Follow</a><a class="button-secondary yt4wp-srs-button" href="http://www.twitter.com/yt4wp" target="_blank">Share</a></span>
 							   </li>
 						  </ul>
 						</div>
@@ -448,14 +574,24 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*  @since 2.0
 			*/			
 			function yt_plus_contact_support_banner() {
+					// referrel variable
+					if ( isset( $_GET['tab'] ) ) {
+						$referrel_page = $_GET['page'] . '-' . $_GET['tab'] . '-';
+					} else {
+						if ( isset( $_GET['page'] ) ) {
+							$referrel_page = $_GET['page'] . '-';
+						} else {
+							$referrel_page = get_current_screen()->base; 
+						}
+					}
 				?>
 					<!-- yt4wp logo on all settings pages -->
 					<div id="yt_plus_review_this_plugin_container">
-						<a href="http://www.YouTubeforWordPress.com/support/" target="_blank">
+						<a href="http://www.YouTubeforWordPress.com/support/?utm_source=<?php echo $referrel_page; ?>&utm_medium=header-image&utm_campaign=review-header-box" target="_blank">
 							<span class="yt_plus_need_support">
 								<strong>
-									<?php _e( 'Need Help?', 'yt-plus-translation-text-domain' ); ?> <br />
-									<?php _e( 'Get Support!', 'yt-plus-translation-text-domain' ); ?> <br />
+									<?php _e( 'Need Help?', 'youtube-for-wordpress' ); ?> <br />
+									<?php _e( 'Get Support!', 'youtube-for-wordpress' ); ?> <br />
 									<div class="dashicons dashicons-plus-alt"></div>
 								</strong>
 							</span>
@@ -463,13 +599,13 @@ if( !class_exists( "YT4WPBase" ) ) {
 						<a href="https://wordpress.org/support/view/plugin-reviews/wp2yt-uploader" target="_blank">
 							<span class="yt_plus_leave_us_a_review">
 								<strong>
-									<?php _e( 'Enjoying the plugin?', 'yt-plus-translation-text-domain' ); ?> <br />
-									<?php _e( 'Leave us a review', 'yt-plus-translation-text-domain' ); ?> <br />
+									<?php _e( 'Enjoying the plugin?', 'youtube-for-wordpress' ); ?> <br />
+									<?php _e( 'Leave us a review', 'youtube-for-wordpress' ); ?> <br />
 									<div class="dashicons dashicons-star-filled"></div><div class="dashicons dashicons-star-filled"></div><div class="dashicons dashicons-star-filled"></div><div class="dashicons dashicons-star-filled"></div><div class="dashicons dashicons-star-filled"></div>
 								</strong>
 							</span>
 						</a>
-						<a href="http://www.YouTubeforWordPress.com" target="_blank" class="yt4wp_header_logo">
+						<a href="http://www.youtubeforwordpress.com/?utm_source=<?php echo $referrel_page; ?>&utm_medium=header-image&utm_campaign=review-header-box" target="_blank" class="yt4wp_header_logo">
 							<img src="<?php echo plugins_url().'/wp2yt-uploader/images/evan_herman_logo.png'; ?>" alt="YouTube for WordPress Site" width=80 style="margin-top:.75em;" title="YouTube for WordPress Site" />
 						</a>
 					</div>
@@ -715,14 +851,14 @@ if( !class_exists( "YT4WPBase" ) ) {
 
 					  } catch (Google_ServiceException $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());						
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 					  
 					  } catch (Google_Exception $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
@@ -844,14 +980,14 @@ if( !class_exists( "YT4WPBase" ) ) {
 
 					  } catch (Google_ServiceException $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  } catch (Google_Exception $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
@@ -1087,19 +1223,17 @@ if( !class_exists( "YT4WPBase" ) ) {
 						} else {
 							$videos_container = sprintf('<h4>It looks like there were no videos found for "%s".' , stripslashes( $search_term ) );
 						}
-
 						$htmlBody .= $videos_container;
-
 					  } catch (Google_ServiceException $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  } catch (Google_Exception $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
@@ -1126,14 +1260,11 @@ if( !class_exists( "YT4WPBase" ) ) {
 					
 					// include the required php files - containers client_id and client_secret
 					@include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
-
 					// Call set_include_path() as needed to point to your client library.
 					require_once YT4WP_PATH.'inc/Google/Client.php';
 					require_once YT4WP_PATH.'inc/Google/Service/YouTube.php';
-
 					/* 
 					* Check if session has started 
 					* On callback, it tries to restart the session
@@ -1142,18 +1273,15 @@ if( !class_exists( "YT4WPBase" ) ) {
 					if(!isset($_SESSION)) { 
 							session_start();
 						}
-
 					$ytPlusBase = new YT4WPBase();
 					$OAUTH2_CLIENT_ID = $ytPlusBase->optionVal['yt4wp-oauth2-key'];
 					$OAUTH2_CLIENT_SECRET = $ytPlusBase->optionVal['yt4wp-oauth2-secret'];
-
 					$client = new Google_Client();
 					$client->setClientId($OAUTH2_CLIENT_ID);
 					$client->setClientSecret($OAUTH2_CLIENT_SECRET);
 					$client->setScopes('https://www.googleapis.com/auth/youtube');
 					$redirect = filter_var('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?page=youtube-for-wordpress', FILTER_SANITIZE_URL);
 					$client->setRedirectUri($redirect);
-
 					// Define an object that will be used to make all API requests.
 					$youtube = new Google_Service_YouTube($client);
 						if ( !isset( $screen_base ) || $screen_base == '' ) {
@@ -1164,41 +1292,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 								$screen_base = $screen_base['base'];
 							}
 						}
-
-					if (isset($_GET['code'])) {
-							
-							$client->authenticate($_GET['code']);			  
-							$_SESSION['token'] = $client->getAccessToken();
-							$token_array = explode( "," ,  str_replace( "}" , "" , str_replace( "{" , "" , str_replace( "\"" , "" ,  $_SESSION['token'] ) ) ) );				
-							// empty exploded token data array
-							$exploded_token_array = array();
-							
-							// loop over to build our array of token data
-							foreach ( $token_array as $token_data ) {
-								$exploded_token_array[] = explode( ":" , $token_data );
-							}
-							
-							// remove our \ in the refresh token, which throws errors
-							// when sending to YouTube APi
-							$refresh_token = str_replace( "\\" , "" , $exploded_token_array[3][1] );
-									
-							// update the refresh token option with the new refresh token	
-							update_option( 'yt4wp_user_refresh_token' , $refresh_token );
-								
-							// set the access token
-							$client->setAccessToken($_SESSION['token']);
-
-							// set our headers
-							$client->authenticate($_GET['code']);
-							$_SESSION['token'] = $client->getAccessToken();
-							header('Location: ' . $redirect);
-							  
-						}
-
-						if (isset($_SESSION['token'])) {
-							  $client->setAccessToken($_SESSION['token']);
-							}
-								
+						
 						if ($client->isAccessTokenExpired()) {
 								// check if the user has ANY data stored in the token session
 								// if they do, but the token has expired, we simply call a refresh
@@ -1235,7 +1329,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 							$channelsResponse = $youtube->channels->listChannels('contentDetails,snippet', array(
 								  'mine' => 'true'
 								));
-
 							$htmlBody = '';
 							// set up the dialog drawer
 							$dialog_drawer = '<section class="dialog_message_drawer"></section>';
@@ -1312,7 +1405,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 							  } else {
 								$htmlBody .= "<h3>Your $clicked_button</h3>" . $pagination . "<ul id='masonry-container'>";
 							  }
-
 							  
 							  
 							  // Browse => Playlists
@@ -1437,14 +1529,12 @@ if( !class_exists( "YT4WPBase" ) ) {
 									// user hasn't uploaded any videos yet
 									// no videos found in "Uploads"
 									?><style>#masonry-container{height:auto !important;}</style><?php
-
 									$htmlBody .= '<span class="no_content_found_error" style="line-height:2.8;">You have not uploaded any videos to your account yet. Why not <a href="' . admin_url() . 'admin.php?page=youtube-for-wordpress&tab=youtube_plus_upload" class="button-secondary">upload one</a> now?</span>';
 								
 								}
 								
 								// Browse => Watch Later
 							  } elseif ( $clicked_button == 'Watch Later' ) {
-
 								// if items are found in the watch later playlist
 								if ( $playlistItemsResponse && count($playlistItemsResponse['items']) > 0 ) {
 									
@@ -1498,7 +1588,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 										if ( isset( $playlistItem['modelData']['snippet']['thumbnails'] ) ) {
 											$thumbnail_url = $playlistItem['modelData']['snippet']['thumbnails']['high']['url'];
 										}
-
 										// display only public videos in your favorites list
 										if ( $playlistItem['modelData']['snippet']['title'] != 'Deleted video' ) {
 											
@@ -1521,7 +1610,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 								} else {
 								
 									?><style>#masonry-container{height:auto !important;}</style><?php
-
 									$htmlBody .= '<span class="no_content_found_error">You have not added any videos to your "Watch Later" playlist yet.</span>';
 									
 								}
@@ -1530,7 +1618,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 								// Browse => Favorites
 								// Browse => Watch History
 							  } else {
-
 								// if the playlist has items
 								if ( $playlistItemsResponse && count($playlistItemsResponse['items']) > 0 ) {
 							
@@ -1583,7 +1670,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 										if ( isset( $playlistItem['modelData']['snippet']['thumbnails'] ) ) {
 											$thumbnail_url = $playlistItem['modelData']['snippet']['thumbnails']['high']['url'];
 										}
-
 										// display only public videos in your favorites list
 										if ( $privacy_setting == 'public' && $playlistItem['modelData']['snippet']['title'] != 'Deleted video' ) {
 											
@@ -1622,7 +1708,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  } catch (Google_ServiceException $e) {
 						  
 							$htmlBody = '';
-							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 							  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
@@ -1644,7 +1730,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 									<style>#masonry-container{height:auto !important;}</style>
 								<?php
 								 $error_message = '<h3>Your Favorites</h3><ul id="masonry-container" style="position: relative; height: auto;"><span class="no_content_found_error">You have not favorited any videos yet.</span></ul>';
-								 $htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+								 $htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 									htmlspecialchars($e->getMessage()),$e->getCode());
 								/* Write the error to our error log */
 								$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
@@ -1652,7 +1738,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 							} else {
 								
 								$error_message = $e->getMessage();
-								$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+								$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 									htmlspecialchars($e->getMessage()),$e->getCode());
 								/* Write the error to our error log */
 								$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
@@ -1669,7 +1755,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  $state = mt_rand();
 						  $client->setState($state);
 						  $_SESSION['state'] = $state;
-
 						  $authUrl = $client->createAuthUrl();
 						  // this runs only the first time the user ever installs the plugin
 							 $htmlBody .= '<div class="error" style="margin-top:5.3em;position:absolute;width:96.5%;">
@@ -1678,7 +1763,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 									</div>'; 
 									
 						}
-
 						?>
 							<?=$htmlBody?>
 						<?php
@@ -1697,7 +1781,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 										
 					// include the required php files - containers api key
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 						
@@ -1752,7 +1835,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  } catch (Google_ServiceException $e) {
 							
 							$htmlBody = '';
-							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 							  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 								$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
@@ -1760,13 +1843,12 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  } catch (Google_Exception $e) {
 							
 							$htmlBody = '';
-							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 							  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 								$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 								
 						  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					
 					} else {
@@ -1774,7 +1856,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  $state = mt_rand();
 						  $client->setState($state);
 						  $_SESSION['state'] = $state;
-
 						  $authUrl = $client->createAuthUrl();
 						  $htmlBody = '';
 						  
@@ -1799,22 +1880,17 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*  @since 2.0
 			*/		
 			function changeQueriedPlaylist( $selected_list , $clicked_button , $screen_base) {	
-
 					if ( get_option( 'yt4wp_user_refresh_token' ) == '' ) {
 						?><style>.yt4wp-error-alert:before { padding:0 !important; line-height: 1 !important; padding-right: 5px !important; }</style><?php
 						wp_die( '<span id="response_message" class="yt4wp-error-alert"><strong>Woah Woah Woah...</strong> It looks like you haven\'t authenticated yet. You\'ll first need to authenticate yourself before you can go any further.</span>');
 					}
-
 					// include the required php files - containers client_id and client_secret
 					@include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
-
 						// Call set_include_path() as needed to point to your client library.
 						require_once YT4WP_PATH.'inc/Google/Client.php';
 						require_once YT4WP_PATH.'inc/Google/Service/YouTube.php';
-
 						/* 
 						* Check if session has started 
 						* On callback, it tries to restart the session
@@ -1823,7 +1899,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						if (session_id() == PHP_SESSION_NONE) {
 							session_start();
 						}
-
 							
 						/*
 						 * You can acquire an OAuth 2.0 client ID and client secret from the
@@ -1835,7 +1910,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						$ytPlusBase = new YT4WPBase();
 						$OAUTH2_CLIENT_ID = $ytPlusBase->optionVal['yt4wp-oauth2-key'];
 						$OAUTH2_CLIENT_SECRET = $ytPlusBase->optionVal['yt4wp-oauth2-secret'];
-
 						$client = new Google_Client();
 						$client->setClientId($OAUTH2_CLIENT_ID);
 						$client->setClientSecret($OAUTH2_CLIENT_SECRET);
@@ -1847,12 +1921,9 @@ if( !class_exists( "YT4WPBase" ) ) {
 						}
 						
 						$redirect = filter_var( $redirect_prefix . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?page=youtube-for-wordpress&tab=youtube_plus_browse' , FILTER_SANITIZE_URL );
-
 						$client->setRedirectUri($redirect);
-
 						// Define an object that will be used to make all API requests.
 						$youtube = new Google_Service_YouTube($client);
-
 						if ( !isset( $screen_base ) || $screen_base == '' ) {
 							$screen_base = get_current_screen();
 							if ( is_object( $screen_base ) ) {
@@ -1861,48 +1932,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 								$screen_base = $screen_base['base'];
 							}
 						}
-
-						if (isset($_GET['code'])) {
-						
-						   if (strval($_SESSION['state']) !== strval($_GET['state'])) {
-							// die('The session state did not match.');
-						  }
-
-						  $client->authenticate($_GET['code']);
-						  
-						  $_SESSION['token'] = $client->getAccessToken();
-						  
-							$token_array = explode( "," ,  str_replace( "}" , "" , str_replace( "{" , "" , str_replace( "\"" , "" ,  $_SESSION['token'] ) ) ) );
-							
-							// empty exploded token data array
-							$exploded_token_array = array();
-							
-							// loop over to build our array of token data
-							foreach ( $token_array as $token_data ) {
-								$exploded_token_array[] = explode( ":" , $token_data );
-							}
-							
-							// remove our \ in the refresh token, which throws errors
-							// when sending to YouTube APi
-							$refresh_token = str_replace( "\\" , "" , $exploded_token_array[3][1] );
-								
-							// update the refresh token option with the new refresh token	
-							update_option( 'yt4wp_user_refresh_token' , $refresh_token );
-							
-							// set the access token
-							$client->setAccessToken($_SESSION['token']);
-
-							// set our headers
-							  $client->authenticate($_GET['code']);
-							  $_SESSION['token'] = $client->getAccessToken();
-							  header('Location: ' . $redirect);
-						  
-						}
-
-						if (isset($_SESSION['token'])) {
-						  $client->setAccessToken($_SESSION['token']);
-						}
-						
 						
 						if ($client->isAccessTokenExpired()) {
 							// check if the user has ANY data stored in the token session
@@ -1940,7 +1969,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 							$channelsResponse = $youtube->channels->listChannels('contentDetails', array(
 							  'mine' => 'true'
 							));
-
 							$htmlBody = '';
 							// set up the dialog drawer
 							$dialog_drawer = '<section class="dialog_message_drawer"></section>';
@@ -1987,7 +2015,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 										'maxResults' => 50
 									 ));
 								}
-
 							if ( isset( $playlistItemsResponse ) ) {
 								if ( count ( $playlistItemsResponse['items'] ) > 0 ) {
 									$channel_name = $playlistItemsResponse['items'][0]['modelData']['snippet']['channelTitle'];
@@ -2013,14 +2040,12 @@ if( !class_exists( "YT4WPBase" ) ) {
 									if ( isset( $playlistsResponse['prevPageToken'] ) ) {
 										$previousPageToken = $playlistsResponse['prevPageToken'];
 									}
-
 									// pagination button definitions
 									if ( isset ( $previousPageToken ) ) {
 										$previous_pagination = '<a href="#" class="pagination_page_browse button-secondary" onclick="return false;" alt="'.$previousPageToken.'" alt="Previous Page" title="Previous"><div class="dashicons dashicons-arrow-left-alt2" style="line-height:1"></div></a>';
 									} else {
 										$previous_pagination = '<a href="#" class="pagination_page_browse_disabled button-secondary" onclick="return false;" alt="" alt="Previous Page" title="Previous"><div class="dashicons dashicons-arrow-left-alt2" style="line-height:1"></div></a>';
 									}
-
 									if ( isset( $nextPageToken ) ) {
 										$next_pagination =  '<a href="#" class="pagination_page_browse button-secondary" onclick="return false;" alt="'.$nextPageToken.'" alt="Next Page" title="Next"><div class="dashicons dashicons-arrow-right-alt2" style="line-height:1.3"></div></a>';
 									} else {
@@ -2046,14 +2071,12 @@ if( !class_exists( "YT4WPBase" ) ) {
 										if ( isset( $playlistItemsResponse['prevPageToken'] ) ) {
 											$previousPageToken = $playlistItemsResponse['prevPageToken'];
 										}
-
 										// pagination button definitions
 										if ( isset ( $previousPageToken ) ) {
 											$previous_pagination = '<a href="#" class="pagination_page_browse button-secondary" onclick="return false;" alt="'.$previousPageToken.'" alt="Previous Page" title="Previous"><div class="dashicons dashicons-arrow-left-alt2" style="line-height:1"></div></a>';
 										} else {
 											$previous_pagination = '<a href="#" class="pagination_page_browse_disabled button-secondary" onclick="return false;" alt="" alt="Previous Page" title="Previous"><div class="dashicons dashicons-arrow-left-alt2" style="line-height:1"></div></a>';
 										}
-
 										if ( isset( $nextPageToken ) ) {
 											$next_pagination =  '<a href="#" class="pagination_page_browse button-secondary" onclick="return false;" alt="'.$nextPageToken.'" alt="Next Page" title="Next"><div class="dashicons dashicons-arrow-right-alt2" style="line-height:1.3"></div></a>';
 										} else {
@@ -2082,7 +2105,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 							  
 								$htmlBody .= "<h3>Your $clicked_button</h3>" . $previous_pagination . $next_pagination . "<ul id='masonry-container'>";
 							  }
-
 							  
 							  
 							  // Browse => Playlists
@@ -2269,7 +2291,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 										if ( isset( $playlistItem['modelData']['snippet']['thumbnails'] ) ) {
 											$thumbnail_url = $playlistItem['modelData']['snippet']['thumbnails']['high']['url'];
 										}
-
 										// display only public videos in your favorites list
 										if ( $privacy_setting != 'private' && $playlistItem['modelData']['snippet']['title'] != 'Deleted video' ) {
 											
@@ -2292,7 +2313,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 								} else {
 								
 									?><style>#masonry-container{height:auto !important;}</style><?php
-
 									$htmlBody .= '<span class="no_content_found_error">You have not added any videos to your "Watch Later" playlist yet.</span>';
 									
 								}
@@ -2301,7 +2321,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 								// Browse => Favorites
 								// Browse => Watch History
 							  } else {
-
 								// if the playlist has items
 								if ( $playlistItemsResponse && count($playlistItemsResponse['items']) > 0 ) {
 							
@@ -2354,7 +2373,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 										if ( isset( $playlistItem['modelData']['snippet']['thumbnails'] ) ) {
 											$thumbnail_url = $playlistItem['modelData']['snippet']['thumbnails']['high']['url'];
 										}
-
 										// display only public videos in your favorites list
 										if ( $privacy_setting == 'public' && $playlistItem['modelData']['snippet']['title'] != 'Deleted video' ) {
 											
@@ -2423,7 +2441,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					  } catch (Google_ServiceException $e) {
 						
 						$htmlBody = '';
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()));
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
@@ -2435,7 +2453,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 						if (strpos($e->getMessage(),'(401) Invalid Credentials') !== false) {
 						
 							$error_message = 'There was an issue with your credentials. Please check your OAUTH2 API Key, OAUTH2 Secret and that you have authorized.';
-							 $htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered a serious error : %s. Please refresh the page and try again. <p>&nbsp;</p><p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team.</p></p></span>',
+							 $htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered a serious error : %s. Please refresh the page and try again. <p>&nbsp;</p><p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team.</p></p></span>',
 								htmlspecialchars($error_message));
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $error_message , $e->getMessage() );
@@ -2472,7 +2490,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 						
 						} else {
 							
-							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><strong>Oh No!</strong> We have encountered a serious error : <code>%s</code> Please refresh the page and try again. If the error persits please open a support ticket with the YouTube for WordPress <a href="http://www.youtubeforwordpress.com/support" target="_blank">support team</a> and reference the following error number: Error # Please refresh the page and try again. If the error persits please open a support ticket with the YouTube for WordPress <a href="http://www.youtubeforwordpress.com/support" target="_blank">support team</a> and reference the following error number: Error # %s</span>',
+							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><strong>Oh No!</strong> We have encountered an error : %s. If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</span>',
 								  htmlspecialchars($e->getMessage()),$e->getCode());	
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
@@ -2489,7 +2507,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 // this runs only the first time the user ever installs the plugin
 						 $htmlBody .= '<div class="error" style="margin-top:8.3em;position:absolute;width:96.5%;">
@@ -2497,12 +2514,10 @@ if( !class_exists( "YT4WPBase" ) ) {
 								<p>'.__("You need to", "yt-plus-translation-text-domain") .' <a href="'.$authUrl.'">'.__("authorize access", "yt-plus-translation-text-domain") .'</a> '.__("before proceeding.", "yt-plus-translation-text-domain") .'<p>
 							</div>'; 
 					}
-
 					?>
 						<?=$htmlBody?>
 					<?php
 				}
-
 			/*
 			*  getUsersPlaylistItems()
 			*  Get the users selected playlist items
@@ -2516,7 +2531,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 						// include the required php files - containers client_id and client_secret
 						include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 						
 						// delete
 						// set up the Insert button depending on what page we are on
@@ -2539,7 +2553,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 										// who have more than 50 vids
 										'maxResults' => 50
 									 ));
-
 								$htmlBody = '';
 								
 								// set up the dialog drawer
@@ -2624,20 +2637,19 @@ if( !class_exists( "YT4WPBase" ) ) {
 						
 						} catch (Google_ServiceException $e) {
 							
-							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><strong>Oh No!</strong> We have encountered a serious error : <code>%s</code> Please refresh the page and try again. If the error persits please open a support ticket with the YouTube for WordPress <a href="http://www.youtubeforwordpress.com/support" target="_blank">support team</a> and reference the following error number: Error #  %s</span>',
+							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 							  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 								
 						} catch (Google_Exception $e) {
 							
-							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+							$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 							  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 								
 						}
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					  
 					} else {
@@ -2645,12 +2657,10 @@ if( !class_exists( "YT4WPBase" ) ) {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 
 					}
 					
-
 						if ( $current_tab == 'Browse' ) { ?>
 							<!-- navigation items to change the playlist were pulling from -->
 							<div id="profile_sub_navigation">
@@ -2666,7 +2676,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 
 					<?php
 				}
-
 			/*
 			*  getSubscriptionPlaylistItems()
 			*  Get a subscriptions playlists
@@ -2680,7 +2689,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					
 					// set up the Insert button depending on what page we are on
 					if ( $screen_base != 'toplevel_page_youtube-for-wordpress' ) { 
@@ -2702,7 +2710,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 									// who have more than 50 vids
 									'maxResults' => 50
 								 ));
-
 							$htmlBody = '';
 							
 							$create_post_button = '<a class="button-secondary create_video_post_button" disabled="disabled" title="Create Post From This Video (add on not installed)"><div class="dashicons dashicons-media-text" style="line-height:1.3"></div></a>';
@@ -2754,7 +2761,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 									$dialog_drawer = '<section class="dialog_message_drawer"></section>';
 									// set up send to playlist button
 									$send_to_playlist_button = '<a class="button-secondary send_to_playlist_button" disabled="disabled" title="Add Video To Playlist (add on not installed)"><div class="dashicons dashicons-editor-ol" style="line-height:1.3"></div></a>';
-
 							 
 									if($playlistItem['modelData']['snippet']['description']) {
 										// trim the description
@@ -2779,29 +2785,26 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  $htmlBody .= '</ul>';
 						
 					  } catch (Google_ServiceException $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 								
 					  } catch (Google_Exception $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					} else {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 // this runs only the first time the user ever installs the plugin
 					}
-
 					?>
 						<?=$htmlBody?>
 					<?php
@@ -2819,17 +2822,14 @@ if( !class_exists( "YT4WPBase" ) ) {
 					// Call set_include_path() as needed to point to your client library.
 					require_once YT4WP_PATH.'inc/Google/Client.php';
 					require_once YT4WP_PATH.'inc/Google/Service/YouTube.php';
-
 					/* 
 					* Check if session has started 
 					* On callback, it tries to restart the session
 					* Throwing an error
 					*/
-
 					if (session_id() == PHP_SESSION_NONE) {
 						session_start();
 					}
-
 					// check if yt plus session is started
 					
 					/*
@@ -2842,62 +2842,17 @@ if( !class_exists( "YT4WPBase" ) ) {
 					$ytPlusBase = new YT4WPBase();
 					$OAUTH2_CLIENT_ID = $ytPlusBase->optionVal['yt4wp-oauth2-key'];
 					$OAUTH2_CLIENT_SECRET = $ytPlusBase->optionVal['yt4wp-oauth2-secret'];
-
 					$client = new Google_Client();
 					$client->setClientId($OAUTH2_CLIENT_ID);
 					$client->setClientSecret($OAUTH2_CLIENT_SECRET);
 					$client->setScopes('https://www.googleapis.com/auth/youtube');
 					$redirect = filter_var('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?page=youtube-for-wordpress', FILTER_SANITIZE_URL);
 					$client->setRedirectUri($redirect);
-
 					// Define an object that will be used to make all API requests.
 					$youtube = new Google_Service_YouTube($client);
-
 					if ( isset( $screen_base ) && $screen_base == '' ) {
 						$screen_base = get_current_screen()->base;
 					}
-
-					if (isset($_GET['code'])) {
-					
-					   if (strval($_SESSION['state']) !== strval($_GET['state'])) {
-						// die('The session state did not match.');
-					  }
-
-					  $client->authenticate($_GET['code']);
-					  
-					  $_SESSION['token'] = $client->getAccessToken();
-					  
-						$token_array = explode( "," ,  str_replace( "}" , "" , str_replace( "{" , "" , str_replace( "\"" , "" ,  $_SESSION['token'] ) ) ) );
-						
-						// empty exploded token data array
-						$exploded_token_array = array();
-						
-						// loop over to build our array of token data
-						foreach ( $token_array as $token_data ) {
-							$exploded_token_array[] = explode( ":" , $token_data );
-						}
-						
-						// remove our \ in the refresh token, which throws errors
-						// when sending to YouTube APi
-						$refresh_token = str_replace( "\\" , "" , $exploded_token_array[3][1] );
-							
-						// update the refresh token option with the new refresh token	
-						update_option( 'yt4wp_user_refresh_token' , $refresh_token );
-						
-						// set the access token
-						$client->setAccessToken($_SESSION['token']);
-
-						// set our headers
-						  $client->authenticate($_GET['code']);
-						  $_SESSION['token'] = $client->getAccessToken();
-						  header('Location: ' . $redirect);
-					  
-					}
-
-					if (isset($_SESSION['token'])) {
-					  $client->setAccessToken($_SESSION['token']);
-					}
-					
 					
 					if ($client->isAccessTokenExpired()) {
 						// check if the user has ANY data stored in the token session
@@ -2910,7 +2865,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 						
 							$client->refreshToken( get_option( 'yt4wp_user_refresh_token' ) );
 							$_SESSION['token'] = $client->getAccessToken();
-							
+							$client->setAccessToken($client->getAccessToken());
+
 						} else {
 						
 							 $htmlBody = '';
@@ -2938,15 +2894,13 @@ if( !class_exists( "YT4WPBase" ) ) {
 							return $playlist['contentDetails']['relatedPlaylists']['watchLater'];
 						 }
 					} catch( Exception $e ) {
-						 $htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						 $htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 							htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					}
 				}
-
-
 			/*
 			*  addVideoToWatchLaterList()
 			*  
@@ -2958,10 +2912,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*/
 			
 			function addVideoToWatchLaterList($watch_later_list_id,$video_id) {
-
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					try {
 						$resourceId = new Google_Service_YouTube_ResourceId();
 							$resourceId->setVideoId($video_id);
@@ -3005,10 +2957,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*  @since 2.0
 			*/					
 			function addChannelToSubscriptions($channel_id) {
-
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					try {
 						$resourceId = new Google_Service_YouTube_ResourceId();
 							$resourceId->setChannelId($channel_id);
@@ -3053,7 +3003,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					}
 						
 				}
-
 				
 			/*
 			*  removeChannelSubscription()
@@ -3066,10 +3015,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*  @since 2.0
 			*/				
 			function removeChannelSubscription($channel_id) {
-
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					try {
 									
 						$unSubscribeResponse = $youtube->subscriptions->delete("snippet,status",
@@ -3090,7 +3037,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					}
 						
 				}
-
 			
 			/*
 			*  getUsersLikesAndFavoritesVideos()
@@ -3118,7 +3064,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 									// who have more than 50 vids
 									'maxResults' => 50
 								 ));
-
 							$htmlBody = '';
 							
 							 // add our dialog drawr for error message responses
@@ -3163,7 +3108,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 											$stat_container = '<span class="yt-plus-stats-container" style="height:0px !important"></span>';
 										}	
 									
-
 									// grab the privacy settings
 									$privacy_setting = $playlistItem['modelData']['status']['privacyStatus'];
 								
@@ -3190,27 +3134,24 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  $htmlBody .= '</ul>';
 						
 					  } catch (Google_ServiceException $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 					  } catch (Google_Exception $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					} else {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 // this runs only the first time the user ever installs the plugin
 					}
-
 					?>
 						<?=$htmlBody?>
 					<?php
@@ -3277,34 +3218,29 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  $htmlBody .= '</ul>';
 						
 					  } catch (Google_ServiceException $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  } catch (Google_Exception $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					} else {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 // this runs only the first time the user ever installs the plugin
 					}
-
-
 					$channelsResponse = $youtube->channels->listChannels('contentDetails', array(
 						 'mine' => 'true'
 					));
-
 					foreach ($channelsResponse['items'] as $playlist) {
 						// Extract the unique playlist ID that identifies the list of videos
 						// uploaded to the channel, and then call the playlistItems.list method
@@ -3336,7 +3272,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						
 					<?php
 				}
-
 			/*
 			*  getSubscriptionPlaylists()
 			*  Get a selected subscriptions play lists
@@ -3349,7 +3284,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 								
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// set up the Insert button depending on what page we are on
 					if ( $screen_base != 'toplevel_page_youtube-for-wordpress' ) { 
 						$insert_button = '<a class="button-secondary insert_playlist_button" title="Insert Playlist To Post"><div class="dashicons dashicons-external" style="line-height:1.3"></div></a>';
@@ -3407,19 +3341,18 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  
 					  } catch (Google_ServiceException $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );						
 					  } catch (Google_Exception $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					  
 					} else {
@@ -3427,16 +3360,13 @@ if( !class_exists( "YT4WPBase" ) ) {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					
 					}
-
 					?>
 						<?=$htmlBody?>
 					<?php
 				}
-
 			/*
 			*  getSubscriptionVideos() 
 			*  Get a selected subscriptions uploads
@@ -3462,7 +3392,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					$screen_base = $screen_base;
 					include_once YT4WP_PATH.'templates/browse_channel_videos.php';
 				}
-
 				
 			/*
 			*  reloadSubscriptions()
@@ -3475,7 +3404,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'inc/youtube_subscriptions.php';
 				}
-
 				
 			/*
 			*  updateVideoContainer()
@@ -3488,7 +3416,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 						
@@ -3496,7 +3423,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 								
 								$videoResponse = $youtube->videos->listVideos("snippet,status",
 									array('id' => $video_id));
-
 								// include the required php files - containers client_id and client_secret
 								include_once YT4WP_PATH.'templates/single_video_container.php';
 							
@@ -3511,7 +3437,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 								htmlspecialchars($e->getMessage()));
 					  
 						}
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					
 					} else {
@@ -3519,7 +3444,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 
 					}
@@ -3528,7 +3452,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 
 					<?php
 				}
-
 			
 			/*
 			*  updatePlaylistContainer()
@@ -3543,7 +3466,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 						
@@ -3551,7 +3473,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 							
 							$playlistResponse = $youtube->playlists->listPlaylists("snippet,status,contentDetails",
 								array('id' => $playlist_id));
-
 							// include the required php files - containers client_id and client_secret
 							include_once YT4WP_PATH.'templates/single_playlist_container.php';
 						
@@ -3562,13 +3483,11 @@ if( !class_exists( "YT4WPBase" ) ) {
 						$htmlBody .= sprintf('<p><code>%s</code></p>',
 						  htmlspecialchars($e->getMessage()));
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					} else {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 // this runs only the first time the user ever installs the plugin
 					}
@@ -3580,8 +3499,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 
 					<?php
 				}
-
-
 			/*
 			*  generateVideoCategoryDropdown()
 			*  generate a dropdown of all possible video categories
@@ -3593,7 +3510,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 					// include the required php files - containers client_id and client_secret
 					include YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 						
@@ -3624,7 +3540,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  htmlspecialchars($e->getMessage()));
 					  
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					
 					} else {
@@ -3632,7 +3547,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 
 					}
@@ -3640,8 +3554,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						<?=$category_dropdown?>
 					<?php
 				}
-
-
 			/*
 			*  generateRegionDropdown() 
 			*  generate a dropdown of all possible regions
@@ -3653,7 +3565,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// if $errors are set, we've ancountered an error
 					// in the above file, so we need to abort mission at all costs!
 					if ( !isset( $errors ) ) {
@@ -3676,17 +3587,15 @@ if( !class_exists( "YT4WPBase" ) ) {
 								$country_dropdown .= '</select>';
 								
 						  } catch (Google_ServiceException $e) {
-							echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> ' . $e->getMessage() . '.<p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
+							echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> ' . $e->getMessage() . '.<p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
 						  } catch (Google_Exception $e) {
-							echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> ' . $e->getMessage() . '.<p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
+							echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> ' . $e->getMessage() . '.<p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
 						 }
-
 						  $_SESSION['token'] = $client->getAccessToken();
 						} else {
 						  $state = mt_rand();
 						  $client->setState($state);
 						  $_SESSION['state'] = $state;
-
 						  $authUrl = $client->createAuthUrl();
 						 
 						}
@@ -3694,10 +3603,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 						echo $country_dropdown;
 					
 					}
-
 				}
-
-
 			/*
 			*  generateRegionDropdown()
 			*  generate a dropdown of all possible regions
@@ -3732,11 +3638,11 @@ if( !class_exists( "YT4WPBase" ) ) {
 								$language_dropdown .= '</select>';
 								
 						  } catch (Google_ServiceException $e) {						
-								echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> ' . $e->getMessage() . '<p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
+								echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> ' . $e->getMessage() . '<p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
 								/* Write the error to our error log */
 								$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						  } catch (Google_Exception $e) {							
-								echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> ' . $e->getMessage() . '<p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
+								echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> ' . $e->getMessage() . '<p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
 								/* Write the error to our error log */
 								$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );			
 						  }
@@ -3747,16 +3653,12 @@ if( !class_exists( "YT4WPBase" ) ) {
 						  $state = mt_rand();
 						  $client->setState($state);
 						  $_SESSION['state'] = $state;
-
 						  $authUrl = $client->createAuthUrl();
 						
 						}
 						echo $language_dropdown;
 					}
-
 				}
-
-
 			/*
 			*  generateEditVideoForm() 
 			*  generate our edit video form
@@ -3792,8 +3694,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					</div>
 					<?php
 				}
-
-
 				
 			/*
 			*  generateEditPlaylistForm() 
@@ -3828,9 +3728,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					</div>
 					<?php
 				}
-
-
-
 			/*
 			*  getSelectedVideoResponse() 
 			*  get the selected video data, to populate
@@ -3839,10 +3736,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*  @since 2.0
 			*/					
 			function getSelectedVideoResponse($video_id) {				
-
 				// include the required php files - containers client_id and client_secret
 				include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 				// Check to ensure that the access token was successfully acquired.
 				if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 					
@@ -3855,20 +3750,19 @@ if( !class_exists( "YT4WPBase" ) ) {
 					
 				  } catch (Google_ServiceException $e) {
 					
-					$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+					$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 					  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 				  } catch (Google_Exception $e) {
 					
-					$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+					$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 					  htmlspecialchars($e->getMessage()),$e->getCode());
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 				  }
-
 				  $_SESSION['token'] = $client->getAccessToken();
 				
 				} else {
@@ -3876,14 +3770,11 @@ if( !class_exists( "YT4WPBase" ) ) {
 				  $state = mt_rand();
 				  $client->setState($state);
 				  $_SESSION['state'] = $state;
-
 				  $authUrl = $client->createAuthUrl();
 				 
 				 
 				}
-
 			}
-
 			
 			/*
 			*  editExistingVideo() 
@@ -3897,7 +3788,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 						
@@ -3922,32 +3812,27 @@ if( !class_exists( "YT4WPBase" ) ) {
 							$update_video_response = $youtube->videos->update('snippet,status', $new_video );
 										
 					  } catch (Google_ServiceException $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  } catch (Google_Exception $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					} else {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 // this runs only the first time the user ever installs the plugin
 					}
-
 				}
-
-
 			/*
 			*  getSelectedPlaylistResponse()  
 			*  get the current set data for a clicked playlist (used to populate the edit playlist modal with data)
@@ -3955,10 +3840,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*  @since 2.0
 			*/			
 			function getSelectedPlaylistResponse($playlist_id) {				
-
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 						
@@ -3970,27 +3853,24 @@ if( !class_exists( "YT4WPBase" ) ) {
 							echo json_encode($playlistResponse[0]['modelData']);
 						
 					  } catch (Google_ServiceException $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );						
 					  } catch (Google_Exception $e) {
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );		
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					} else {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 // this runs only the first time the user ever installs the plugin
 					}
-
 				}
 				
 			/*
@@ -4004,7 +3884,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 						
@@ -4027,20 +3906,19 @@ if( !class_exists( "YT4WPBase" ) ) {
 										
 					  } catch (Google_ServiceException $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  } catch (Google_Exception $e) {
 						
-						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
+						$htmlBody .= sprintf('<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : %s. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #%s</p></p></span>',
 						  htmlspecialchars($e->getMessage()),$e->getCode());
 							/* Write the error to our error log */
 							$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 						
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					
 					} else {
@@ -4048,13 +3926,10 @@ if( !class_exists( "YT4WPBase" ) ) {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					
 					}
-
 				}
-
 			
 			/*
 			*  deleteUserVideo()
@@ -4068,7 +3943,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 						
@@ -4078,27 +3952,23 @@ if( !class_exists( "YT4WPBase" ) ) {
 								array('id' => $video_id));
 													
 					  } catch (Google_ServiceException $e) {
-						echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : ' .  htmlspecialchars($e->getMessage()) . '. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
+						echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : ' .  htmlspecialchars($e->getMessage()) . '. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );						
 					  } catch (Google_Exception $e) {
-						echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : ' .  htmlspecialchars($e->getMessage()) . '. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
+						echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : ' .  htmlspecialchars($e->getMessage()) . '. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );
 					 }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					} else {
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					 // this runs only the first time the user ever installs the plugin
 					}
-
 				}
-
 				
 			/*
 			*  deleteVideoFromPlaylist() 
@@ -4113,7 +3983,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				
 					// include the required php files - containers client_id and client_secret
 					include_once YT4WP_PATH.'lib/google_api_wrapper_clientid_clientsecret.php';
-
 					// Check to ensure that the access token was successfully acquired.
 					if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"]) && $_SESSION["token"] != '' ) {
 						
@@ -4124,27 +3993,23 @@ if( !class_exists( "YT4WPBase" ) ) {
 								 ));	
 													
 					  } catch (Google_ServiceException $e) {
-						echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : ' .  htmlspecialchars($e->getMessage()) . '. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';					  
+						echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : ' .  htmlspecialchars($e->getMessage()) . '. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';					  
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );		
 					  } catch (Google_Exception $e) {					
-						echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : ' .  htmlspecialchars($e->getMessage()) . '. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';	  
+						echo '<span id="response_message" class="yt4wp-error-alert"><p><strong>Oh No!</strong> We have encountered an error : ' .  htmlspecialchars($e->getMessage()) . '. Please refresh the page and try again. <p>If the error persits please <a href="http://www.youtubeforwordpress.com/support/?utm_source=ytwp-admin-error-alert&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank" title="Open a Ticket">open a support ticket</a> with the YouTube for WordPress support team and reference the following error number: Error #' . $e->getCode() . '</p></p></span>';	  
 						/* Write the error to our error log */
 						$this->writeErrorToErrorLog( $e->getMessage() , $e->getCode() );	
 					  }
-
 					  $_SESSION['token'] = $client->getAccessToken();
 					
 					} else {  
 					  $state = mt_rand();
 					  $client->setState($state);
 					  $_SESSION['state'] = $state;
-
 					  $authUrl = $client->createAuthUrl();
 					}
-
 				}
-
 			
 			/*
 			*  youtubePlusCustomRSS()
@@ -4165,7 +4030,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 			function youtubePlusCustomRSSFunc(){
 					include_once YT4WP_PATH.'templates/rss-youtube-feed-template.php';
 				}
-
 			/*
 			*  logOutAndRevokeAccessToken()
 			*  logout and revoke access token from the currently authenticated user
@@ -4196,8 +4060,13 @@ if( !class_exists( "YT4WPBase" ) ) {
 					// conditionally build and return our button array
 					// we can use this for extending functionality and adding custom buttonse;				
 					// global buttons
+					if ( $screen_base != 'toplevel_page_youtube-for-wordpress' ) { 
+						$line_height = '1.2';
+					} else {
+						$line_height = '1.3';
+					}
 					$browse_buttons = '';
-					$browse_buttons .= '<a class="button-secondary edit_video_button" href="#" onclick="return false;" title="Edit Video Details"><div class="dashicons dashicons-edit" style="line-height:1.3"></div></a>';
+					$browse_buttons .= '<a class="button-secondary edit_video_button" href="#" onclick="return false;" title="Edit Video Details"><div class="dashicons dashicons-edit" style="line-height:'.$line_height.'"></div></a>';
 					$browse_buttons .= '<a class="button-secondary delete_video_button" href="#" onclick="return false;" title="Delete This Video"><div class="dashicons dashicons-trash" style="line-height:1.3"></div></a>';
 					$browse_buttons .= '<a class="button-secondary add_to_watch_later" title="Add to Watch Later"><div class="dashicons dashicons-clock" style="line-height:1.3"></div></a>';				
 					// admin page specific
@@ -4221,10 +4090,14 @@ if( !class_exists( "YT4WPBase" ) ) {
 			public function yt4wp_get_playlist_buttons($screen_base) {
 					// conditionally build and return our button array
 					// we can use this for extending functionality and adding custom buttons
-					
+					if ( $screen_base != 'toplevel_page_youtube-for-wordpress' ) { 
+						$line_height = '1.2';
+					} else {
+						$line_height = '1.3';
+					}
 					// global buttons
 					$playlist_buttons = '';
-					$playlist_buttons .= '<a class="button-secondary edit_playlist_button" href="#" onclick="return false;" title="Edit Playlist Details"><div class="dashicons dashicons-edit" style="line-height:1.3"></div></a>';
+					$playlist_buttons .= '<a class="button-secondary edit_playlist_button" href="#" onclick="return false;" title="Edit Playlist Details"><div class="dashicons dashicons-edit" style="line-height:'.$line_height.'"></div></a>';
 					$playlist_buttons .= '<a class="button-secondary youtube-plus-delete-playlist-button" title="Delete Playlist (add on not installed)" disabled="disabled" href="#" onclick="return false;"><div class="dashicons dashicons-trash" style="line-height:1.3;"></div></a>';					
 					// admin page specific
 					if ( $screen_base != 'toplevel_page_youtube-for-wordpress' ) { 
@@ -4234,7 +4107,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					}						
 					return $playlist_buttons;					
 				}
-
 				
 			/*
 			*  yt4wp_get_users_playlist_item_buttons()
@@ -4286,11 +4158,9 @@ if( !class_exists( "YT4WPBase" ) ) {
 			public function yt4wp_get_likes_favs_history_buttons($screen_base) {
 					// conditionally build and return out button array
 					// we can use this for extending functionality and adding custom buttons
-
 					$likes_favs_history_buttons = '';
 					$likes_favs_history_buttons .= '<a class="button-secondary add_to_watch_later" title="Add to Watch Later"><div class="dashicons dashicons-clock" style="line-height:1.3"></div></a>';	
 					$likes_favs_history_buttons .= '<a class="button-secondary send_to_playlist_button" disabled="disabled" title="Add Video To Playlist (add on not installed)"><div class="dashicons dashicons-editor-ol" style="line-height:1.3"></div></a>';
-
 					// admin page specific
 					if ( $screen_base != 'toplevel_page_youtube-for-wordpress' ) { 
 						$likes_favs_history_buttons .= '<a class="button-secondary insert_video_button"><div class="dashicons dashicons-external" style="line-height:1.3"></div></a>';
@@ -4316,7 +4186,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					// we can use this for extending functionality and adding custom buttons
 					$watch_later_buttons = '';
 					$watch_later_buttons .= '<a class="button-secondary remove_video_from_watch_later" title="Remove Video from Watch Later"><div class="dashicons dashicons-no" style="line-height: 2.2;position: absolute;color: rgb(248, 47, 47);font-size: 17px;margin-left: 7px;"></div><div class="dashicons dashicons-clock" style="line-height: 1.1;font-size: 25px;margin-left: -2px;"></div></a>';
-
 					// admin page specific
 					if ( $screen_base != 'toplevel_page_youtube-for-wordpress' ) { 
 						$watch_later_buttons .= '<a class="button-secondary insert_video_button"><div class="dashicons dashicons-external" style="line-height:1.3"></div></a>';
@@ -4327,7 +4196,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					return $watch_later_buttons;
 						
 				}
-
 			
 			/*
 			*  yt4wp_get_channel_results_buttons()
@@ -4440,10 +4308,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 					file_put_contents( $error_log_location , $new_content );
 				}
 			}				
-
 		/*					         End YouTube Buttons	    				*/
 		/*******************************************************************/
-
 		/***
 		** Custom/Hookable Filters
 		***/
@@ -4522,7 +4388,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 			public function yt4wp_addon_tabs( $addon_tabs ) {
 					return $addon_tabs;
 				}
-
 		  
 		 /**
 			**	End YouTube Hookable Filters
@@ -4556,7 +4421,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					} else {
 						$previous_pagination = '<a href="#" class="pagination_page_'.$tab.'_disabled button-secondary" onclick="return false;" alt="Previous Page" title="Previous"><div class="dashicons dashicons-arrow-left-alt2" style="line-height:1"></div></a>';
 					}
-
 					if ( isset( $nextPageToken ) ) {
 						$next_pagination =  '<a href="#" class="pagination_page_'.$tab.' button-secondary" onclick="return false;" alt="'.$nextPageToken.'" alt="Next Page" title="Next"><div class="dashicons dashicons-arrow-right-alt2" style="line-height:1.3"></div></a>';
 					} else {
@@ -4572,7 +4436,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 		**	End YouTube Plus Functions
 		*/ 
 		 
-
 		/***** SCRIPTS/STYLES
 		 ****************************************************************************************************/
 			/*
@@ -4582,11 +4445,20 @@ if( !class_exists( "YT4WPBase" ) ) {
 			*  @since 2.0
 			*/
 			public function addStyles($hook) {
-				
+								
 				// set up an array of pages to enqueue our scripts on
 				$page_array = array( 'toplevel_page_youtube-for-wordpress' , 'edit.php' , 'post-new.php' , 'post.php' , 'youtube-for-wp_page_youtube-for-wordpress-settings' );
 				
-				// only load our js files if we're on one of the pages above
+				$all_yt4wp_pages = array( 'toplevel_page_youtube-for-wordpress' , 'edit.php' , 'post-new.php' , 'post.php' , 'widgets.php' , 'youtube-for-wp_page_youtube-for-wordpress-settings' , 'youtube-for-wp_page_youtube-for-wordpress-support' , 'youtube-for-wp_page_youtube-for-wordpress-add-ons' , 'admin_page_youtube-for-wordpress-welcome' );
+				
+				// load our admin styles on all yt4wp pages
+				if ( in_array( $hook , $all_yt4wp_pages ) ) {
+					// wp_register_style( 'yt4wp_sess-css-base' , YT4WP_URL . 'css/yt4wp-admin.css' , array() , '1.0.0' , 'all' );
+					wp_register_style( 'yt4wp_sess-css-base' , YT4WP_URL . 'css/yt4wp-admin.min.css' , array() , '1.0.0' , 'all' );
+					wp_enqueue_style( 'yt4wp_sess-css-base' );
+				}
+				
+				// only load our css files if we're on one of the pages above
 				if ( in_array( $hook ,  $page_array ) ) {
 				
 					// Register Styles
@@ -4607,7 +4479,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					do_action( 'yt4wp-enqueue-styles-dashboard' );	 
 					
 				}
-
+				
 				// load our settings sidebar and addons css on the welcome page and on the add-ons page
 				if ( in_array( $hook , array( 'youtube-for-wp_page_youtube-for-wordpress-add-ons' , 'admin_page_youtube-for-wordpress-welcome' ) ) ) {
 					// register settings sidebar styles
@@ -4623,10 +4495,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					wp_register_style( 'yt4wp-settings-sidebar-css' , YT4WP_URL . '/css/yt4wp-settings-sidebar.css' , array() , 'all' );
 					wp_enqueue_style( 'yt4wp-settings-sidebar-css' );
 				}
-				
-				// wp_register_style( 'yt4wp_sess-css-base' , YT4WP_URL . 'css/yt4wp-admin.css' , array() , '1.0.0' , 'all' );
-				wp_register_style( 'yt4wp_sess-css-base' , YT4WP_URL . 'css/yt4wp-admin.min.css' , array() , '1.0.0' , 'all' );
-				wp_enqueue_style( 'yt4wp_sess-css-base' );
 						
 			}
 			
@@ -4641,10 +4509,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 					// Register Styles
 					// wp_register_style( 'yt4wp_sess-front-end-css-base' , YT4WP_URL . 'css/yt4wp-frontend.css' , array() , '1.0.0' , 'all' );
 					wp_register_style( 'yt4wp_sess-front-end-css-base' , YT4WP_URL . 'css/yt4wp-frontend.min.css' , array() , '1.0.0' , 'all' );
-
 					// Enqueue Styles
 					wp_enqueue_style('yt4wp_sess-front-end-css-base');
-
 					// enqueue fancybox for widget
 					wp_enqueue_style( 'fancy-css' , '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css' );
 					
@@ -4767,30 +4633,26 @@ if( !class_exists( "YT4WPBase" ) ) {
 					// custom action hook for extension to hook into front end script enqueueing
 					do_action( 'yt-plus-enqueue-scripts-frontend' );
 				}
-
 		/***** ADMINISTRATION MENUS
 		 ****************************************************************************************************/
 		 
 			/*
 			*  addAdministrationMenu() 
-			*  register our YouTube for WordPress menu items
+			*  register our YouTube for WordPress menu items 
 			*
 			*  @since 2.0
 			*/
 			public function addAdministrationMenu() {
-					// Top Level Menu
-					add_menu_page( __('YouTube for WP','yt-plus-translation-text-domain'), __('YouTube for WP','yt-plus-translation-text-domain'), 'manage_options', 'youtube-for-wordpress', array(&$this, 'generateYouTubeDetails'), 'dashicons-video-alt3', 400);
+					// Top Level Menu 
+					add_menu_page( __('YouTube for WP','youtube-for-wordpress'), __('YouTube for WP','youtube-for-wordpress'), 'manage_options', 'youtube-for-wordpress', array(&$this, 'generateYouTubeDetails'), 'dashicons-video-alt3', 500);
 					// Sub Items
-					add_submenu_page('youtube-for-wordpress', __('YouTube for WP','yt-plus-translation-text-domain'), __('YouTube for WP','yt-plus-translation-text-domain'), 'manage_options', 'youtube-for-wordpress', array(&$this, 'generateYouTubeDetails'));	
-					add_submenu_page('youtube-for-wordpress', __('Settings','yt-plus-translation-text-domain'), __('Settings','yt-plus-translation-text-domain'), 'manage_options', 'youtube-for-wordpress-settings', array(&$this, 'generatePageOptions'));
-					add_submenu_page('youtube-for-wordpress', __('Add Ons','yt-plus-translation-text-domain'), __('Add Ons','yt-plus-translation-text-domain'), 'manage_options', 'youtube-for-wordpress-add-ons', array(&$this, 'generatePageAddOns'));
-					add_submenu_page('youtube-for-wordpress', __('Support','yt-plus-translation-text-domain'), __('Support','yt-plus-translation-text-domain'), 'manage_options', 'youtube-for-wordpress-support', array(&$this, 'generatePageSupport'));
-
+					add_submenu_page('youtube-for-wordpress', __('YouTube for WP','youtube-for-wordpress'), __('YouTube for WP','youtube-for-wordpress'), 'manage_options', 'youtube-for-wordpress', array(&$this, 'generateYouTubeDetails'));	
+					add_submenu_page('youtube-for-wordpress', __('Settings','youtube-for-wordpress'), __('Settings','youtube-for-wordpress'), 'manage_options', 'youtube-for-wordpress-settings', array(&$this, 'generatePageOptions'));
+					add_submenu_page('youtube-for-wordpress', __('Add Ons','youtube-for-wordpress'), __('Add Ons','youtube-for-wordpress'), 'manage_options', 'youtube-for-wordpress-add-ons', array(&$this, 'generatePageAddOns'));
+					add_submenu_page('youtube-for-wordpress', __('Support','youtube-for-wordpress'), __('Support','youtube-for-wordpress'), 'manage_options', 'youtube-for-wordpress-support', array(&$this, 'generatePageSupport'));
 					// hidden pages, still directly accessable
-					add_submenu_page( 'options.php', __('Welcome','yt-plus-translation-text-domain'), __('Welcome','yt-plus-translation-text-domain'), 'administrator', 'youtube-for-wordpress-welcome', array(&$this, 'generateWelcomePage'));
+					add_submenu_page( 'options.php', __('Welcome','youtube-for-wordpress'), __('Welcome','youtube-for-wordpress'), 'administrator', 'youtube-for-wordpress-welcome', array(&$this, 'generateWelcomePage'));
 				}
-
-
 			/***** ADMINISTRATION PAGES
 			 ****************************************************************************************************/
 			/*
@@ -4854,7 +4716,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					require_once YT4WP_PATH.'templates/yt4wp-rss-feed-widget.php'; // include our RSS feed widget
 					require_once YT4WP_PATH.'templates/yt4wp-upload-widget.php'; // include our user upload widget
 				}		
-
 			/***** FORM DATA
 			 ****************************************************************************************************/	 
 			/*
@@ -4893,7 +4754,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 			function youtube_for_wordpress_insert_button( $context ) {
 				  //our popup's title
 				  $title = 'YouTube for WordPress';
-
 				  // button is disabled until the user authenticates properly
 				  if ( get_option( 'yt4wp_user_refresh_token' ) == '' ) {
 				  
@@ -4908,7 +4768,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 				  }
 				  return $context;
 				}
-
 			/***** YouTube for WordPRess Pop Up for insert media 
 			 ****************************************************************************************************/		 
 			/*
@@ -5128,7 +4987,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						});
 					<?php
 				}
-
 				
 			/*
 			*  loadTabDataAjax()
@@ -5140,7 +4998,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 			function loadTabDataAjax($clicked_tab) {
 					include YT4WP_PATH . 'inc/' . $clicked_tab . '.php';
 				}
-
 			/***** Shortcodes 
 			 ***************************************************************************************************
 			/*
@@ -5161,7 +5018,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 						'loop' => '',
 						'preload' => ''
 					), $atts ) );
-
 						$video_width = 900;
 						$video_height = ( $video_width / 1.8 );
 						// recalculate the video width
@@ -5215,23 +5071,21 @@ if( !class_exists( "YT4WPBase" ) ) {
 							);
 							// wrap our embedded video in a shadow container
 							if ( $shadow == "1" ) {
-								return '<div class="video-container-shadow">' . wp_video_shortcode( $attr ) . '</div><!-- YouTube for WordPress video container - http://www.YouTubeForWordPress.com -->';
+								return '<div class="video-container-shadow">' . wp_video_shortcode( $attr ) . '</div><!--YouTube-for-WordPress-video-container-- http://www.YouTubeforWordPress.com -->';
 							} else {
-								return wp_video_shortcode( $attr ) . '<!-- YouTube for WordPress video container - http://www.YouTubeForWordPress.com -->';
+								return wp_video_shortcode( $attr ) . '<!--YouTube-for-WordPress-video-container-- http://www.YouTubeforWordPress.com -->';
 							}
 						} else {
 							// embed the player with a standard youtube iframe
-
 							return '<div class="ytplus-video-container"><iframe src="//www.youtube.com/embed/' . $video_id . '?autoplay='.$auto_play . '" allowfullscreen="" frameborder="0"></iframe></div>
-							<!-- YouTube for WordPress video container - http://www.YouTubeForWordPress.com -->';
+							<!--YouTube-For-WordPress-Container--http://www.YouTubeForWordPress.com>';
 						}		
 					} else {
 						/* Mobile Devices use standard IFRAME */
 						return '<div class="ytplus-video-container mobile"><iframe src="//www.youtube.com/embed/' . $video_id . '?autoplay='.$auto_play . '" allowfullscreen="" frameborder="0"></iframe></div>
-						<!-- YouTube for WordPress video container - http://www.YouTubeForWordPress.com -->';
+						<!--YouTube-for-WordPress-video-container--http://www.YouTubeForWordPress.com>';
 					}
 				}
-
 			
 			/*
 			*  youtube_for_wordpress_playlist_shortcode()
@@ -5247,9 +5101,8 @@ if( !class_exists( "YT4WPBase" ) ) {
 					), $atts ) );
 					 
 					return '<div class="ytplus-video-container"><iframe src="http://www.youtube.com/embed?listType=playlist&amp;list=' . $playlist_id . '" allowfullscreen="" frameborder="0"></iframe></div>
-					<!-- YouTube for WordPress video container - http://www.YouTubeForWordPress.com -->';
+					<!--YouTube-for-WordPress-video-container-- http://www.YouTubeforWordPress.com -->';
 				}
-
 				
 			/*
 			*  youtube_for_wordpress_grid_layout()
@@ -5274,15 +5127,18 @@ if( !class_exists( "YT4WPBase" ) ) {
 					
 					if ( isset( $playlist_id ) && $playlist_id != '' ) { // playlist ID set
 					
-						include_once YT4WP_PATH.'templates/grid-layout-templates/grid-layout-playlist.php';
+						$playlist_grid = include_once YT4WP_PATH.'templates/grid-layout-templates/grid-layout-playlist.php';
+						return $playlist_grid;
 						
 					} else if ( isset( $channel_id ) && $channel_id != '' ) { // channel ID set
 					
-						include_once YT4WP_PATH.'templates/grid-layout-templates/grid-layout-channel.php';
+						$channel_grid = include_once YT4WP_PATH.'templates/grid-layout-templates/grid-layout-channel.php';
+						return $channel_grid;
 						
 					} else if ( isset( $search_term ) && $search_term != '' ) { // search term set
 					
-						include_once YT4WP_PATH.'templates/grid-layout-templates/grid-layout-search.php';
+						$search_grid = include_once YT4WP_PATH.'templates/grid-layout-templates/grid-layout-search.php';
+						return $search_grid;
 						
 					} else {
 						if ( isset( $playlist_id ) ) {
@@ -5296,7 +5152,6 @@ if( !class_exists( "YT4WPBase" ) ) {
 					}
 					
 				}
-
 		/***** => END Shortcodes 
 		 ****************************************************************************************************/
 		 			

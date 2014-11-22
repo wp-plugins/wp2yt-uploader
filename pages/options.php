@@ -1,10 +1,6 @@
 <?php 
+	// enqueue jQuery dialog, for warning alerts
 	wp_enqueue_script('jquery-ui-dialog');
-	// if blog is greater than or equal to WordPress 3.9
-	// enqueue our new jQuery UI dialog styles
-	if ( get_bloginfo( 'version' ) >= '3.9' ) {
-		// wp_enqueue_style("wp-jquery-ui-dialog");
-	}
 ?>
 <style>
 .media-upload-form div.error, .wrap div.error, .wrap div.updated {
@@ -32,7 +28,8 @@ jQuery(document).ready(function () {
 
 	// ajax save the WordPress Plugin Options Page
 	// YouTube Settings Page
-    jQuery('#yt4wp-youtube-form').submit(function (e) {	        
+    jQuery('#yt4wp-youtube-form').submit(function (e) {	      
+		
             jQuery('#yt4wp-status').slideUp('fast');
 			var oauth2_id = jQuery( '#yt4wp-oauth2-key' ).val();
 			var oauth2_secret = jQuery( '#yt4wp-oauth2-secret' ).val();
@@ -48,7 +45,7 @@ jQuery(document).ready(function () {
 					dataType: 'json',
 					success: function (MAILCHIMP) {
 						if (MAILCHIMP == '1') {	
-							jQuery('#yt4wp-status').html('<div class=updated><p><span class="dashicons dashicons-yes" style="line-height:1;"></span><?php _e('Options saved successfully.', 'yt-plus-translation-text-domain'); ?></p></div>');
+							jQuery('#yt4wp-status').html('<div class=updated><p><span class="dashicons dashicons-yes" style="line-height:1;"></span><?php _e('Options saved successfully.', 'youtube-for-wordpress'); ?></p></div>');
 							jQuery('#yt4wp-status').slideDown('fast');
 							clear_update_option_message();
 						} else {
@@ -82,7 +79,7 @@ jQuery(document).ready(function () {
 					dataType: 'json',
 					success: function (response) {
 						if (response == '1') {	
-							jQuery('#yt4wp-status').html('<div class=updated><p><?php _e('Options saved successfully.', 'yt-plus-translation-text-domain'); ?></p></div>');
+							jQuery('#yt4wp-status').html('<div class=updated><p><?php _e('Options saved successfully.', 'youtube-for-wordpress'); ?></p></div>');
 							jQuery('#yt4wp-status').slideDown('fast');
 							clear_update_option_message()
 						} else {
@@ -247,12 +244,12 @@ jQuery(document).ready(function () {
 			success: function (response) {
 				jQuery( '.yt4wp-limit-error-log' ).val( response );
 				jQuery( '.yt4wp-update-limit-preloader' ).fadeOut( 'fast' , function() {
-					jQuery( this ).replaceWith( '<span class="dashicons dashicons-yes yt4wp-update-limit-success-check" style="color:#458B00;" style="margin-top:8px;"></span>' );
+					jQuery( this ).replaceWith( '<span class="dashicons dashicons-yes yt4wp-update-limit-success-check" style="color:#7EBF5B;" style="margin-top:8px;"></span>' );
 					setTimeout(function() {
 						jQuery( '.yt4wp-update-limit-success-check' ).fadeOut( 'fast' , function() {
 							jQuery( this ).remove();
 						});
-					},150000);
+					}, 2000);
 				});
 				console.log(response);
 			},
@@ -260,6 +257,15 @@ jQuery(document).ready(function () {
 				console.log(error_response.responseText);
 			}
 		});
+	});
+	
+	/* Toggle the text of the Auto Background Update checkbox */
+	jQuery( 'body' ).on( 'click' , '#yt4wp-auto-background-updates' , function() {
+		if( jQuery( this ).is( ':checked' ) ) {
+			jQuery( '.yt4wp-auto-background-updates-description' ).text( ' Yes, keep YouTube for WordPress up to date at all times.' );
+		} else {
+			jQuery( '.yt4wp-auto-background-updates-description' ).text( ' No, I will keep YouTube for WordPress up to date myself.' );
+		}
 	});
 		
 });
@@ -304,14 +310,14 @@ jQuery(document).ready(function () {
 ?>
 
 <h2 id="yt4wp-page-header">
-	<div id="yt4wp-icon" class="icon32"></div><?php _e('YouTube for WordPress','yt-plus-translation-text-domain'); ?>
+	<div id="yt4wp-icon" class="icon32"></div><?php _e('YouTube for WordPress','youtube-for-wordpress'); ?>
 </h2>
 
 <!-- tabs -->
 <h2 class="nav-tab-wrapper">
-    <a href="?page=youtube-for-wordpress-settings&tab=youtube_settings" class="nav-tab <?php echo $active_tab == 'youtube_settings' ? 'nav-tab-active' : ''; ?>"><?php _e('YouTube Settings','yt-plus-translation-text-domain'); ?></a>
-	<a href="?page=youtube-for-wordpress-settings&tab=debug_settings" class="nav-tab <?php echo $active_tab == 'debug_settings' ? 'nav-tab-active' : ''; ?>" ><?php _e('Debug Settings','yt-plus-translation-text-domain'); ?></a>
-	<a href="?page=youtube-for-wordpress-settings&tab=license_settings" class="nav-tab <?php echo $active_tab == 'license_settings' ? 'nav-tab-active' : ''; ?>" ><?php _e('Support License','yt-plus-translation-text-domain'); ?></a>
+    <a href="?page=youtube-for-wordpress-settings&tab=youtube_settings" class="nav-tab <?php echo $active_tab == 'youtube_settings' ? 'nav-tab-active' : ''; ?>"><?php _e('YouTube Settings','youtube-for-wordpress'); ?></a>
+	<a href="?page=youtube-for-wordpress-settings&tab=debug_settings" class="nav-tab <?php echo $active_tab == 'debug_settings' ? 'nav-tab-active' : ''; ?>" ><?php _e('Debug Settings','youtube-for-wordpress'); ?></a>
+	<a href="?page=youtube-for-wordpress-settings&tab=license_settings" class="nav-tab <?php echo $active_tab == 'license_settings' ? 'nav-tab-active' : ''; ?>" ><?php _e('Support License','youtube-for-wordpress'); ?></a>
 	<?php do_action( 'youtube_for_wordpress_addon_settings_tabs' , $active_tab ); ?>
 </h2>
 	
@@ -321,14 +327,14 @@ jQuery(document).ready(function () {
 	
 	<br />
 	
-	<h2><?php _e('YouTube for WordPress Settings','yt-plus-translation-text-domain'); ?></h2>
+	<h2><?php _e('YouTube for WordPress Settings','youtube-for-wordpress'); ?></h2>
 
 	<!-- WordPress version number and SSL error checking -->
 	<!-- check WordPress version num. and display an error if its outdated -->
 	<?php if ( $wordPress_version < '3.9' ) { ?>
 		<div class="error">
-			<h3><div class="dashicons dashicons-no yt_plus_error_x"></div><?php _e( 'WordPress Version Number Error', 'yt-plus-translation-text-domain' ); ?></h3>
-			<p><?php _e( 'We\'re sorry, but it looks like your using an outdated version of WordPress. You won\'t be able to access the tinyMCE button to insert forms into pages and posts unless you update to 3.9 or later.', 'yt-plus-translation-text-domain' ); ?></p>
+			<h3><div class="dashicons dashicons-no yt_plus_error_x"></div><?php _e( 'WordPress Version Number Error', 'youtube-for-wordpress' ); ?></h3>
+			<p><?php _e( 'We\'re sorry, but it looks like your using an outdated version of WordPress. You won\'t be able to access the tinyMCE button to insert forms into pages and posts unless you update to 3.9 or later.', 'youtube-for-wordpress' ); ?></p>
 		</div>
 	<?php } 
 	
@@ -338,9 +344,9 @@ jQuery(document).ready(function () {
 	if ( $this->yt4wp_is_user_localhost() ) {
 	?>
 		<div class="update-nag" style="margin-bottom:2.5em;width:97.5% !important;">
-			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'LocalHost Detected :', 'yt-plus-translation-text-domain' ); ?></h3></span>
-			<p><?php _e( 'It looks like your using YouTube for WordPress on localhost.', 'yt-plus-translation-text-domain' ); ?></p>
-			<p><?php _e( 'You will want to setup a <strong>global API key</strong> and set your <strong>redirect URI</strong> as ', 'yt-plus-translation-text-domain' ); ?><?php echo '<em>"' . admin_url() . 'admin.php?page=youtube-for-wordpress"</em>'; ?></p>
+			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'LocalHost Detected :', 'youtube-for-wordpress' ); ?></h3></span>
+			<p><?php _e( 'It looks like your using YouTube for WordPress on localhost.', 'youtube-for-wordpress' ); ?></p>
+			<p><?php _e( 'You will want to setup a <strong>global API key</strong> and set your <strong>redirect URI</strong> as ', 'youtube-for-wordpress' ); ?><?php echo '<em>"' . admin_url() . 'admin.php?page=youtube-for-wordpress"</em>'; ?></p>
 		</div>
 	<?php }
 
@@ -348,9 +354,9 @@ jQuery(document).ready(function () {
 	if ( $php_version < '5.3' ) {
 	?>
 		<div class="update-nag" style="margin-bottom:2.5em;width:97.5% !important;">
-			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'Outdated Version of PHP :', 'yt-plus-translation-text-domain' ); ?></h3></span>
-			<p><?php _e( 'It looks like your site is running an outdated version of PHP. YouTube for WordPress requires a minimum of PHP 5.3.', 'yt-plus-translation-text-domain' ); ?></p>
-			<p><?php _e( 'Your site is currently running PHP v.', 'yt-plus-translation-text-domain' ); echo $php_version; ?></p>
+			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'Outdated Version of PHP :', 'youtube-for-wordpress' ); ?></h3></span>
+			<p><?php _e( 'It looks like your site is running an outdated version of PHP. YouTube for WordPress requires a minimum of PHP 5.3.', 'youtube-for-wordpress' ); ?></p>
+			<p><?php _e( 'Your site is currently running PHP v.', 'youtube-for-wordpress' ); echo $php_version; ?></p>
 		</div>
 	<?php 
 	}  
@@ -359,9 +365,9 @@ jQuery(document).ready(function () {
 	if ( $sql_version < '5.0.0' ) {
 	?>
 		<div class="update-nag" style="margin-bottom:2.5em;width:97.5% !important;">
-			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'LocalHost Detected :', 'yt-plus-translation-text-domain' ); ?></h3></span>
-			<p><?php _e( 'It looks like your site is running an outdated version of MySQL. YouTube for WordPress requires a minimum of MySQL 5.0.0.', 'yt-plus-translation-text-domain' ); ?></p>
-			<p><?php _e( 'Your site is currently running MySQL v.', 'yt-plus-translation-text-domain' ); echo $sql_version; ?></p>
+			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'LocalHost Detected :', 'youtube-for-wordpress' ); ?></h3></span>
+			<p><?php _e( 'It looks like your site is running an outdated version of MySQL. YouTube for WordPress requires a minimum of MySQL 5.0.0.', 'youtube-for-wordpress' ); ?></p>
+			<p><?php _e( 'Your site is currently running MySQL v.', 'youtube-for-wordpress' ); echo $sql_version; ?></p>
 		</div>
 	<?php 
 	} ?>
@@ -372,13 +378,13 @@ jQuery(document).ready(function () {
 			<tbody>				
 				<!-- YouTube OAUTH2 Key Field -->
 				<tr valign="top">
-					<th scope="row"><label for="yt4wp-oauth2-key"><?php _e('Google OAUTH2 Client ID','yt-plus-translation-text-domain'); ?></label></th>
+					<th scope="row"><label for="yt4wp-oauth2-key"><?php _e('Google OAUTH2 Client ID','youtube-for-wordpress'); ?></label></th>
 					<td><input name="yt4wp-oauth2-key" type="password" autofill="off" id="yt4wp-oauth2-key" value="<?php echo $this->optionVal['yt4wp-oauth2-key']; ?>" class="regular-text" /><span class="dashicons dashicons-visibility view-obfuscated-text"></span></span>
 					</td>
 				</tr>
 				<!-- YouTube OAUTH2 Secret Key Field -->
 				<tr valign="top">
-					<th scope="row"><label for="yt4wp-oauth2-secret"><?php _e('Google OAUTH2 Client Secret','yt-plus-translation-text-domain'); ?></label></th>
+					<th scope="row"><label for="yt4wp-oauth2-secret"><?php _e('Google OAUTH2 Client Secret','youtube-for-wordpress'); ?></label></th>
 					<td><input name="yt4wp-oauth2-secret" type="password" autofill="off" id="yt4wp-oauth2-secret" value="<?php echo $this->optionVal['yt4wp-oauth2-secret']; ?>" class="regular-text" /><span class="dashicons dashicons-visibility view-obfuscated-text"></span></span>
 					</td>
 				</tr>
@@ -386,19 +392,19 @@ jQuery(document).ready(function () {
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('Please enter your Google OAUTH2 Keys above. The OAUTH2 Keys allow your WordPress site to communicate securely with your YouTube account.','yt-plus-translation-text-domain'); ?>  <a href="https://console.developers.google.com" target="_blank"><?php _e('Google Developer Console','yt-plus-translation-text-domain'); ?></a>
+						<?php _e('Please enter your Google OAUTH2 Keys above. The OAUTH2 Keys allow your WordPress site to communicate securely with your YouTube account.','youtube-for-wordpress'); ?>  <a href="https://console.developers.google.com" target="_blank"><?php _e('Google Developer Console','youtube-for-wordpress'); ?></a>
 					</td>
 				</tr>
 				<!-- Google Project Setup Tutorial Link -->
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('If you need help setting up the Google API Project, please visit the support article :','yt-plus-translation-text-domain'); ?> <a href="http://YouTubeforWordPress.com/support/documentation/setup/setup-google-project/" target="_blank"><?php _e('Setup the Google Project','yt-plus-translation-text-domain'); ?></a>
+						<strong><?php _e('If you need help setting up the Google API Project, please visit the support article :','youtube-for-wordpress'); ?> <a href="http://YouTubeforWordPress.com/support/documentation/setup/setup-google-project/?utm_source=yt4wp-settings-page&utm_medium=text-link&utm_campaign=yt4wp-settings-page?RURL=<?php echo urlencode( admin_url() . 'admin.php?page=youtube-for-wordpress' ); ?>" target="_blank"><?php _e('Setup the Google Project','youtube-for-wordpress'); ?></a></strong>
 					</td>
 				</tr>
 				<!-- YouTube API Key Field -->
 				<tr valign="top">
-					<th scope="row"><label for="yt4wp-api-key"><?php _e('Google Public API Key','yt-plus-translation-text-domain'); ?></label></th>
+					<th scope="row"><label for="yt4wp-api-key"><?php _e('Google Public API Key','youtube-for-wordpress'); ?></label></th>
 					<td><input name="yt4wp-api-key" type="password" id="yt4wp-api-key" autofill="off" value="<?php echo $this->optionVal['yt4wp-api-key']; ?>" class="regular-text" /><span class="dashicons dashicons-visibility view-obfuscated-text"></span></span>
 					</td>
 				</tr>
@@ -406,14 +412,14 @@ jQuery(document).ready(function () {
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('Please enter your Google API Key above.','yt-plus-translation-text-domain'); ?><br />
+						<?php _e('Please enter your Google API Key above.','youtube-for-wordpress'); ?><br />
 					</td>
 				</tr>
 				<?php if ( get_option( 'yt4wp_user_refresh_token' ) != '' ) { ?>
 				
 				<!-- YouTube Region Field -->
 				<tr valign="top">
-					<th scope="row"><label for="yt4wp-region"><?php _e('Select Your Region','yt-plus-translation-text-domain'); ?></label></th>
+					<th scope="row"><label for="yt4wp-region"><?php _e('Select Your Region','youtube-for-wordpress'); ?></label></th>
 					<td><?php $this->generateRegionDropdown(); ?></span>
 					</td>
 				</tr>
@@ -421,18 +427,18 @@ jQuery(document).ready(function () {
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('Your region will determine some data returned from the API. For example, when searching, YouTube will return videos from your country first.','yt-plus-translation-text-domain'); ?><br />
+						<?php _e('Your region will determine some data returned from the API. For example, when searching, YouTube will return videos from your country first.','youtube-for-wordpress'); ?><br />
 					</td>
 				</tr>
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('Note : Use Wordlwide if you are in the United States.','yt-plus-translation-text-domain'); ?><br />
+						<?php _e('Note : Use Wordlwide if you are in the United States.','youtube-for-wordpress'); ?><br />
 					</td>
 				</tr>
 				<!-- YouTube Language Field -->
 				<tr valign="top">
-					<th scope="row"><label for="yt4wp-language"><?php _e('Select Your Language','yt-plus-translation-text-domain'); ?></label></th>
+					<th scope="row"><label for="yt4wp-language"><?php _e('Select Your Language','youtube-for-wordpress'); ?></label></th>
 					<td><?php $this->generateLanguageDropdown(); ?></span>
 					</td>
 				</tr>
@@ -440,18 +446,18 @@ jQuery(document).ready(function () {
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('This will determine the language of some data returned from the YouTube API (ie: category names).','yt-plus-translation-text-domain'); ?><br />
+						<?php _e('This will determine the language of some data returned from the YouTube API (ie: category names).','youtube-for-wordpress'); ?><br />
 					</td>
 				</tr>
 				
 				<?php } ?>
 				<!-- YouTube Embed Player Options -->
 				<tr valign="top">
-					<th scope="row"><label for="yt4wp-embed-player-style"><?php _e('YouTube Embedded Player Style','yt-plus-translation-text-domain'); ?></label></th>
+					<th scope="row"><label for="yt4wp-embed-player-style"><?php _e('YouTube Embedded Player Style','youtube-for-wordpress'); ?></label></th>
 					<td>
 						<select name="yt4wp-embed-player-style" id="yt4wp-embed-player-style" class="regular-text" style="width:300px;">
-							<option value="yt-default"<?php echo ($this->optionVal['yt4wp-embed-player-style'] === 'yt-default' ? ' selected' : ''); ?>><?php _e('YouTube Default','yt-plus-translation-text-domain'); ?></option>
-							<option value="wp-mediaelement"<?php echo ($this->optionVal['yt4wp-embed-player-style'] === 'wp-mediaelement' ? ' selected' : ''); ?>><?php _e('Media Element Player','yt-plus-translation-text-domain'); ?></option>
+							<option value="yt-default"<?php echo ($this->optionVal['yt4wp-embed-player-style'] === 'yt-default' ? ' selected' : ''); ?>><?php _e('YouTube Default','youtube-for-wordpress'); ?></option>
+							<option value="wp-mediaelement"<?php echo ($this->optionVal['yt4wp-embed-player-style'] === 'wp-mediaelement' ? ' selected' : ''); ?>><?php _e('Media Element Player','youtube-for-wordpress'); ?></option>
 						</select>
 					</td>
 				</tr>
@@ -459,16 +465,16 @@ jQuery(document).ready(function () {
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('Select your video style above.','yt-plus-translation-text-domain'); ?><br />
+						<?php _e('Select your video style above.','youtube-for-wordpress'); ?><br />
 					</td>
 				</tr>		
 				<!-- YouTube Statistics Inclusion Setting -->
 				<tr valign="top">
-					<th scope="row"><label for="yt4wp-embed-player-style"><?php _e('Display Video Statistics','yt-plus-translation-text-domain'); ?></label></th>
+					<th scope="row"><label for="yt4wp-embed-player-style"><?php _e('Display Video Statistics','youtube-for-wordpress'); ?></label></th>
 					<td>
 						<select name="yt4wp-include-stat-count-in-query" id="yt4wp-include-stat-count-in-query" class="regular-text" style="width:300px;">
-							<option value="stat-count-enabled"<?php echo ($this->optionVal['yt4wp-include-stat-count-in-query'] === 'stat-count-enabled' ? ' selected' : ''); ?>><?php _e('Enable Video Stats','yt-plus-translation-text-domain'); ?></option>
-							<option value="stat-count-disabled"<?php echo ($this->optionVal['yt4wp-include-stat-count-in-query'] === 'stat-count-disabled' ? ' selected' : ''); ?>><?php _e('Disable Video Stats','yt-plus-translation-text-domain'); ?></option>
+							<option value="stat-count-enabled"<?php echo ($this->optionVal['yt4wp-include-stat-count-in-query'] === 'stat-count-enabled' ? ' selected' : ''); ?>><?php _e('Enable Video Stats','youtube-for-wordpress'); ?></option>
+							<option value="stat-count-disabled"<?php echo ($this->optionVal['yt4wp-include-stat-count-in-query'] === 'stat-count-disabled' ? ' selected' : ''); ?>><?php _e('Disable Video Stats','youtube-for-wordpress'); ?></option>
 						</select>
 					</td>
 				</tr>
@@ -476,9 +482,23 @@ jQuery(document).ready(function () {
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('Select if you would like the video statistics to be displayed below videos. Video stats include view count, dislikes, likes and favorites. Note : including stats will significantly increase page load times in the dashboard.','yt-plus-translation-text-domain'); ?><br />
+						<?php _e('Select if you would like the video statistics to be displayed below videos. Video stats include view count, dislikes, likes and favorites. Note : including stats will significantly increase page load times in the dashboard.','youtube-for-wordpress'); ?><br />
 					</td>
-				</tr>		
+				</tr>	
+				<!-- YouTube for WordPress automatic Plugin Updates -->
+				<tr valign="top">
+					<th scope="row"><label for="yt4wp-embed-player-style"><?php _e('Background Updates','youtube-for-wordpress'); ?></label></th>
+					<td>
+						<label for="yt4wp-auto-background-updates"><input type="checkbox" name="yt4wp-auto-background-updates" id="yt4wp-auto-background-updates" class="yt4wp-auto-background-updates" value="1" <?php checked( $this->optionVal['yt4wp-auto-background-updates'] , '1' ); ?>><?php if ( $this->optionVal['yt4wp-auto-background-updates'] == '1' ) { ?><span class="yt4wp-auto-background-updates-description"> <?php _e( 'Yes, keep YouTube for WordPress up to date at all times.' , 'youtube-for-wordpress' ); ?></span><?php } else { ?><span class="yt4wp-auto-background-updates-description"> <?php _e( 'No, I will keep YouTube for WordPress up to date myself.' , 'youtube-for-wordpress' ); ?></span><?php } ?></label>
+					</td>
+				</tr>
+				<!-- YouTube Statistics Inclusion Setting Description -->
+				<tr>
+					<td></td>
+					<td class="yt4wp-settings-description">
+						<?php _e('Enable this setting if you would like <strong>YouTube for WordPress</strong> to be automatically updated. This will ensure you always have the most up to date version of the plugin.','youtube-for-wordpress'); ?><br />
+					</td>
+				</tr>	
 				<!-- submit button -->
 				<tr>
 					<td></td>
@@ -498,7 +518,7 @@ jQuery(document).ready(function () {
 		
 		<br />
 		
-		<h2><?php _e('Debug Settings','yt-plus-translation-text-domain'); ?></h2>
+		<h2><?php _e('Debug Settings','youtube-for-wordpress'); ?></h2>
 		
 		<form method="post" name="yt4wp-youtube-form" id="yt4wp-youtube-form-debug-options" onsubmit="return false;">
 			<table class="form-table yt4wp-admin-form">
@@ -506,19 +526,19 @@ jQuery(document).ready(function () {
 				<table class="form-table yt4wp-admin-form">
 					<tbody>
 						<!-- Plugin Info -->
-						<h3><?php _e('Plugin Information','yt-plus-translation-text-domain'); ?></h3>
+						<h3><?php _e('Plugin Information','youtube-for-wordpress'); ?></h3>
 						<!-- Issues? Contact Us. -->
 						<p>
-							<?php _e('If you experience any issues with YouTube for WordPress, please ','yt-plus-translation-text-domain'); ?> <a href="http://www.youtubeforwordpress.com/support/" target="_blank"><?php _e('submit a new ticket','yt-plus-translation-text-domain'); ?></a> <?php _e('with the YouTube for WordPress support team','yt-plus-translation-text-domain'); ?>. <?php _e('You will need to be a support license holder to receive any level of support. Please include the information below and any eror messages or error numbers to help us troubleshoot your problem.','yt-plus-translation-text-domain'); ?>
+							<?php _e('If you experience any issues with YouTube for WordPress, please ','youtube-for-wordpress'); ?> <a href="http://www.youtubeforwordpress.com/support/?utm_source=yt4wp-debug-settings&utm_medium=text-link&utm_campaign=open-support-ticket" target="_blank"><?php _e('submit a new ticket','youtube-for-wordpress'); ?></a> <?php _e('with the YouTube for WordPress support team','youtube-for-wordpress'); ?>. <?php _e('You will need to be a support license holder to receive any level of support. Please include the information below and any eror messages or error numbers to help us troubleshoot your problem.','youtube-for-wordpress'); ?>
 						</p>
 						<!-- User Debug Section -->
 						<!-- Plugin Version, Browser Version etc. -->
 						<tr valign="top">
-							<th scope="row"><label><?php _e('Plugin Version','yt-plus-translation-text-domain'); ?></label></th>
+							<th scope="row"><label><?php _e('Plugin Version','youtube-for-wordpress'); ?></label></th>
 							<td><?php echo YT4WP_VERSION_CURRENT; ?></td>
 						</tr>
 						<tr valign="top">
-							<th scope="row"><label><?php _e('Wordpress Version','yt-plus-translation-text-domain'); ?></label></th>
+							<th scope="row"><label><?php _e('Wordpress Version','youtube-for-wordpress'); ?></label></th>
 							<td>
 							<?php 
 								$wordpress_version = get_bloginfo( 'version' );
@@ -531,7 +551,7 @@ jQuery(document).ready(function () {
 							</td>
 						</tr>
 						<tr valign="top">
-							<th scope="row"><label><?php _e('PHP Version','yt-plus-translation-text-domain'); ?></label></th>
+							<th scope="row"><label><?php _e('PHP Version','youtube-for-wordpress'); ?></label></th>
 							<td>
 								<?php	
 								if ( $php_version < '5.3' ) {
@@ -543,7 +563,7 @@ jQuery(document).ready(function () {
 							</td>
 						</tr>
 						<tr valign="top">
-							<th scope="row"><label><?php _e('MySQL Version','yt-plus-translation-text-domain'); ?></label></th>
+							<th scope="row"><label><?php _e('MySQL Version','youtube-for-wordpress'); ?></label></th>
 							<td>
 								<?php	
 								if ( $sql_version < '5.0.0' ) {
@@ -555,7 +575,7 @@ jQuery(document).ready(function () {
 							</td>
 						</tr>
 						<tr valign="top">
-							<th scope="row"><label><?php _e('Browser Information','yt-plus-translation-text-domain'); ?></label></th>
+							<th scope="row"><label><?php _e('Browser Information','youtube-for-wordpress'); ?></label></th>
 							<td>
 								<?php
 								$theBrowser = $this->getBrowser();
@@ -567,7 +587,7 @@ jQuery(document).ready(function () {
 						<?php $error_file_contents = $this->yt4wp_generate_error_log_table(); ?>
 						<tr valign="top">
 						
-							<th scope="row"><label style="display:block;width:100%;margin-bottom:.5em;"><?php _e('Error Log','yt-plus-translation-text-domain'); ?></label><a href="#" onclick="return false;" class="button-secondary clear-yt4wp-error-log" <?php if ( !$error_file_contents ) { ?> disabled="disabled" <?php } ?>><?php _e( 'clear log' , 'yt-plus-translation-text-domain' ); ?></a><p style="font-weight:400;">Increase/Decrease number of errors to keep at one time</p><input type="number" max="20" min="5" name="yt4wp-limit-error-log" class="yt4wp-limit-error-log" value="<?php echo isset( $this->optionVal['yt4wp-limit-error-log-count'] ) ? $this->optionVal['yt4wp-limit-error-log-count'] : '5'; ?>" style="display:block;width:75px;"></th>
+							<th scope="row"><label style="display:block;width:100%;margin-bottom:.5em;"><?php _e('Error Log','youtube-for-wordpress'); ?></label><a href="#" onclick="return false;" class="button-secondary clear-yt4wp-error-log" <?php if ( !$error_file_contents ) { ?> disabled="disabled" <?php } ?>><?php _e( 'clear log' , 'youtube-for-wordpress' ); ?></a><p style="font-weight:400;">Increase/Decrease number of errors to keep at one time</p><input type="number" max="20" min="5" name="yt4wp-limit-error-log" class="yt4wp-limit-error-log" value="<?php echo isset( $this->optionVal['yt4wp-limit-error-log-count'] ) ? $this->optionVal['yt4wp-limit-error-log-count'] : '5'; ?>" style="display:block;width:75px;"></th>
 							<td class="yt4wp-error-log-table-row">
 								
 								<?php 
@@ -597,7 +617,7 @@ jQuery(document).ready(function () {
 											</table>
 										<?php
 									} else {
-										echo '<em>' . __( 'no errors logged' , 'yt-plus-translation-text-domain' ) . '</em>';
+										echo '<em>' . __( 'no errors logged' , 'youtube-for-wordpress' ) . '</em>';
 									}	
 								?>
 							</td>
@@ -618,7 +638,7 @@ jQuery(document).ready(function () {
 		
 			<br />
 		
-			<h2><?php _e('Support License','yt-plus-translation-text-domain'); ?></h2>
+			<h2><?php _e('Support License','youtube-for-wordpress'); ?></h2>
 						
 			<form method="post" name="yt4wp-youtube-form" id="yt4wp-youtube-form-license-options">
 								
@@ -626,15 +646,15 @@ jQuery(document).ready(function () {
 					<tbody>				
 						<!-- YouTube for WordPress License Key Field -->
 						<tr valign="top">
-							<th scope="row"><label for="yt4wp-license-key"><?php _e('Support License Key','yt-plus-translation-text-domain'); ?></label></th>
-							<td><input name="yt4wp-license-key" disabled="disabled" placeholder="Temporarily Unavailable" type="text" id="yt4wp-license-key" value="<?php echo $this->optionVal['yt4wp-license-key']; ?>" class="regular-text" style="width:100%;min-width:500px;" /></span>
+							<th scope="row"><label for="yt4wp-license-key"><?php _e('Support License Key','youtube-for-wordpress'); ?></label></th>
+							<td><input name="yt4wp-license-key" disabled="disabled" placeholder="Coming Soon" type="text" id="yt4wp-license-key" value="<?php echo $this->optionVal['yt4wp-license-key']; ?>" class="regular-text" style="width:100%;min-width:500px;" /></span>
 							</td>
 						</tr>
 						<!-- YouTube for WordPress License Description -->
 						<tr>
 							<td></td>
 							<td class="yt4wp-settings-description">
-								<?php _e('The license key is used for access to automatic upgrades and support. Please see the' , 'yt-plus-translation-text-domain'); ?> <a href="http://www.youtubeforwordpress.com/buy-yt4wp/" target="_blank"><?php _e( 'support' , 'yt-plus-translation-text-domain'); ?></a> <?php _e( 'page for further details about purchasing a support license.','yt-plus-translation-text-domain'); ?>
+								<?php _e('The license key is used for access to automatic upgrades and support. Please see the' , 'youtube-for-wordpress'); ?> <a href="http://www.youtubeforwordpress.com/buy-yt4wp/?utm_source=ytwp-support-license-settings&utm_medium=text-link&utm_campaign=get-support" target="_blank"><?php _e( 'support' , 'youtube-for-wordpress'); ?></a> <?php _e( 'page for further details about purchasing a support license.','youtube-for-wordpress'); ?>
 							</td>
 						</tr>
 						<tr>

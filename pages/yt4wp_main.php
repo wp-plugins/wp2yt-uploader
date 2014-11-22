@@ -95,33 +95,39 @@ $screen_base = get_current_screen()->base;
 		// create our edit playlist form
 		$this->generateEditPlaylistForm();
 	?>
-		<style>
-		#TB_window {
-			width: 80% !important;
-			margin-left:-38% !important;
-			margin-top: -1.2em !important;
-		}
-		#TB_ajaxContent {
-			width: 100% !important;
-			height:95.5% !important;
-			padding: 0 !important;
-		}
-		#TB_ajaxContent .ytplus-page-main {
-			padding: 15px;
-		}
-		#TB_iframeContent {
-			width:  75% !important;
-			height: 75% !important;
-			display:block;
-			margin: 0 auto;
-			margin-top: 6em;
-		}
-		</style>
+	
 		<script type="text/javascript">
-		
 		/* Fake our Ajax inside Modals */
 		jQuery(document).ready(function() {
-	
+		
+			/* 
+				Interval to re-style the thickbox for our plugin only 
+				- may be better alternatives for this
+			*/
+				var i = 0;
+				var timed_thickbox_check = setInterval(function() {	
+					if ( jQuery( '.ytplus-page-main' ).is( ':visible' ) && jQuery( '.yt4wp_tb_window_style' ).length == 0 ) {
+						 jQuery('#TB_ajaxContent').prepend("<div class='yt4wp_tb_window_style'><style>#TB_window {"+
+								"width: 80% !important;"+
+								"margin-left:-38% !important;"+
+								"margin-top: -1.2em !important;"+
+							"}"+
+							"#TB_ajaxContent {"+
+								"width: 100% !important;"+
+								"height:95.5% !important;"+
+								"padding: 0 !important;"+
+							"}"+
+							"#TB_ajaxContent .ytplus-page-main {"+
+								"padding: 15px;"+
+							"}</style></div>");
+							i = 1;
+					} else if ( jQuery( '.ytplus-page-main' ).length == 0 && jQuery( '.yt4wp_tb_window_style' ).length == 1 ) {
+						jQuery( '.yt4wp_tb_window_style' ).remove();
+						i = 0;
+					}
+				}, 15);
+
+			
 			jQuery('.nav-tab').on( 'click' , function(event) {
 					
 				var clicked_button = jQuery(this).text();

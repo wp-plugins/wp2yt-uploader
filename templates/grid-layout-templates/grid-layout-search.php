@@ -7,11 +7,11 @@
 // enqueue masonry for layouts
 wp_enqueue_script( 'masonry' , array('jquery') );
 
-// display our page title + search term
-echo '<h4>Showing results for "' . stripslashes( $search_term ) . '"</h4>';
-
 // include the required php files - containers api key
 include_once YT4WP_PATH.'lib/google_api_wrapper_api_key.php';
+	
+// include object buffer
+ob_start();
 
 $searchResponse = $youtube->search->listSearch('id,snippet', array(
 		  'q' => stripslashes( $search_term ),
@@ -20,7 +20,10 @@ $searchResponse = $youtube->search->listSearch('id,snippet', array(
 		  'regionCode' => $this->optionVal['yt4wp-region'],
 		  'type' => 'video'
 		));
-				
+
+// display our page title + search term
+echo '<h4>Showing results for "' . stripslashes( $search_term ) . '"</h4>';
+	
 		echo '<ul id="masonry-container">';
 			
 			foreach ($searchResponse['items'] as $searchResult) {
@@ -52,8 +55,6 @@ $searchResponse = $youtube->search->listSearch('id,snippet', array(
 			
 		echo '</ul>';
 		
-		
-		
 ?>
 <!-- 
 Initialize the masonry script 
@@ -75,10 +76,8 @@ Initialize the masonry script
 				  }
 			});
 		});
-
-									
+								
 		jQuery(window).resize(function() { jQuery('#masonry-container').masonry('reloadItems'); });
-	
 	
 		<!-- initialize fancybox  -->
 		jQuery(".fancybox").on("click", function(){
@@ -89,7 +88,13 @@ Initialize the masonry script
 			return false;  
 		}); // on
 	
-
-	
 	});
-		</script>
+</script>
+		
+
+<?php 
+	
+	// return the contents of our search grid
+	return ob_get_clean(); 
+	
+?>

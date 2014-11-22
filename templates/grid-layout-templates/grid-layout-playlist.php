@@ -10,6 +10,9 @@ wp_enqueue_script( 'masonry' , array('jquery') );
 // include the required php files - containers api key
 include_once YT4WP_PATH.'lib/google_api_wrapper_api_key.php';
 
+		// include object buffer
+		ob_start();
+
 			// run the YouTube API request
 			$playlistItemsResponse = $youtube->playlistItems->listPlaylistItems('status,snippet', array(
 				'playlistId' =>  $playlist_id,
@@ -108,4 +111,10 @@ Initialize the masonry script
 
 	
 	});
-		</script>
+</script>
+
+
+<?php 
+	// return the contents of our search grid
+	return ob_get_clean(); 
+?>

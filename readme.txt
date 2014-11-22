@@ -4,14 +4,12 @@ Donate link: http://www.evan-herman.com/contact/?contact-reason=I%20want%20to%20
 Tags: YouTube, youtube, upload, uploader, to, wordpress, plugin, responsive, embed, embed, fluidvid.js, fluidvid, flexible, flex, fluid, you, tube, you tube, browser, browse, google, video, music, content, songs, dynamic, url, media, social, social network, social media, social plugin, comments, shortcode, youtube api, YouTube API, YouTube URL, Videos, video player, player, movie player, youtube player , upload, browse, subscriptions, unsubscribe, playlist, mediaelement, add-on, support 
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 2.0.2.1
+Stable tag: 2.0.3
 License: GPLv2 or later
 
-YouTube for WordPress is a complete YouTube solution for WordPress installations.
+YouTube for WordPress is a complete, all in one, YouTube solution for WordPress installations.
 
 == Description ==
-
-**Help us make YouTube for WordPress better by taking the [user feedback survey](http://www.youtubeforwordpress.com/user-feedback-survey/)**
 
 [YouTube for WordPress Demo Site](http://www.youtubeforwordpress.com) // [YouTube for WordPress Documentation](http://www.youtubeforwordpress.com/support/documentation/)
 
@@ -145,7 +143,20 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Changelog ==
 
-= 2.0.1.1 - November 17th, 2014 =
+= 2.0.3 - November 22nd, 2014 =
+* Enhancement: Added dismissable notification at 2 weeks, politely asking for a review
+* Enhancement: Style enhancements throughout
+* Enhancement: Included a new option for automatic plugin updates in the background, to keep all users on the same version (can be disabled)
+* Update: Removed file upload limit errors, as chunked uploads should avoid this limitation (max_execution_time is the limiter)
+* Update: Stripped out some unecessary code
+* Update: Updated both `[yt4wp-grid]` shortcode functions, view the exmaples : <a href="http://www.youtubeforwordpress.com/examples/search-grid-shortcode/?utm_source=yt4wp-changelog&utm_medium=text-link&utm_campaign=yt4wp-changelog">Search Grid</a>, <a href="http://www.youtubeforwordpress.com/examples/playlist-grid-shortcode/?utm_source=yt4wp-changelog&utm_medium=text-link&utm_campaign=yt4wp-changelog">Playlist Grid</a>
+* Fixed: Authentication redirect bug. When a user is authenticated and removes there keys, they are then logged out and permissions are revoked.
+* Fixed: `[yt4wp-grid]` bug where grid always displayed at the top of the page 
+* Fixed: Bug removing the error log update arrow
+* Fixed: Thickbox styles on post and page edit screens interefering with other plugins
+* Fixed: Split styles and enqueued on pages where needed. Print icon styles in admin_print_scripts hook.
+
+=2.0.2.1 - November 17th, 2014 =
 * Update: Fixed error with comment not closing, throwing page layouts off
 
 = 2.0.2 - November 16th, 2014 =

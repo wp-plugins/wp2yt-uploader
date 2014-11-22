@@ -10,10 +10,10 @@ class yt_plus_upload_widget extends WP_Widget {
 			'yt_plus_upload_widget', 
 
 			// Widget name will appear in UI
-			__('YouTube Plus : User Upload Widget', 'yt-plus-translation-text-domain'), 
+			__('YouTube Plus : User Upload Widget', 'youtube-for-wordpress'), 
 
 			// Widget description
-			array( 'description' => __( 'Allow visitors to upload content from a simple sidebar widget.', 'yt-plus-translation-text-domain' ), ) 
+			array( 'description' => __( 'Allow visitors to upload content from a simple sidebar widget.', 'youtube-for-wordpress' ), ) 
 		);
 	}
 	
