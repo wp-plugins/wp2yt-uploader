@@ -182,10 +182,11 @@ if ( $client->isAccessTokenExpired() ) {
 						});
 					});
 				</script>
+				<style>
+					#initial_setup_message{margin-top:8em;padding:3em 0;}body.toplevel_page_youtube-for-wordpress .nav-tab-wrapper { display: none; }
+				</style>
 			<?php
 			
-			
-
 				// this runs only the first time the user ever installs the plugin
 				 echo '<div id="initial_setup_message" class="yt4wp-setup-alert">
 						<h2>'.__("Welcome to YouTube for WordPress", "yt-plus-translation-text-domain") .'</h2>';
