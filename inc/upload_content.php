@@ -207,7 +207,7 @@ if ( $client->isAccessTokenExpired() ) {
 						</a>
 						<?php						
 						echo '<p>&nbsp;</p>';
-						echo "<p><em>" . __( "if this is your first time using the plugin, it's recommended you check out our " , "yt-plus-translation-text-domain") . "<a href='http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/' target='_blank' title='Setup Help'>" . __( "tutorial" , "yt-plus-translation-text-domain" ) . "</a>" . __( " on setting everything up." , "yt-plus-translation-text-domain" ) . "</em></p>";
+						echo "<p><em>" . __( "if this is your first time using the plugin, it's recommended you watch our " , "yt-plus-translation-text-domain") . "<a href='http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=ytwp-upload-page&utm_medium=text-link&utm_campaign=yt4wp-upload-page' target='_blank' title='Setup Help'>" . __( "video walkthrough" , "yt-plus-translation-text-domain" ) . "</a>" . __( " on properly setting everything up." , "yt-plus-translation-text-domain" ) . "</em></p>";
 					
 					} else {
 						

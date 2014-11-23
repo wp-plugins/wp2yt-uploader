@@ -181,11 +181,25 @@ if( !class_exists( "YT4WPBase" ) ) {
 					// enqueue admin icon styles in the header
 					add_action( 'admin_enqueue_scripts' , array( &$this , 'styleYT4WP_Admin_Icon' ) );
 					
+					// Add extra link on plugin install/uninstall page	
+					add_filter( 'plugin_action_links_wp2yt-uploader/youtube-for-wordpress.php', array( &$this , 'yt4wp_custom_action_links' ) );
+					
 					// Do any update tasks if needed
 					// to add new/missing options :)
 					$this->runUpdateCheck();	
 					
 				}
+				
+			/* Add link on plugin page to plugin settings page */
+			public function yt4wp_custom_action_links( $links ) {
+			   $links[] = '<a title="YouTube for WordPress Settings" href="'. get_admin_url(null, 'admin.php?page=youtube-for-wordpress-settings') .'">Settings</a>';
+			   $links[] = '<a title="YouTube for WordPress Add Ons" href="http://www.youtubeforwordpress.com/?utm_source=dashboard-plugins-page&utm_medium=text-link&utm_campaign=dashboard-plugins-page" target="_blank">Add Ons</a>';
+			   $links[] = '<a title="YouTube for WordPress Support" href="http://www.youtubeforwordpress.com/support/?utm_source=dashboard-plugins-page&utm_medium=text-link&utm_campaign=dashboard-plugins-page" target="_blank">Support</a>';
+			   if ( $this->optionVal['yt4wp-license-key'] == '' ) {
+					$links[] = '<a title="YouTube for WordPress Licensing" href="#" onclick="return false;" target="_blank">Purchase a License</a>';
+			   }
+			   return $links;
+			}
 				
 			/* 
 			*	styleYT4WP_Admin_Icons()

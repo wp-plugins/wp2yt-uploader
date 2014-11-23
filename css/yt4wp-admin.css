@@ -2018,7 +2018,7 @@ label[for="single-optin-message"], label[for="double-optin-message"] {
 		text-align: center;
 	}
 		/* Initial setup buttons */
-		#initial_setup_message .yt4wp-setup-button {
+		#initial_setup_message .yt4wp-setup-button, #yt4wp-youtube-form .settings-setup-link {
 			color:#888;
 			background: #f6f5f1;
 			border: 1px solid #ddd;
@@ -2049,9 +2049,25 @@ label[for="single-optin-message"], label[for="double-optin-message"] {
 				transition: color 0.2s ease 0s;
 				-moz-transition: color 0.2s ease 0s;
 				-webkit-transition: color 0.2s ease 0s;
-				font-size: 22px;
+				font-size: 19px;
 				margin: 0 4px;
-				line-height: 1.95;
+				line-height: 2.2;
+			}
+			
+		#yt4wp-youtube-form .settings-setup-link {
+			font-size: 14px;
+			text-align:center;
+			width: auto !important;
+			height: auto;
+			padding: 0px 12px;
+			background: #EDEDED;
+			border: 1px solid rgba(51, 51, 51, 0.21);
+			transition: all 0.15s ease 0s;
+			-moz-transition: all 0.15s ease 0s;
+			-webkit-transition: all 0.15s ease 0s;
+		}
+			#yt4wp-youtube-form .settings-setup-link:hover {
+				background: #E4E4E4;
 			}
 	
 	a.button.youtube-plus:hover {

@@ -4,7 +4,7 @@ Donate link: http://www.evan-herman.com/contact/?contact-reason=I%20want%20to%20
 Tags: YouTube, youtube, upload, uploader, to, wordpress, plugin, responsive, embed, embed, fluidvid.js, fluidvid, flexible, flex, fluid, you, tube, you tube, browser, browse, google, video, music, content, songs, dynamic, url, media, social, social network, social media, social plugin, comments, shortcode, youtube api, YouTube API, YouTube URL, Videos, video player, player, movie player, youtube player , upload, browse, subscriptions, unsubscribe, playlist, mediaelement, add-on, support 
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 2.0.3
+Stable tag: 2.0.3.1
 License: GPLv2 or later
 
 YouTube for WordPress is a complete, all in one, YouTube solution for WordPress installations.
@@ -143,6 +143,10 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Changelog ==
 
+= 2.0.3.1 - November 23rd, 2014 =
+* Enhancement: Added action links to the plugin page
+* Update: Small adjustments to the settings pages, re-shifted text, added new buttons for 'Setup Guide' and 'Google Developer Console' so that they are not overlooked 
+
 = 2.0.3 - November 22nd, 2014 =
 * Enhancement: Added dismissable notification at 2 weeks, politely asking for a review
 * Enhancement: Style enhancements throughout
@@ -208,6 +212,23 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 * Initial Release of YouTube Plus
 
 == Upgrade Notice ==
+
+= 2.0.3.1 - November 23rd, 2014 =
+* Update: Small adjustments to the settings pages, re-shifted text, added new buttons for 'Setup Guide' and 'Google Developer Console' so that they are not overlooked. Also added new action links to the plugins page.
+
+= 2.0.3 - November 22nd, 2014 =
+* Enhancement: Added dismissable notification at 2 weeks, politely asking for a review
+* Enhancement: Style enhancements throughout
+* Enhancement: Included a new option for automatic plugin updates in the background, to keep all users on the same version (can be disabled)
+* Update: Removed file upload limit errors, as chunked uploads should avoid this limitation (max_execution_time is the limiter)
+* Update: Stripped out some unecessary code
+* Update: Updated both `[yt4wp-grid]` shortcode functions, view the exmaples : <a href="http://www.youtubeforwordpress.com/examples/search-grid-shortcode/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=changelog-tab">Search Grid</a>, <a href="http://www.youtubeforwordpress.com/examples/playlist-grid-shortcode/?utm_source=yt4wp-changelog&utm_medium=text-link&utm_campaign=changelog-tab">Playlist Grid</a>
+* Fixed: Authentication redirect bug. When a user is authenticated and removes there keys, they are then logged out and permissions are revoked.
+* Fixed: `[yt4wp-grid]` bug where grid always displayed at the top of the page 
+* Fixed: Bug removing the error log update arrow
+* Fixed: Thickbox styles on post and page edit screens interefering with other plugins
+* Fixed: Split styles and enqueued on pages where needed. Print icon styles in admin_print_scripts hook.
+
 = 2.0.2 - November 16th, 2014
 Tons of updates in this release including but not limited to better error messaging, style improvements, usability enhancements and more.
 

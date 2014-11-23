@@ -372,9 +372,12 @@ jQuery(document).ready(function () {
 	<?php 
 	} ?>
 	
-	
 	<form method="post" name="yt4wp-youtube-form" id="yt4wp-youtube-form">
 		<table class="form-table yt4wp-admin-form">
+			
+			<a style="margin-left:0;" href="http://YouTubeforWordPress.com/support/documentation/setup/setup-google-project/?utm_source=yt4wp-settings-page&utm_medium=button&utm_campaign=yt4wp-settings-page?RURL=<?php echo urlencode( admin_url() . 'admin.php?page=youtube-for-wordpress' ); ?>" target="_blank" class="settings-setup-link"><?php _e('Setup Guide','youtube-for-wordpress'); ?></a>	
+			<a href="https://console.developers.google.com" target="_blank" class="settings-setup-link"><?php _e('Google Developer Console','youtube-for-wordpress'); ?></a>
+			
 			<tbody>				
 				<!-- YouTube OAUTH2 Key Field -->
 				<tr valign="top">
@@ -392,14 +395,7 @@ jQuery(document).ready(function () {
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('Please enter your Google OAUTH2 Keys above. The OAUTH2 Keys allow your WordPress site to communicate securely with your YouTube account.','youtube-for-wordpress'); ?>  <a href="https://console.developers.google.com" target="_blank"><?php _e('Google Developer Console','youtube-for-wordpress'); ?></a>
-					</td>
-				</tr>
-				<!-- Google Project Setup Tutorial Link -->
-				<tr>
-					<td></td>
-					<td class="yt4wp-settings-description">
-						<strong><?php _e('If you need help setting up the Google API Project, please visit the support article :','youtube-for-wordpress'); ?> <a href="http://YouTubeforWordPress.com/support/documentation/setup/setup-google-project/?utm_source=yt4wp-settings-page&utm_medium=text-link&utm_campaign=yt4wp-settings-page?RURL=<?php echo urlencode( admin_url() . 'admin.php?page=youtube-for-wordpress' ); ?>" target="_blank"><?php _e('Setup the Google Project','youtube-for-wordpress'); ?></a></strong>
+						<?php _e('Please enter your Google OAUTH2 Keys above.','youtube-for-wordpress'); ?>
 					</td>
 				</tr>
 				<!-- YouTube API Key Field -->
@@ -415,45 +411,47 @@ jQuery(document).ready(function () {
 						<?php _e('Please enter your Google API Key above.','youtube-for-wordpress'); ?><br />
 					</td>
 				</tr>
+				
 				<?php if ( get_option( 'yt4wp_user_refresh_token' ) != '' ) { ?>
 				
-				<!-- YouTube Region Field -->
-				<tr valign="top">
-					<th scope="row"><label for="yt4wp-region"><?php _e('Select Your Region','youtube-for-wordpress'); ?></label></th>
-					<td><?php $this->generateRegionDropdown(); ?></span>
-					</td>
-				</tr>
-				<!-- YouTube Region Field Description -->
-				<tr>
-					<td></td>
-					<td class="yt4wp-settings-description">
-						<?php _e('Your region will determine some data returned from the API. For example, when searching, YouTube will return videos from your country first.','youtube-for-wordpress'); ?><br />
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td class="yt4wp-settings-description">
-						<?php _e('Note : Use Wordlwide if you are in the United States.','youtube-for-wordpress'); ?><br />
-					</td>
-				</tr>
-				<!-- YouTube Language Field -->
-				<tr valign="top">
-					<th scope="row"><label for="yt4wp-language"><?php _e('Select Your Language','youtube-for-wordpress'); ?></label></th>
-					<td><?php $this->generateLanguageDropdown(); ?></span>
-					</td>
-				</tr>
-				<!-- YouTube Language Field Description -->
-				<tr>
-					<td></td>
-					<td class="yt4wp-settings-description">
-						<?php _e('This will determine the language of some data returned from the YouTube API (ie: category names).','youtube-for-wordpress'); ?><br />
-					</td>
-				</tr>
+					<!-- YouTube Region Field -->
+					<tr valign="top">
+						<th scope="row"><label for="yt4wp-region"><?php _e('Select Your Region','youtube-for-wordpress'); ?></label></th>
+						<td><?php $this->generateRegionDropdown(); ?></span>
+						</td>
+					</tr>
+					<!-- YouTube Region Field Description -->
+					<tr>
+						<td></td>
+						<td class="yt4wp-settings-description">
+							<?php _e('Your region will determine some data returned from the API. For example, when searching, YouTube will return videos from your country first.','youtube-for-wordpress'); ?><br />
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="yt4wp-settings-description">
+							<?php _e('Note : Use Wordlwide if you are in the United States.','youtube-for-wordpress'); ?><br />
+						</td>
+					</tr>
+					<!-- YouTube Language Field -->
+					<tr valign="top">
+						<th scope="row"><label for="yt4wp-language"><?php _e('Select Your Language','youtube-for-wordpress'); ?></label></th>
+						<td><?php $this->generateLanguageDropdown(); ?></span>
+						</td>
+					</tr>
+					<!-- YouTube Language Field Description -->
+					<tr>
+						<td></td>
+						<td class="yt4wp-settings-description">
+							<?php _e('This will determine the language of some data returned from the YouTube API (ie: category names).','youtube-for-wordpress'); ?><br />
+						</td>
+					</tr>
 				
 				<?php } ?>
+				
 				<!-- YouTube Embed Player Options -->
 				<tr valign="top">
-					<th scope="row"><label for="yt4wp-embed-player-style"><?php _e('YouTube Embedded Player Style','youtube-for-wordpress'); ?></label></th>
+					<th scope="row"><label for="yt4wp-embed-player-style"><?php _e('YouTube Player Style','youtube-for-wordpress'); ?></label></th>
 					<td>
 						<select name="yt4wp-embed-player-style" id="yt4wp-embed-player-style" class="regular-text" style="width:300px;">
 							<option value="yt-default"<?php echo ($this->optionVal['yt4wp-embed-player-style'] === 'yt-default' ? ' selected' : ''); ?>><?php _e('YouTube Default','youtube-for-wordpress'); ?></option>
@@ -482,7 +480,8 @@ jQuery(document).ready(function () {
 				<tr>
 					<td></td>
 					<td class="yt4wp-settings-description">
-						<?php _e('Select if you would like the video statistics to be displayed below videos. Video stats include view count, dislikes, likes and favorites. Note : including stats will significantly increase page load times in the dashboard.','youtube-for-wordpress'); ?><br />
+						<?php _e('Select if you would like the video statistics to be displayed below videos. Video stats include view count, dislikes, likes and favorites.','youtube-for-wordpress'); ?><br />
+						<em style="display:block;margin-top:1em;"><?php _e('Note : including stats will significantly increase page load times in the dashboard.','youtube-for-wordpress'); ?></em>
 					</td>
 				</tr>	
 				<!-- YouTube for WordPress automatic Plugin Updates -->
