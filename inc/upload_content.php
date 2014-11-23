@@ -202,7 +202,7 @@ if ( $client->isAccessTokenExpired() ) {
 						<a class="yt4wp-setup-button" href="http://www.youtubeforwordpress.com/documentation/?utm_source=ytwp-upload-page&utm_medium=button&utm_campaign=yt4wp-upload-page" target="_blank">
 							<span class="dashicons dashicons-book-alt"></span><?php _e( 'Documentation' , 'youtube-for-wordpress' ); ?>
 						</a>
-						<a class="yt4wp-setup-button" href="http://www.youtubeforwordpress.com/contact/?contact-reason=I%20Need%20Support" target="_blank">
+						<a class="yt4wp-setup-button" href="http://www.youtubeforwordpress.com/contact/?utm_source=ytwp-upload-page&utm_medium=button&utm_campaign=yt4wp-upload-page&contact-reason=I%20Need%20Support" target="_blank">
 							<span class="dashicons dashicons-format-status"></span><?php _e( 'Support' , 'youtube-for-wordpress' ); ?>
 						</a>
 						<?php						
