@@ -5095,12 +5095,12 @@ if( !class_exists( "YT4WPBase" ) ) {
 						} else {
 							// embed the player with a standard youtube iframe
 							return '<div class="ytplus-video-container"><iframe src="//www.youtube.com/embed/' . $video_id . '?autoplay='.$auto_play . '" allowfullscreen="" frameborder="0"></iframe></div>
-							<!--YouTube-For-WordPress-Container--http://www.YouTubeForWordPress.com>';
+							<!--YouTube-For-WordPress-Container--http://www.YouTubeForWordPress.com -->';
 						}		
 					} else {
 						/* Mobile Devices use standard IFRAME */
 						return '<div class="ytplus-video-container mobile"><iframe src="//www.youtube.com/embed/' . $video_id . '?autoplay='.$auto_play . '" allowfullscreen="" frameborder="0"></iframe></div>
-						<!--YouTube-for-WordPress-video-container--http://www.YouTubeForWordPress.com>';
+						<!--YouTube-for-WordPress-video-container--http://www.YouTubeForWordPress.com -->';
 					}
 				}
 			

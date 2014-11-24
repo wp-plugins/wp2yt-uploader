@@ -4,7 +4,7 @@ Donate link: http://www.evan-herman.com/contact/?contact-reason=I%20want%20to%20
 Tags: YouTube, youtube, upload, uploader, to, wordpress, plugin, responsive, embed, embed, fluidvid.js, fluidvid, flexible, flex, fluid, you, tube, you tube, browser, browse, google, video, music, content, songs, dynamic, url, media, social, social network, social media, social plugin, comments, shortcode, youtube api, YouTube API, YouTube URL, Videos, video player, player, movie player, youtube player , upload, browse, subscriptions, unsubscribe, playlist, mediaelement, add-on, support 
 Requires at least: 3.9
 Tested up to: 4.0
-Stable tag: 2.0.3.1
+Stable tag: 2.0.3.2
 License: GPLv2 or later
 
 YouTube for WordPress is a complete, all in one, YouTube solution for WordPress installations.
@@ -142,6 +142,9 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 11. YouTube for WordPress Uploader mid-upload at 79%
 
 == Changelog ==
+
+= 2.0.3.2 - November 24th, 2014 =
+* Fixed: Closed comment on the video container (again) 
 
 = 2.0.3.1 - November 23rd, 2014 =
 * Enhancement: Added action links to the plugin page
