@@ -216,6 +216,9 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Upgrade Notice ==
 
+= 2.0.3.2 - November 23rd, 2014 =
+* Fixed: Closing comment on the video container, which caused layouts to be thrown off 
+
 = 2.0.3.1 - November 23rd, 2014 =
 * Update: Small adjustments to the settings pages, re-shifted text, added new buttons for 'Setup Guide' and 'Google Developer Console' so that they are not overlooked. Also added new action links to the plugins page.
 
