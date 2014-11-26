@@ -13,6 +13,9 @@ YouTube for WordPress is a complete, all in one, YouTube solution for WordPress 
 
 [YouTube for WordPress Demo Site](http://www.youtubeforwordpress.com/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab) // [YouTube for WordPress Documentation](http://www.youtubeforwordpress.com/support/documentation/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab)
 
+**New!**
+[YouTube for WordPress: Setup Video Tutorial](http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab)
+
 If you run into issues <em>please</em> contact support and let us help you work out any issues you are facing : [Contact Support](http://www.youtubeforwordpress.com/contact/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab)
 
 Introducing a brand new , fully redesigned YouTube browsing experience brought directly to your WordPress dashboard.
@@ -101,7 +104,7 @@ You can find the complete documentation up on the [YouTube for WordPress site](h
 3. Click Plugins -> Add New -> Upload
 4. Upload the wp2yt-uploader.zip file
 4. Activate the plugin
-5. Once installed and activated, head over to the <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=installation_tab" target="_blank">setup documentation</a> and follow along with the tutorial to get things setup properly.
+5. Once installed and activated, head over to the <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=installation_tab" target="_blank">setup documentation</a> and follow along with the video tutorial to get things set up properly.
 
 == Frequently Asked Questions ==
 = This seems very complicated, I really need help getting things set up. =
