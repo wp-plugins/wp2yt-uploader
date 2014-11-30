@@ -104,7 +104,7 @@ You can find the complete documentation up on the [YouTube for WordPress site](h
 3. Click Plugins -> Add New -> Upload
 4. Upload the wp2yt-uploader.zip file
 4. Activate the plugin
-5. Once installed and activated, head over to the <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=installation_tab" target="_blank">setup documentation</a> and follow along with the video tutorial to get things set up properly.
+5. Once installed and activated, head over to the <a href="http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=installation_tab" target="_blank">setup documentation</a> and follow along with the tutorial to get things setup properly.
 
 == Frequently Asked Questions ==
 = This seems very complicated, I really need help getting things set up. =
