@@ -33,21 +33,21 @@ echo '<h4>Showing results for "' . stripslashes( $search_term ) . '"</h4>';
 					// trim the description
 					// if there are more than 400 characters
 					if(strlen($searchResult['modelData']['snippet']['description']) > 325) {
-						$video_description = '<b class="youtube-plus-video-description" style="text-decoration:underline;">Description</b> <br />' . substr($searchResult['modelData']['snippet']['description'], 0, 400).'...'; 
+						$video_description = '<b class="yt4wp-video-description" style="text-decoration:underline;">Description</b> <br />' . substr($searchResult['modelData']['snippet']['description'], 0, 400).'...'; 
 					} else {
-						$video_description = '<b class="youtube-plus-video-description" style="text-decoration:underline;">Description</b> <br />' . $searchResult['modelData']['snippet']['description']; 
+						$video_description = '<b class="yt4wp-video-description" style="text-decoration:underline;">Description</b> <br />' . $searchResult['modelData']['snippet']['description']; 
 					}
 				} else {
 					$video_description = ''; 
 				}
 			
 				?>
-				<li class="youtube-plus-video-single-list-item">
+				<li class="yt4wp-video-single-list-item">
 					<input type="hidden" class="video_id" value="<?php echo $searchResult['id']['videoId']; ?>">
 						<a class="fancybox" data-type="iframe" href="http://www.youtube.com/embed/<?php echo $searchResult['id']['videoId']; ?>?autoplay=1" title="<?php echo $searchResult['snippet']['title']; ?>">	
-						<img class="youtube-plus-video-thumbnail" src="<?php echo $searchResult['snippet']['thumbnails']['high']['url'];?>"></a>
-						<h3 class="youtube-plus-video-title-container"><?php echo $searchResult['snippet']['title']; ?></h3> 
-					<span class="youtube-plus-video-description-container"><?php echo $video_description; ?></span>
+						<img class="yt4wp-video-thumbnail" src="<?php echo $searchResult['snippet']['thumbnails']['high']['url'];?>"></a>
+						<h3 class="yt4wp-video-title-container"><?php echo $searchResult['snippet']['title']; ?></h3> 
+					<span class="yt4wp-video-description-container"><?php echo $video_description; ?></span>
 					<p>&nbsp;</p> <!-- spacer -->
 				</li>	
 				<?php
@@ -65,7 +65,7 @@ Initialize the masonry script
 			/* Masonry the Results */
 			jQuery('#masonry-container').masonry().imagesLoaded( function() {
 				jQuery('#masonry-container').masonry({
-				  itemSelector: '.youtube-plus-video-single-list-item',
+				  itemSelector: '.yt4wp-video-single-list-item',
 				  gutter: 35,
 				 // options...
 				  isAnimated: true,

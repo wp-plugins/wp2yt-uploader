@@ -4,7 +4,7 @@
 Plugin Name: YouTube for WordPress
 Plugin URI: http://www.YouTubeforWordPress.com
 Description: Upload videos, browse your account, and insert them in to posts without having to leave your blog! Now built with YouTube API v3 and lots of love
-Version: 2.0.3.2
+Version: 2.0.3.3
 Author: YouTubeforWordPress, Evan Herman
 Author URI: http://www.YouTubeforWordPress.com
 License: GPL2
@@ -30,12 +30,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /** Configuration **/
 if( !defined( 'YT4WP_DEBUG') ) define( 'YT4WP_DEBUG' , false );
-if( !defined( 'YT4WP_VERSION_CURRENT') ) define( 'YT4WP_VERSION_CURRENT',	'2.0.3.2' );
+if( !defined( 'YT4WP_VERSION_CURRENT') ) define( 'YT4WP_VERSION_CURRENT',	'2.0.3.3' );
 if( !defined( 'YT4WP_REQ_PHP') ) define( 'YT4WP_REQ_PHP', '5.3' );
 if( !defined( 'YT4WP_AUTHOR' ) ) define( 'YT4WP_AUTHOR', 'Evan Herman' );
 if( !defined( 'YT4WP_SITE' ) ) define(' YT4WP_SITE', site_url() . '/' );
 if( !defined( 'YT4WP_PREFIX' ) ) define( 'YT4WP_PREFIX' , 'YT4WP_' );
-if( !defined( 'YT4WP_PATH' ) ) define( 'YT4WP_PATH' , ABSPATH.'wp-content/plugins/wp2yt-uploader/' );
+if( !defined( 'YT4WP_PATH' ) ) define( 'YT4WP_PATH' , plugin_dir_path( __FILE__ ) );
 if( !defined( 'YT4WP_URL' ) ) define( 'YT4WP_URL' , plugins_url('wp2yt-uploader/') );
 if( !defined( 'YT4WP_URL_WP' ) ) define( 'YT4WP_URL_WP' , get_bloginfo('url') );
 if( !defined( 'YT4WP_URL_WP_ADM' ) ) define('YT4WP_URL_WP_ADM' , YT4WP_URL_WP . '/wp-admin/' );

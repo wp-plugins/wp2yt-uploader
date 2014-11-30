@@ -47,9 +47,9 @@ include_once YT4WP_PATH.'lib/google_api_wrapper_api_key.php';
 						// trim the description
 						// if there are more than 400 characters
 						if(strlen($playlistItem['modelData']['snippet']['description']) > 325) {
-							$video_description = '<b class="youtube-plus-video-description" style="text-decoration:underline;">Description</b> <br />' . substr($playlistItem['modelData']['snippet']['description'], 0, 400).'...'; 
+							$video_description = '<b class="yt4wp-video-description" style="text-decoration:underline;">Description</b> <br />' . substr($playlistItem['modelData']['snippet']['description'], 0, 400).'...'; 
 						} else {
-							$video_description = '<b class="youtube-plus-video-description" style="text-decoration:underline;">Description</b> <br />' . $playlistItem['modelData']['snippet']['description']; 
+							$video_description = '<b class="yt4wp-video-description" style="text-decoration:underline;">Description</b> <br />' . $playlistItem['modelData']['snippet']['description']; 
 						}
 					} else {
 						$video_description = ''; 
@@ -57,12 +57,12 @@ include_once YT4WP_PATH.'lib/google_api_wrapper_api_key.php';
 				
 					if ( $privacy_setting == 'public' && $playlistItem['modelData']['snippet']['title'] != 'Deleted video' ) {
 						?>
-						<li class="youtube-plus-video-single-list-item">
+						<li class="yt4wp-video-single-list-item">
 							<input type="hidden" class="video_id" value="<?php echo $playlistItem['snippet']['resourceId']['videoId']; ?>">
 								<a class="fancybox" data-type="iframe" href="http://www.youtube.com/embed/<?php echo $playlistItem['snippet']['resourceId']['videoId']; ?>?autoplay=1" title="<?php echo $playlistItem['snippet']['title']; ?>">	
-								<img class="youtube-plus-video-thumbnail" src="<?php echo $playlistItem['snippet']['thumbnails']['high']['url'];?>"></a>
-								<h3 class="youtube-plus-video-title-container"><?php echo $playlistItem['snippet']['title']; ?></h3> 
-							<span class="youtube-plus-video-description-container"><?php echo $video_description; ?></span>
+								<img class="yt4wp-video-thumbnail" src="<?php echo $playlistItem['snippet']['thumbnails']['high']['url'];?>"></a>
+								<h3 class="yt4wp-video-title-container"><?php echo $playlistItem['snippet']['title']; ?></h3> 
+							<span class="yt4wp-video-description-container"><?php echo $video_description; ?></span>
 							<p>&nbsp;</p> <!-- spacer -->
 						</li>	
 						<?php
@@ -83,7 +83,7 @@ Initialize the masonry script
 			/* Masonry the Results */
 			jQuery('#masonry-container').masonry().imagesLoaded( function() {
 				jQuery('#masonry-container').masonry({
-				  itemSelector: '.youtube-plus-video-single-list-item',
+				  itemSelector: '.yt4wp-video-single-list-item',
 				  gutter: 35,
 				 // options...
 				  isAnimated: true,

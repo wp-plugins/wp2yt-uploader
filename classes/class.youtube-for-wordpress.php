@@ -1,8 +1,5 @@
 <?php
 
-// to do
-// pagination on watch later doesn't work
-
 if( !class_exists( "YT4WPBase" ) ) {
 
 	class YT4WPBase {
@@ -563,7 +560,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 								<p>
 								  <strong>Developers </strong><br/>
 								  You too can develop premium add-ons to sell in our digital marketplace. <a href="http://www.youtubeforwordpress.com/support/documentation?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=text-link&utm_campaign=yt4wp-sidebar" onclick="return false;">learn more</a>
-								</p>
+								</p> 
 							   </li>
 						  </ul>
 						  <a class="visit" target="blank" href="http://www.YouTubeforWordPress.com/add-ons-overview/?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=cta-button&utm_campaign=yt4wp-sidebar"><i class="dashicons dashicons-arrow-right" style="line-height:.6"></i> View Add-Ons</a>
@@ -575,7 +572,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 							<ul>
 							   <li>
 								 <p>If you're not interested in purchasing an add-on or a support license, why not share and rate the plugin?</p>
-								 <span class="yt4wp-srs-button-container"><a href="https://wordpress.org/support/view/plugin-reviews/wp2yt-uploader" target="_blank" class="button-secondary yt4wp-srs-button">Review</a><a href="http://www.evan-herman.com/contact/?utm_source=<?php echo $referrel_page; ?>yt4wp-sidebar&utm_medium=button&utm_campaign=yt4wp-sidebar&contact-reason=I%20want%20to%20make%20a%20donation%20for%20all%20your%20hard%20work&donation-for=YouTube%20for%20WordPress" target="_blank" class="button-secondary yt4wp-srs-button">Donate</a><a href="https://twitter.com/yt4wp" target="_blank" class="button-secondary yt4wp-srs-button">Follow</a><a class="button-secondary yt4wp-srs-button" href="http://www.twitter.com/yt4wp" target="_blank">Share</a></span>
+								 <span class="yt4wp-srs-button-container"><a href="https://wordpress.org/support/view/plugin-reviews/wp2yt-uploader" target="_blank" class="button-secondary yt4wp-srs-button">Review</a><a href="https://twitter.com/yt4wp" target="_blank" class="button-secondary yt4wp-srs-button">Follow</a><a class="button-secondary yt4wp-srs-button" href="http://www.twitter.com/yt4wp" target="_blank">Share</a></span>
 							   </li>
 						  </ul>
 						</div>

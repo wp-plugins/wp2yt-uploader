@@ -28,7 +28,7 @@ jQuery(function(){
 					
 			progressInterval: 10,
 			
-			// maxChunkSize: local_data.chunk_max_size / parseInt(2) , // wp_max_upload_size()
+			maxChunkSize: local_data.chunk_max_size, // wp_max_upload_size()
 					
 			// This element will accept file drag/drop uploading
 			dropZone: jQuery('#drop'),
@@ -54,22 +54,7 @@ jQuery(function(){
 					return;
 					
 				}
-				
-				/* Limit file size uploads to the max_file_upload
-				if( data.files[0]['size'] > local_data.chunk_max_size ) {
-					if ( jQuery('#acceptable_filetypes').is(':visible') ) {
-							jQuery('#acceptable_filetypes').html('<h3 style="color:#a94442;">Error : File too large</h3><p>The file you are attempting to upload is larger than the maximum allowed by your server ('+local_data.formatted_max_upload_size+').</p><p>Please get in touch with your host provider and ask them to increase this limit.</p><p>&nbsp;</p><p>For help, please see the <a href="http://www.youtubeforwordpress.com/documentation/" title="YouTube for WordPress Documentation">documentation</a> page on common errors.</p>');
-							return;
-						} else {	
-							jQuery('#drop').after('<div id="acceptable_filetypes" style="display:none;" class="yt4wp-error-alert"><h3 style="color:#a94442;">Error : File too large</h3><p>The file you are attempting to upload is larger than the maximum allowed by your server ('+local_data.formatted_max_upload_size+').</p><p>Please get in touch with your host provider and ask them to increase this limit.</p><p>&nbsp;</p><p>For help, please see the <a href="http://www.youtubeforwordpress.com/documentation/" title="YouTube for WordPress Documentation">documentation</a> page on common errors.</p></div>');
-							setTimeout(function() {	
-								jQuery('#acceptable_filetypes').fadeIn();
-							},200);
-						}	
-					return;
-				}
-				*/		
-							
+											
 				var file_name = data.files[0].name;
 				var video_title = file_name.split('.')[0];
 				
