@@ -13,6 +13,9 @@ YouTube for WordPress is a complete, all in one, YouTube solution for WordPress 
 
 [YouTube for WordPress Demo Site](http://www.youtubeforwordpress.com/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab) // [YouTube for WordPress Documentation](http://www.youtubeforwordpress.com/support/documentation/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab)
 
+**New!**
+[YouTube for WordPress: Setup Video Tutorial](http://www.youtubeforwordpress.com/support/documentation/setup/setup-google-project/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab)
+
 If you run into issues <em>please</em> contact support and let us help you work out any issues you are facing : [Contact Support](http://www.youtubeforwordpress.com/contact/?utm_source=wordpress-plugin-repo&utm_medium=text-link&utm_campaign=description_tab)
 
 Introducing a brand new , fully redesigned YouTube browsing experience brought directly to your WordPress dashboard.
