@@ -4,7 +4,7 @@ Donate link: http://www.evan-herman.com/contact/?contact-reason=I%20want%20to%20
 Tags: YouTube, youtube, upload, uploader, to, wordpress, plugin, responsive, embed, embed, fluidvid.js, fluidvid, flexible, flex, fluid, you, tube, you tube, browser, browse, google, video, music, content, songs, dynamic, url, media, social, social network, social media, social plugin, comments, shortcode, youtube api, YouTube API, YouTube URL, Videos, video player, player, movie player, youtube player , upload, browse, subscriptions, unsubscribe, playlist, mediaelement, add-on, support 
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.0.3.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 
 YouTube for WordPress is a complete, all in one, YouTube solution for WordPress installations.
@@ -146,6 +146,9 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Changelog ==
 
+= 2.0.4 - January 3rd, 2015 =
+* Fixed: Replaced php shorthand to print results (caused issues for some users on newer versions of php)
+
 = 2.0.3.3 - November 30th, 2014 =
 * Update: Re-added chunked uploads to the upload script ( max chunk size == `wp_max_upload_size()` )
 * Update: Altered the hardcoded path to the plugin folder for users who have plugins outside of /wp-content/
@@ -224,6 +227,9 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 * Initial Release of YouTube Plus
 
 == Upgrade Notice ==
+
+= 2.0.4 - January 3rd, 2015 =
+* Fixed: Replaced php shorthand to print results (caused issues for some users on newer versions of php)
 
 = 2.0.3.3 - November 30th, 2014 =
 * Update: Re-added chunked uploads to the upload script ( max chunk size == `wp_max_upload_size()` )

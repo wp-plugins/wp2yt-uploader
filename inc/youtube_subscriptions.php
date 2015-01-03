@@ -98,6 +98,6 @@ if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"])
 <!doctype html>
 	  <body>	  
 		<div id="subscribtions_box">
-			<?=$htmlBody?>
+			<?php echo $htmlBody; ?>
 		</div>
 	  </body>

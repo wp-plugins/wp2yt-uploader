@@ -222,7 +222,7 @@ if ( get_option( 'yt4wp_user_refresh_token' ) != '' && isset($_SESSION["token"])
 		</div>
 		
 		<div id="subscription_content_div">
-			<?=$htmlBody?>
+			<?php echo $htmlBody; ?>
 		</div>
 		
 		

@@ -882,7 +882,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					}
 					?>
 
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 
 					<?php
 				}
@@ -1011,7 +1011,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					}
 					?>
 
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 
 					<?php
 				}
@@ -1256,7 +1256,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					}
 					?>
 
-					<?=$htmlBody?>
+					<?php echo $htmlBody; ?>
 
 				<?php
 				}
@@ -1778,7 +1778,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 									
 						}
 						?>
-							<?=$htmlBody?>
+							<?php echo $htmlBody; ?>
 						<?php
 				}
 				
@@ -1880,7 +1880,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 									</div>'; 
 					}
 					?>
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 					<?php
 				}
 			
@@ -2529,7 +2529,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 							</div>'; 
 					}
 					?>
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 					<?php
 				}
 			/*
@@ -2686,7 +2686,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 							</div>
 						<?php } ?>
 						
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 
 					<?php
 				}
@@ -2820,7 +2820,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					 // this runs only the first time the user ever installs the plugin
 					}
 					?>
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 					<?php
 				}
 		
@@ -3167,7 +3167,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					 // this runs only the first time the user ever installs the plugin
 					}
 					?>
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 					<?php
 				}
 			
@@ -3282,7 +3282,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 							<input type="hidden" id="watch_later_list_id" value="<?php $this->getUserWatchLaterListId(); ?>">
 						</div>
 						 
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 						
 					<?php
 				}
@@ -3378,7 +3378,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					
 					}
 					?>
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 					<?php
 				}
 			/*
@@ -3462,7 +3462,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 					 
 					}
 					?>
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 
 					<?php
 				}
@@ -3509,7 +3509,7 @@ if( !class_exists( "YT4WPBase" ) ) {
 
 						<!-- return something //
 						// to our ajax function -->
-						<?=$htmlBody?>
+						<?php echo $htmlBody; ?>
 
 					<?php
 				}
