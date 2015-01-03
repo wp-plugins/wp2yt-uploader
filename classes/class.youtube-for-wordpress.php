@@ -4923,13 +4923,13 @@ if( !class_exists( "YT4WPBase" ) ) {
 							// either via the browse button, or via drag/drop:
 							add: function (e, data) {
 											
-								if (!(/\.(mov|mpeg4|mp4|avi|wmv|mpegps|3gpp|webm)$/i).test(data.files[0].name)) {
+								if (!(/\.(mov|mpeg4|mp4|avi|wmv|mpegps|3gpp|webm|mts)$/i).test(data.files[0].name)) {
 									// if an unacceptable file type was dropped in
 									
 										if ( jQuery('#acceptable_filetypes').is(':visible') ) {
 											return;
 										} else {	
-											jQuery('#drop').after('<div id="acceptable_filetypes" style="display:none;"><h2 style="color:red;">Error - Please use an acceptable file type :</h2><ul><li>.MOV</li><li>.MPEG4</li><li>.MP4</li><li>.AVI</li><li>.WMV</li><li>.MPEGPS</li><li>.FLV</li><li>.3GPP</li><li>.WebM</li></ul></div>');
+											jQuery('#drop').after('<div id="acceptable_filetypes" style="display:none;"><h2 style="color:red;">Error - Please use an acceptable file type :</h2><ul><li>.MOV</li><li>.MPEG4</li><li>.MP4</li><li>.AVI</li><li>.WMV</li><li>.MPEGPS</li><li>.FLV</li><li>.3GPP</li><li>.WebM</li><li>.MTS</li></ul></div>');
 											jQuery('#acceptable_filetypes').fadeIn();
 										}	
 									return;
