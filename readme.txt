@@ -148,6 +148,7 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 = 2.0.4 - January 3rd, 2015 =
 * Fixed: Replaced php shorthand to print results (caused issues for some users on newer versions of php)
+* Enhancement: Added .mts as an accepted file format to upload to YouTube
 
 = 2.0.3.3 - November 30th, 2014 =
 * Update: Re-added chunked uploads to the upload script ( max chunk size == `wp_max_upload_size()` )
@@ -230,6 +231,7 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 = 2.0.4 - January 3rd, 2015 =
 * Fixed: Replaced php shorthand to print results (caused issues for some users on newer versions of php)
+* Enhancement: Added .mts as an accepted file format to upload to YouTube
 
 = 2.0.3.3 - November 30th, 2014 =
 * Update: Re-added chunked uploads to the upload script ( max chunk size == `wp_max_upload_size()` )
