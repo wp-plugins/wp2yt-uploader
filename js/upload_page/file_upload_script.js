@@ -39,14 +39,14 @@ jQuery(function(){
 				
 				jQuery('#acceptable_filetypes').remove();
 							
-				if (!(/\.(mov|mpeg4|mp4|avi|wmv|mpegps|3gpp|webm)$/i).test(data.files[0].name)) {
+				if (!(/\.(mov|mpeg4|mp4|avi|wmv|mpegps|3gpp|webm|mts)$/i).test(data.files[0].name)) {
 					// if an unacceptable file type was dropped in
 					
 						if ( jQuery('#acceptable_filetypes').is(':visible') ) {
-							jQuery('#acceptable_filetypes').html('<h3 style="color:#a94442;">Error : Please use an acceptable file type</h3><p>YouTube accepts the following video formats</p><ul><li>.mov</li><li>.mpeg4</li><li>.mp4</li><li>.avi</li><li>.wmv</li><li>.mpegpsMPEGPS</li><li>.flv</li><li>.3gpp</li><li>.webm</li></ul>');
+							jQuery('#acceptable_filetypes').html('<h3 style="color:#a94442;">Error : Please use an acceptable file type</h3><p>YouTube accepts the following video formats</p><ul><li>.mov</li><li>.mpeg4</li><li>.mp4</li><li>.avi</li><li>.wmv</li><li>.mpegps</li><li>.flv</li><li>.3gpp</li><li>.webm</li><li>.mts</li></ul>');
 							return;
 						} else {	
-							jQuery('#drop').after('<div id="acceptable_filetypes" style="display:none;" class="yt4wp-error-alert"><h3 style="color:#a94442;">Error : Please use an acceptable file type</h3><p>YouTube accepts the following video formats</p><ul><li>.mov</li><li>.mpeg4</li><li>.mp4</li><li>.avi</li><li>.wmv</li><li>.mpegpsMPEGPS</li><li>.flv</li><li>.3gpp</li><li>.webm</li></ul></div>');
+							jQuery('#drop').after('<div id="acceptable_filetypes" style="display:none;" class="yt4wp-error-alert"><h3 style="color:#a94442;">Error : Please use an acceptable file type</h3><p>YouTube accepts the following video formats</p><ul><li>.mov</li><li>.mpeg4</li><li>.mp4</li><li>.avi</li><li>.wmv</li><li>.mpegps</li><li>.flv</li><li>.3gpp</li><li>.webm</li><li>.mts</li></ul></div>');
 							setTimeout(function() {
 								jQuery('#acceptable_filetypes').fadeIn();
 							},200);
