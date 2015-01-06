@@ -146,7 +146,7 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Changelog ==
 
-= 2.0.4.2 - January 3rd, 2015 =
+= 2.0.4.2 - January 6th, 2015 =
 * Fixed: re-minified and re-added file_upload_script.js + file_upload_script.min.js
 
 = 2.0.4.1 - January 3rd, 2015 =
@@ -236,7 +236,7 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 
 == Upgrade Notice ==
 
-= 2.0.4.2 - January 3rd, 2015 =
+= 2.0.4.2 - January 6th, 2015 = 
 * Fixed: re-minified and re-added file_upload_script.js + file_upload_script.min.js
 
 = 2.0.4.1 - January 3rd, 2015 =
