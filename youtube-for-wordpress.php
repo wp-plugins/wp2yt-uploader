@@ -4,7 +4,7 @@
 Plugin Name: YouTube for WordPress
 Plugin URI: http://www.YouTubeforWordPress.com
 Description: Upload videos, browse your account, and insert them in to posts without having to leave your blog! Now built with YouTube API v3 and lots of love
-Version: 2.0.4.2
+Version: 2.0.4.3
 Author: YouTubeforWordPress, Evan Herman
 Author URI: http://www.YouTubeforWordPress.com
 License: GPL2

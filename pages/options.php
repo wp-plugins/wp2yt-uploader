@@ -279,7 +279,6 @@ jQuery(document).ready(function () {
 	
 	// get the SQL and PHP versions 
 	$php_version = phpversion();
-	$sql_version = mysql_get_server_info();
 	
 	// set up the options for our WYSIWYG editors
 	// for the optin messages
@@ -360,17 +359,7 @@ jQuery(document).ready(function () {
 		</div>
 	<?php 
 	}  
-	
-	// Check the Users MySQL Version Numbers 
-	if ( $sql_version < '5.0.0' ) {
 	?>
-		<div class="update-nag" style="margin-bottom:2.5em;width:97.5% !important;">
-			<span class="yt4wp-mc-icon-notice"><h3><?php _e( 'LocalHost Detected :', 'youtube-for-wordpress' ); ?></h3></span>
-			<p><?php _e( 'It looks like your site is running an outdated version of MySQL. YouTube for WordPress requires a minimum of MySQL 5.0.0.', 'youtube-for-wordpress' ); ?></p>
-			<p><?php _e( 'Your site is currently running MySQL v.', 'youtube-for-wordpress' ); echo $sql_version; ?></p>
-		</div>
-	<?php 
-	} ?>
 	
 	<form method="post" name="yt4wp-youtube-form" id="yt4wp-youtube-form">
 		<table class="form-table yt4wp-admin-form">
@@ -557,18 +546,6 @@ jQuery(document).ready(function () {
 									echo '<div class="dashicons dashicons-no-alt" style="margin-right:2em;color:rgb(205, 90, 90);"></div>' . $php_version ;
 								} else {
 									echo '<div class="dashicons dashicons-yes" style="margin-right:2em;color:#7EBF5B;"></div>' . $php_version;
-								}
-								?>
-							</td>
-						</tr>
-						<tr valign="top">
-							<th scope="row"><label><?php _e('MySQL Version','youtube-for-wordpress'); ?></label></th>
-							<td>
-								<?php	
-								if ( $sql_version < '5.0.0' ) {
-									echo '<div class="dashicons dashicons-no-alt" style="margin-right:2em;color:rgb(205, 90, 90);"></div>' . $sql_version ;
-								} else {
-									echo '<div class="dashicons dashicons-yes" style="margin-right:2em;color:#7EBF5B;"></div>' . $sql_version;
 								}
 								?>
 							</td>
