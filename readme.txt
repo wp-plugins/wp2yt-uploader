@@ -3,8 +3,8 @@ Contributors: YouTubeforWordPress , eherman24
 Donate link: http://www.evan-herman.com/contact/?contact-reason=I%20want%20to%20make%20a%20donation%20for%20all%20your%20hard%20work
 Tags: YouTube, youtube, upload, uploader, to, wordpress, plugin, responsive, embed, embed, fluidvid.js, fluidvid, flexible, flex, fluid, you, tube, you tube, browser, browse, google, video, music, content, songs, dynamic, url, media, social, social network, social media, social plugin, comments, shortcode, youtube api, YouTube API, YouTube URL, Videos, video player, player, movie player, youtube player , upload, browse, subscriptions, unsubscribe, playlist, mediaelement, add-on, support 
 Requires at least: 3.9
-Tested up to: 4.1
-Stable tag: 2.0.4.3
+Tested up to: 4.1.1
+Stable tag: 2.0.4.4
 License: GPLv3 or later
 
 YouTube for WordPress is a complete, all in one, YouTube solution for WordPress installations.
@@ -39,6 +39,14 @@ http://www.youtube.com/watch?v=5DxDbLxpykE
 9. Extremely extensible for custom functionality not built in
 10. The best support around
 11. Awesome documentation (and constantly growing)
+
+
+**Translated**
+We are currently seeking users to help translate YouTube for WordPress, to make it more readily available to the rest of the world. Currently we have the plugin translated into :
+* English (en_EN) - <a href="http://www.evan-herman.com" target="_blank" title="Evan Herman | WordPress Plugin Developer">Evan Herman</a>
+* Serbian (sr_RS) - thanks goes to the <a href="http://firstsiteguide.com/" target="_blank" title="First Guide">First Guide</a> team for the translation
+
+<em>If your interested in helping out with translations, please consider grabbing a copy of the .pot file located in the language folder in the root of YouTube for WordPress. Any and all translators will get credit in the readme and on the YouTube for WordPress site.</em>
 
 YouTube for WordPress is built up on the latest version of the YouTube API (v3.0) enabling some truly amazing features out of the box. Some features include (but are not limited to) uploading new content to your account, browsing your entire channel, searching YouTube for new videos/playlists/channels, keeping up with your subscriptions, insert single videos or entire playlists and so much more.
 
@@ -145,6 +153,9 @@ Please view the developer documentation on the [YouTube for WordPress](http://ww
 11. YouTube for WordPress Uploader mid-upload at 79%
 
 == Changelog ==
+
+= 2.0.4.4 - March 25th, 2015 =
+* Enhancement: Added Serbian (sr_RS) translation file - thanks goes to the <a href="http://firstsiteguide.com/" target="_blank">First Guide</a> team for the translation
 
 = 2.0.4.3 - January 21st, 2015 =
 * Removed: The MySQL version check. Incompatable on a few servers.
