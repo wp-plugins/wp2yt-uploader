@@ -40,8 +40,8 @@ http://www.youtube.com/watch?v=5DxDbLxpykE
 10. The best support around
 11. Awesome documentation (and constantly growing)
 
-
 **Translated**
+
 We are currently seeking users to help translate YouTube for WordPress, to make it more readily available to the rest of the world. Currently we have the plugin translated into :
 * English (en_EN) - <a href="http://www.evan-herman.com" target="_blank" title="Evan Herman | WordPress Plugin Developer">Evan Herman</a>
 * Serbian (sr_RS) - thanks goes to the <a href="http://firstsiteguide.com/" target="_blank" title="First Guide">First Guide</a> team for the translation
